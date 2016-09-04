@@ -8,6 +8,7 @@ var searchData=
   ['readslave',['readSlave',['../classmbed_1_1_i2_c_driver.html#a3950f5d02a4a27c48d215cdc218e958e',1,'mbed::I2CDriver::readSlave(char *data, int length)'],['../classmbed_1_1_i2_c_driver.html#acc5c34bc61dacc1d64312f431c182fa2',1,'mbed::I2CDriver::readSlave()']]],
   ['readvendorcode',['readVendorCode',['../class_a_v_r910.html#a24a91ddb881d8e0d27c1cb203d0f7349',1,'AVR910']]],
   ['ready',['ready',['../class_comm_link.html#a7dc25b226a3808312eb7d891816b86a5',1,'CommLink']]],
+  ['recalculatebottowheel',['recalculateBotToWheel',['../class_robot_model.html#a371f2a73a77c19c7771bfdef12b7b5a9',1,'RobotModel']]],
   ['receive',['receive',['../classmbed_1_1_i2_c_slave_rtos.html#ad70ee9f8fa39ef8f5b4e46c681b75d64',1,'mbed::I2CSlaveRtos::receive()'],['../class_comm_module.html#aee403e29bb1f0c43ea14fc6daa50a08f',1,'CommModule::receive()']]],
   ['receiveslave',['receiveSlave',['../classmbed_1_1_i2_c_driver.html#a3de96755baaf4fd0ca1115ded49d5279',1,'mbed::I2CDriver']]],
   ['recv',['recv',['../classrtp_1_1packet.html#ac4b74bf4776cdfb7bd016f315977cc77',1,'rtp::packet::recv(const std::vector&lt; T &gt; &amp;v)'],['../classrtp_1_1packet.html#a53ebcb1304a80483cfe09528cd7fe926',1,'rtp::packet::recv(const uint8_t *buffer, size_t size)']]],
@@ -18,7 +19,7 @@ var searchData=
   ['rotate',['rotate',['../class_geometry2d_1_1_point.html#a699f0e416909f6efd61b94d2761132b3',1,'Geometry2d::Point::rotate(const Point &amp;origin, float angle)'],['../class_geometry2d_1_1_point.html#a4a89479b6394a4d0867664a4f7599625',1,'Geometry2d::Point::rotate(float angle)']]],
   ['rotated',['rotated',['../class_geometry2d_1_1_point.html#aeab18a2ec5e60bcd00498bb29bcf3048',1,'Geometry2d::Point::rotated(float angle) const '],['../class_geometry2d_1_1_point.html#a091a1f61eb2db2fd020688390e0a9022',1,'Geometry2d::Point::rotated(const Point &amp;origin, float angle) const '],['../class_geometry2d_1_1_point.html#afc4c5c9e97eb394f97652ea12274632f',1,'Geometry2d::Point::rotated(const Point &amp;pt, const Point &amp;origin, float angle)']]],
   ['rtostimerhelper',['RtosTimerHelper',['../class_rtos_timer_helper.html#aa871e77f7f006dda52052a5a6758a3d1',1,'RtosTimerHelper::RtosTimerHelper(T *instance, void(T::*method)(), os_timer_type type)'],['../class_rtos_timer_helper.html#ab8faa20cf658c925acb335c1ddfa5c0e',1,'RtosTimerHelper::RtosTimerHelper(std::function&lt; void()&gt; callback, os_timer_type type)']]],
-  ['run',['run',['../class_pid.html#ae86adf5545b2af4188acdf3a29f71ea9',1,'Pid']]],
+  ['run',['run',['../class_pid_motion_controller.html#a154603280daca4697fafcfd973cd3f40',1,'PidMotionController::run()'],['../class_pid.html#ae86adf5545b2af4188acdf3a29f71ea9',1,'Pid::run()']]],
   ['rxcallback',['rxCallback',['../class_comm_port.html#a4fd6eb7e55d79c849f7d061e1ad08fb3',1,'CommPort']]],
   ['rxhandler',['rxHandler',['../class_radio_protocol.html#ab47de368e75e7994ea126b3d8a5ca633',1,'RadioProtocol']]]
 ];

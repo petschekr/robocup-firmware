@@ -4,6 +4,7 @@ var searchData=
   ['segment',['Segment',['../class_geometry2d_1_1_segment.html',1,'Geometry2d']]],
   ['selftest',['selfTest',['../class_c_c1201.html#a6463819e64582f1f6e74e26bcc0e440c',1,'CC1201::selfTest()'],['../class_comm_link.html#a43c1119c09f26dba0e816f57bf1d70e0',1,'CommLink::selfTest()']]],
   ['sendpacket',['sendPacket',['../class_c_c1201.html#a321a031a3da161a4ec641b69e86a70a4',1,'CC1201::sendPacket()'],['../class_comm_link.html#ae9ec315271e66d405ef55c91cbc19ca7',1,'CommLink::sendPacket()']]],
+  ['sensechangecallback',['senseChangeCallback',['../class_ball_sense.html#a2965a1ce960a0b427bd523248a3700fb',1,'BallSense']]],
   ['set',['Set',['../class_watchdog.html#a35b747177c2780f8247fd89adc08afe2',1,'Watchdog']]],
   ['setaccelerorange',['setAcceleroRange',['../class_m_p_u6050.html#a3811859c76080d0faea7ed0d43c34525',1,'MPU6050']]],
   ['setaddress',['setAddress',['../class_c_c1201.html#a4d69e8ba33208dde9b42b86c68ee5d0b',1,'CC1201']]],
