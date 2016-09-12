@@ -1,6 +1,8 @@
 var NAVTREE =
 [
   [ "GT RoboCup SSL", "index.html", [
+    [ "Robot Firmware 2008, 2011", "md_doc_RobotFirmware.html", null ],
+    [ "Robot Firmware 2015", "md_doc_RobotFirmware2015.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ]
     ] ],

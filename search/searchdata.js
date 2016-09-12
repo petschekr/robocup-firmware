@@ -5,7 +5,8 @@ var indexSectionsWithContent =
   2: "fps",
   3: "abcdefghiklmnoprstuvw~",
   4: "abcdehimnprstuvw",
-  5: "rs"
+  5: "rs",
+  6: "r"
 };
 
 var indexSectionNames =
@@ -15,7 +16,8 @@ var indexSectionNames =
   2: "namespaces",
   3: "functions",
   4: "variables",
-  5: "enums"
+  5: "enums",
+  6: "pages"
 };
 
 var indexSectionLabels =
@@ -25,6 +27,7 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Functions",
   4: "Variables",
-  5: "Enumerations"
+  5: "Enumerations",
+  6: "Pages"
 };
 
