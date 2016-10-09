@@ -32,6 +32,7 @@ var searchData=
   ['start',['start',['../class_ball_sense.html#adcc69360d831c54acb7f6293bb19f513',1,'BallSense::start()'],['../classmbed_1_1_i2_c_master_rtos.html#a37d7f0abd46b29924ae64834db037bb8',1,'mbed::I2CMasterRtos::start()']]],
   ['startmaster',['startMaster',['../classmbed_1_1_i2_c_driver.html#a6ebb2df84e62811bc0d297813d66ea91',1,'mbed::I2CDriver']]],
   ['stop',['stop',['../class_ball_sense.html#a1a71e9b73cdc1f2dc077509c45f2ad6e',1,'BallSense::stop()'],['../classmbed_1_1_i2_c_master_rtos.html#aa278b115d3baae28e0f38d6e05fb13cd',1,'mbed::I2CMasterRtos::stop()'],['../classmbed_1_1_i2_c_slave_rtos.html#a531a28b366d14fb02e7bc54f3d07b6c4',1,'mbed::I2CSlaveRtos::stop()']]],
+  ['stop_5fcharging',['stop_charging',['../class_kicker_board.html#a0ec9b6088c4503f3329d19093bf8b82c',1,'KickerBoard']]],
   ['stopmaster',['stopMaster',['../classmbed_1_1_i2_c_driver.html#a057006a54ef33be39e4a638f2cfeba76',1,'mbed::I2CDriver']]],
   ['stopslave',['stopSlave',['../classmbed_1_1_i2_c_driver.html#a605b4c6d27a2339b5ff055f89958c018',1,'mbed::I2CDriver']]],
   ['strobingtimeoutleds',['StrobingTimeoutLEDs',['../class_strobing_timeout_l_e_ds.html',1,'']]]

@@ -7,6 +7,8 @@ var searchData=
   ['instance',['Instance',['../class_console.html#a9b3169187cee9df27f0f8fee40a75e03',1,'Console']]],
   ['intersects',['intersects',['../class_geometry2d_1_1_line.html#a01c483e8855d81463b8b93099b09c1fd',1,'Geometry2d::Line::intersects(const Line &amp;other, Point *intersection=nullptr) const '],['../class_geometry2d_1_1_line.html#a39c1165c80b834beb91fc47cdfe4cb7c',1,'Geometry2d::Line::intersects(const Circle &amp;circle, Point *p1=nullptr, Point *p2=nullptr) const ']]],
   ['ioexpanderdigitalinout',['IOExpanderDigitalInOut',['../class_i_o_expander_digital_in_out.html#a83c8b6dc7331ab3cd6b8fb24bcb213b3',1,'IOExpanderDigitalInOut']]],
+  ['is_5fcharge_5fenabled',['is_charge_enabled',['../class_kicker_board.html#a786e5313bcbd3a231d75f35c3520949a',1,'KickerBoard']]],
+  ['is_5fpingable',['is_pingable',['../class_kicker_board.html#ab499b18264154983cd2647254db10601',1,'KickerBoard']]],
   ['isconnected',['isConnected',['../class_c_c1201.html#a6e38428d0ef057b215bb89c5b327a213',1,'CC1201::isConnected()'],['../class_comm_link.html#a518b5e89a19177696fd1f037ac37e99f',1,'CommLink::isConnected()']]],
   ['isr',['ISR',['../class_comm_link.html#a288c3410e4911738eb088e23817f9356',1,'CommLink']]],
   ['issystemstoprequested',['IsSystemStopRequested',['../class_console.html#a9dff64f8179cd12a04a8352e436f062d',1,'Console']]]

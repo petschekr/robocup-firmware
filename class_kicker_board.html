@@ -110,6 +110,7 @@ $(document).ready(function(){initNavTree('class_kicker_board.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_kicker_board-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -150,6 +151,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a61455be0828684366a62465ddb33fdb5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#a61455be0828684366a62465ddb33fdb5">flash</a> (bool onlyIfDifferent=true, bool verbose=false)</td></tr>
 <tr class="memdesc:a61455be0828684366a62465ddb33fdb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reflashes the program on the kicker board MCU with the file specified in the constructor.  <a href="#a61455be0828684366a62465ddb33fdb5">More...</a><br /></td></tr>
 <tr class="separator:a61455be0828684366a62465ddb33fdb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab282f9e2afe7a4d55696c423e0d15d7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#ab282f9e2afe7a4d55696c423e0d15d7c">kick</a> (uint8_t time)</td></tr>
+<tr class="memdesc:ab282f9e2afe7a4d55696c423e0d15d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the KickerBoard a command to kick for the allotted time in in milliseconds.  <a href="#ab282f9e2afe7a4d55696c423e0d15d7c">More...</a><br /></td></tr>
+<tr class="separator:ab282f9e2afe7a4d55696c423e0d15d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6776892171cc45f082c09e23a7e03ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#ad6776892171cc45f082c09e23a7e03ce">chip</a> (uint8_t time)</td></tr>
+<tr class="memdesc:ad6776892171cc45f082c09e23a7e03ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the KickerBoard a command to chip for the allotted time in in milliseconds.  <a href="#ad6776892171cc45f082c09e23a7e03ce">More...</a><br /></td></tr>
+<tr class="separator:ad6776892171cc45f082c09e23a7e03ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aa69c0b02800b9bd95184590c0f7535"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#a7aa69c0b02800b9bd95184590c0f7535">read_voltage</a> (uint8_t *voltage)</td></tr>
+<tr class="memdesc:a7aa69c0b02800b9bd95184590c0f7535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the charge voltage back from the KickerBoard.  <a href="#a7aa69c0b02800b9bd95184590c0f7535">More...</a><br /></td></tr>
+<tr class="separator:a7aa69c0b02800b9bd95184590c0f7535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83ee4cedca2f3826ade7005882c05a6d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#a83ee4cedca2f3826ade7005882c05a6d">charge</a> ()</td></tr>
+<tr class="memdesc:a83ee4cedca2f3826ade7005882c05a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the charge pin (to high)  <a href="#a83ee4cedca2f3826ade7005882c05a6d">More...</a><br /></td></tr>
+<tr class="separator:a83ee4cedca2f3826ade7005882c05a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ec9b6088c4503f3329d19093bf8b82c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#a0ec9b6088c4503f3329d19093bf8b82c">stop_charging</a> ()</td></tr>
+<tr class="memdesc:a0ec9b6088c4503f3329d19093bf8b82c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the charge pin.  <a href="#a0ec9b6088c4503f3329d19093bf8b82c">More...</a><br /></td></tr>
+<tr class="separator:a0ec9b6088c4503f3329d19093bf8b82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab499b18264154983cd2647254db10601"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#ab499b18264154983cd2647254db10601">is_pingable</a> ()</td></tr>
+<tr class="memdesc:ab499b18264154983cd2647254db10601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a ping command and checks that we get the correct resposne.  <a href="#ab499b18264154983cd2647254db10601">More...</a><br /></td></tr>
+<tr class="separator:ab499b18264154983cd2647254db10601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a786e5313bcbd3a231d75f35c3520949a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#a786e5313bcbd3a231d75f35c3520949a">is_charge_enabled</a> ()</td></tr>
+<tr class="memdesc:a786e5313bcbd3a231d75f35c3520949a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current charging state.  <a href="#a786e5313bcbd3a231d75f35c3520949a">More...</a><br /></td></tr>
+<tr class="separator:a786e5313bcbd3a231d75f35c3520949a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_a_v_r910"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_a_v_r910')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_a_v_r910.html">AVR910</a></td></tr>
 <tr class="memitem:ac91074eb873fa02757866236e50c2e19 inherit pub_methods_class_a_v_r910"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_v_r910.html#ac91074eb873fa02757866236e50c2e19">AVR910</a> (std::shared_ptr&lt; <a class="el" href="class_shared_s_p_i.html">SharedSPI</a> &gt; spi, PinName nCs, PinName nReset)</td></tr>
 <tr class="memdesc:ac91074eb873fa02757866236e50c2e19 inherit pub_methods_class_a_v_r910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac91074eb873fa02757866236e50c2e19">More...</a><br /></td></tr>
@@ -180,6 +202,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a72b94604822101722a63b2f873e4e38c inherit pub_methods_class_shared_s_p_i_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the SPI frequency for this device. <br /></td></tr>
 <tr class="separator:a72b94604822101722a63b2f873e4e38c inherit pub_methods_class_shared_s_p_i_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a22280b43d8d2c14b2fd66da823a67f76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22280b43d8d2c14b2fd66da823a67f76"></a>
+static std::shared_ptr&lt; <a class="el" href="class_kicker_board.html">KickerBoard</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Instance</b></td></tr>
+<tr class="separator:a22280b43d8d2c14b2fd66da823a67f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a34de349bcf21d784909184b41e0d944f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kicker_board.html#a34de349bcf21d784909184b41e0d944f">verify_param</a> (const char *name, char expected, int(AVR910::*paramMethod)(), char mask=0xFF, bool verbose=false)</td></tr>
@@ -189,9 +217,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a4e99d5a29dc0e48069cebd1f26c83800 inherit pro_methods_class_a_v_r910"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e99d5a29dc0e48069cebd1f26c83800"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>readRegister</b> (int reg)</td></tr>
 <tr class="separator:a4e99d5a29dc0e48069cebd1f26c83800 inherit pro_methods_class_a_v_r910"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa52cb82f0afc83c5d41dd6b7010dc81 inherit pro_methods_class_a_v_r910"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_v_r910.html#aaa52cb82f0afc83c5d41dd6b7010dc81">checkMemory</a> (int numPages, int pageSize, FILE *binary, bool verbose=true)</td></tr>
-<tr class="memdesc:aaa52cb82f0afc83c5d41dd6b7010dc81 inherit pro_methods_class_a_v_r910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the binary has been written correctly.  <a href="#aaa52cb82f0afc83c5d41dd6b7010dc81">More...</a><br /></td></tr>
-<tr class="separator:aaa52cb82f0afc83c5d41dd6b7010dc81 inherit pro_methods_class_a_v_r910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d5e6c907a6c31e47e05557fc713f0f0 inherit pro_methods_class_a_v_r910"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_v_r910.html#a3d5e6c907a6c31e47e05557fc713f0f0">checkMemory</a> (int numPages, int pageSize, FILE *binary, bool verbose=false)</td></tr>
+<tr class="memdesc:a3d5e6c907a6c31e47e05557fc713f0f0 inherit pro_methods_class_a_v_r910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the binary has been written correctly.  <a href="#a3d5e6c907a6c31e47e05557fc713f0f0">More...</a><br /></td></tr>
+<tr class="separator:a3d5e6c907a6c31e47e05557fc713f0f0 inherit pro_methods_class_a_v_r910"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6390cd4b442aa6267d934357ebdb42b9 inherit pro_methods_class_a_v_r910"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_v_r910.html#a6390cd4b442aa6267d934357ebdb42b9">exitProgramming</a> ()</td></tr>
 <tr class="memdesc:a6390cd4b442aa6267d934357ebdb42b9 inherit pro_methods_class_a_v_r910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Brings the reset line high to exit programming mode.  <a href="#a6390cd4b442aa6267d934357ebdb42b9">More...</a><br /></td></tr>
 <tr class="separator:a6390cd4b442aa6267d934357ebdb42b9 inherit pro_methods_class_a_v_r910"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -258,6 +286,49 @@ mbed::DigitalOut&#160;</td><td class="memItemRight" valign="bottom"><b>_cs</b></
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a83ee4cedca2f3826ade7005882c05a6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::charge </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the charge pin (to high) </p>
+<dl class="section return"><dt>Returns</dt><dd>If the charge command was acknowledged </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad6776892171cc45f082c09e23a7e03ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::chip </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends the KickerBoard a command to chip for the allotted time in in milliseconds. </p>
+<p>This roughly corresponds to chip strength. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>Millisecond chip time, can only range from 0 to 255 ms </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the chip command was acknowledged </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a61455be0828684366a62465ddb33fdb5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -291,6 +362,111 @@ mbed::DigitalOut&#160;</td><td class="memItemRight" valign="bottom"><b>_cs</b></
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if flashing was successful </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a786e5313bcbd3a231d75f35c3520949a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::is_charge_enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the current charging state. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if charging is enabled, otherwise false </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab499b18264154983cd2647254db10601"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::is_pingable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a ping command and checks that we get the correct resposne. </p>
+<dl class="section return"><dt>Returns</dt><dd>If the ping command was acknowledged </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab282f9e2afe7a4d55696c423e0d15d7c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::kick </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends the KickerBoard a command to kick for the allotted time in in milliseconds. </p>
+<p>This roughly corresponds to kick strength.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>Millisecond kick time, can only range from 0 to 255 ms </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the kick command was acknowledged </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7aa69c0b02800b9bd95184590c0f7535"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::read_voltage </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>voltage</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads the charge voltage back from the KickerBoard. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">voltage</td><td>Output voltage 0 (GND) to 255 (Vd) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the read_voltage command was acknowledged </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0ec9b6088c4503f3329d19093bf8b82c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KickerBoard::stop_charging </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the charge pin. </p>
+<dl class="section return"><dt>Returns</dt><dd>If the stop_charging command was acknowledged </dd></dl>
 
 </div>
 </div>
@@ -359,7 +535,7 @@ mbed::DigitalOut&#160;</td><td class="memItemRight" valign="bottom"><b>_cs</b></
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_kicker_board.html">KickerBoard</a></li>
-    <li class="footer">Generated on Thu Sep 22 2016 15:56:59 for GT RoboCup SSL by
+    <li class="footer">Generated on Sun Oct 9 2016 21:49:51 for GT RoboCup SSL by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

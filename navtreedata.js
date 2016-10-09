@@ -27,8 +27,8 @@ var NAVTREEINDEX =
 [
 ".html",
 "class_geometry2d_1_1_line.html",
-"class_m_p_u6050.html#aae3131eac8cbf899f09c2ff1253719cc",
-"functions_func_u.html"
+"class_m_p_u6050.html#a7b2281753b756c54f031aaf996429188",
+"functions_func_m.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
