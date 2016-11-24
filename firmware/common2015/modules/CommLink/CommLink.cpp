@@ -23,36 +23,32 @@ CommLink::CommLink(shared_ptr<SharedSPI> sharedSPI, PinName nCs,
 // Task operations for placing received data into the received data queue
 void CommLink::rxThread() {
     // Store our priority so we know what to reset it to if ever needed
-    const osPriority threadPriority = _rxThread.get_priority();
+    const auto threadPriority = _rxThread.get_priority();
 
     // Set the function to call on an interrupt trigger
     _int_in.rise(this, &CommLink::ISR);
 
-    std::vector<uint8_t> buf;
-
     // Only continue past this point once the hardware link is initialized
     Thread::signal_wait(COMM_LINK_SIGNAL_START_THREAD);
 
-    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d",
-        ((P_TCB)_rxThread.gettid())->task_id, threadPriority);
+    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d", reinterpret_cast<P_TCB>(_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {
         // Wait until new data has arrived
         // this is triggered by CommLink::ISR()
-        Thread::yield();
+        // Thread::yield();
         Thread::signal_wait(COMM_LINK_SIGNAL_RX_TRIGGER);
 
         LOG(INF3, "RX interrupt triggered");
 
         // Get the received data from the external chip
-        buf.clear();
-        int32_t response = getData(&buf);
-        Thread::yield();
+        auto response = getData();
+        // Thread::yield();
 
-        if (response == COMM_SUCCESS) {
+        if (!response.empty()) {
             // Write the data to the CommModule object's rxQueue
-            rtp::packet p;
-            p.recv(buf);
+            rtp::packet p(response);
+            // p.recv(buf);
             CommModule::Instance->receive(std::move(p));
         }
     }

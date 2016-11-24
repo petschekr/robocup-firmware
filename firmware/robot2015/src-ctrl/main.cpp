@@ -238,7 +238,7 @@ int main() {
     RadioProtocol radioProtocol(CommModule::Instance, global_radio);
     radioProtocol.setUID(robotShellID);
     radioProtocol.start();
-    
+
     radioProtocol.rxCallback = [&](const rtp::ControlMessage* msg, const bool addressed) {
         // reset timeout
         radioTimeoutTimer.start(RADIO_TIMEOUT);
@@ -329,7 +329,7 @@ int main() {
         // make sure we can always reach back to main by
         // renewing the watchdog timer periodicly
         Watchdog::Renew();
-        global_radio->printStuff();
+
         // periodically reset the console text's format
         ll++;
         if ((ll % 8) == 0) {

@@ -25,8 +25,9 @@ public:
 template <class DIGITAL_OUT = mbed::DigitalOut>
 class SharedSPIDevice {
 public:
-    SharedSPIDevice(std::shared_ptr<SharedSPI> spi, DIGITAL_OUT cs,
-                    bool csInverted = true)
+    using spiPtr_t = std::shared_ptr<SharedSPI>;
+
+    SharedSPIDevice(spiPtr_t spi, DIGITAL_OUT cs, bool csInverted = true)
         : _spi(spi), _cs(cs) {
         ASSERT(spi != nullptr);
 
@@ -53,7 +54,7 @@ public:
     void setSPIFrequency(int hz) { _frequency = hz; }
 
 protected:
-    std::shared_ptr<SharedSPI> _spi;
+    spiPtr_t _spi;
     DIGITAL_OUT _cs;
 
 private:

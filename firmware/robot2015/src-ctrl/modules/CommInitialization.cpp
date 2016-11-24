@@ -91,8 +91,7 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
 
     // TODO(justin): make this non-global
     // Create a new physical hardware communication link
-    global_radio =
-        new Decawave(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
+    global_radio = new Decawave(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
 
     // Open a socket for running tests across the link layer
     // The LINK port handlers are always active, regardless of whether or not a

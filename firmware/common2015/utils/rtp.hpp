@@ -7,12 +7,12 @@
 namespace rtp {
 
 /// Max packet size.  This is limited by the CC1201 buffer size.
-static const unsigned int MAX_DATA_SZ = 120;
+static constexpr size_t MAX_DATA_SZ = 120;
 
-const uint8_t BROADCAST_ADDRESS = 0x00;  // configured by the PKT_CFG1 register
-const uint8_t BASE_STATION_ADDRESS = 0xFF - 1;
-const uint8_t ROBOT_ADDRESS = 0x01;  // All robots have the same address
-const uint8_t LOOPBACK_ADDRESS = 2;
+constexpr uint8_t BROADCAST_ADDRESS = 0x00;  // configured by the PKT_CFG1 register
+constexpr uint8_t BASE_STATION_ADDRESS = 0xFF - 1;
+constexpr uint8_t ROBOT_ADDRESS = 0x01;  // All robots have the same address
+constexpr uint8_t LOOPBACK_ADDRESS = 2;
 
 // The value 0 is a valid robot id, so we have to choose something else to
 // represent "null"
@@ -20,23 +20,16 @@ const uint8_t INVALID_ROBOT_UID = 0xFF;
 
 template <typename PACKET_TYPE>
 void SerializeToVector(const PACKET_TYPE& pkt, std::vector<uint8_t>* buf) {
-    const uint8_t* bytes = (const uint8_t*)&pkt;
-    for (size_t i = 0; i < sizeof(PACKET_TYPE); i++) {
+    const auto bytes = reinterpret_cast<const uint8_t*>(&pkt);
+    for (auto i = 0; i < sizeof(PACKET_TYPE); ++i) {
         buf->push_back(bytes[i]);
     }
 }
 
 template <typename PACKET_TYPE>
-void SerializeToBuffer(const PACKET_TYPE& pkt, uint8_t* buf, size_t bufSize) {
-    memcpy(buf, (const void*)&pkt, bufSize);
-}
-
-template <typename PACKET_TYPE>
 bool DeserializeFromBuffer(PACKET_TYPE* pkt, uint8_t* buf, size_t bufSize) {
     if (bufSize < sizeof(PACKET_TYPE)) return false;
-
     memcpy(pkt, buf, bufSize);
-
     return true;
 }
 
@@ -79,7 +72,6 @@ struct RobotStatusMessage {
      */
     static constexpr float BATTERY_READING_SCALE_FACTOR = 0.09884;
     uint8_t battVoltage;
-
     uint8_t ballSenseStatus : 2;
 };
 
@@ -91,51 +83,43 @@ public:
     rtp::header_data header;
     std::vector<uint8_t> payload;
 
+    static constexpr size_t headerSize = sizeof(header);
+
     packet(){};
     packet(const std::string& s, Port p = SINK) : header(p) {
+        payload.reserve(s.size() + 1);
         for (char c : s) payload.push_back(c);
         payload.push_back('\0');
     }
 
     template <class T>
-    packet(const std::vector<T>& v, Port p = SINK) : header(p) {
-        for (T val : v) payload.push_back(val);
-    }
+    packet(const std::vector<T>& v, Port p = SINK) : header(p) { recv(v); }
 
-    size_t size() const { return sizeof(header) + payload.size(); }
+    size_t size() const { return headerSize + payload.size(); }
 
     /// deserialize a packet from a buffer
     template <class T>
     void recv(const std::vector<T>& v) {
-        recv(v.data(), v.size());
-    }
-
-    /// deserialize a packet from a buffer
-    void recv(const uint8_t* buffer, size_t size) {
         // check that the buffer is big enough
-        if (size < sizeof(header)) return;
+        if (v.size() < headerSize) return;
 
         // deserialize header
-        header = *((header_data*)buffer);
+        header = *(reinterpret_cast<const header_data*>(v.data()));
 
-        // Everything after the header is payload data
+        // copy over the payload
         payload.clear();
-        for (size_t i = sizeof(header); i < size; i++) {
-            payload.push_back(buffer[i]);
-        }
+        payload.insert(payload.begin(), v.begin() + headerSize, v.end());
     }
 
     void pack(std::vector<uint8_t>* buffer) const {
-        buffer->reserve(sizeof(header) + payload.size());
+        buffer->reserve(size());
         SerializeToVector(header, buffer);
         buffer->insert(buffer->end(), payload.begin(), payload.end());
     }
 };
 
 // Packet sizes
-constexpr unsigned int Forward_Size =
-    sizeof(header_data) + 6 * sizeof(ControlMessage);
-constexpr unsigned int Reverse_Size =
-    sizeof(header_data) + sizeof(RobotStatusMessage);
+constexpr size_t Forward_Size = packet::headerSize + 6 * sizeof(ControlMessage);
+constexpr size_t Reverse_Size = packet::headerSize + sizeof(RobotStatusMessage);
 
 }  // namespace rtp

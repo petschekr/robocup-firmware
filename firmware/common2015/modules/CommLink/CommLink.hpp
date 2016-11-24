@@ -29,9 +29,11 @@ enum { FOREACH_COMM_ERR(GENERATE_ENUM) };
  */
 class CommLink : public SharedSPIDevice<> {
 public:
+    using buffer_t = std::vector<uint8_t>;
+    using bufferPtr_t = buffer_t*;
+
     /// Constructor
-    CommLink(std::shared_ptr<SharedSPI> spiBus, PinName nCs = NC,
-             PinName int_pin = NC);
+    CommLink(spiPtr_t spiBus, PinName nCs = NC, PinName int_pin = NC);
 
     /// Virtual deconstructor
     /// Kills any threads and frees the allocated stack.
@@ -57,13 +59,11 @@ protected:
     /**
      * @brief Read data from the radio's RX buffer
      *
-     * Copies the contents of the RX buffer into the given @buf parameter.
-     *
      * @param buf The buffer to write data into
      *
-     * @return An error/success code.  See the comm error enum above.
+     * @return A vector of received bytes returned with std::move
      */
-    virtual int32_t getData(std::vector<uint8_t>* buffer) = 0;
+    virtual buffer_t getData() = 0;
 
     /// Interrupt Service Routine - KEEP OPERATIONS TO ABSOLUTE MINIMUM HERE AND
     /// IN ANY OVERRIDDEN BASE CLASS IMPLEMENTATIONS OF THIS CLASS METHOD
@@ -76,9 +76,7 @@ protected:
     void ready();
 
     template <typename T>
-    T twos_compliment(T val) {
-        return ~val + 1;
-    }
+    T twos_compliment(T val) { return ~val + 1; }
 
     InterruptIn _int_in;
 
@@ -89,7 +87,7 @@ private:
     void rxThread();
 
     static void rxThreadHelper(const void* linkInst) {
-        CommLink* link = (CommLink*)linkInst;
+        auto link = reinterpret_cast<CommLink*>(const_cast<void*>(linkInst));    // dangerous
         link->rxThread();
     }
 };
