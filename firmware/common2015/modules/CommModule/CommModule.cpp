@@ -14,24 +14,13 @@ std::shared_ptr<CommModule> CommModule::Instance;
 
 CommModule::CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
                        std::shared_ptr<FlashingTimeoutLED> txTimeoutLED)
-    : m_rxThread(&CommModule::rxThreadHelper, this, osPriorityAboveNormal,
-                 DEFAULT_STACK_SIZE / 2),
-      m_txThread(&CommModule::txThreadHelper, this, osPriorityHigh,
-                 DEFAULT_STACK_SIZE / 2),
+    : m_rxThread(&CommModule::rxThreadHelper, this, osPriorityAboveNormal, STACK_SIZE),
+      m_txThread(&CommModule::txThreadHelper, this, osPriorityHigh, STACK_SIZE),
       m_rxTimeoutLED(rxTimeoutLED),
       m_txTimeoutLED(txTimeoutLED) {
     // Create the data queues.
     m_txQueue = osMailCreate(m_txQueueHelper.def(), nullptr);
     m_rxQueue = osMailCreate(m_rxQueueHelper.def(), nullptr);
-}
-
-void CommModule::rxThreadHelper(void const* moduleInst) {
-    auto module = reinterpret_cast<CommModule*>(const_cast<void*>(moduleInst));
-    module->rxThread();
-}
-void CommModule::txThreadHelper(void const* moduleInst) {
-    auto module = reinterpret_cast<CommModule*>(const_cast<void*>(moduleInst));
-    module->txThread();
 }
 
 void CommModule::txThread() {
@@ -233,6 +222,21 @@ unsigned int CommModule::numTxPackets() const {
     return count;
 }
 
+void CommModule::resetCount(unsigned int portNbr) {
+    m_ports[portNbr].resetPacketCount();
+}
+
+int CommModule::numOpenSockets() const {
+    auto count = 0;
+    for (const auto& kvpair : m_ports) {
+        if (kvpair.second.rxCallback() != nullptr ||
+            kvpair.second.txCallback() != nullptr)
+            count++;
+    }
+    return count;
+}
+
+#ifndef NDEBUG
 void CommModule::printInfo() const {
     printf("PORT\t\tIN\tOUT\tRX CBCK\t\tTX CBCK\r\n");
 
@@ -250,17 +254,4 @@ void CommModule::printInfo() const {
 
     Console::Instance()->Flush();
 }
-
-void CommModule::resetCount(unsigned int portNbr) {
-    m_ports[portNbr].resetPacketCount();
-}
-
-int CommModule::numOpenSockets() const {
-    auto count = 0;
-    for (const auto& kvpair : m_ports) {
-        if (kvpair.second.rxCallback() != nullptr ||
-            kvpair.second.txCallback() != nullptr)
-            count++;
-    }
-    return count;
-}
+#endif
