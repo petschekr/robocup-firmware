@@ -211,10 +211,10 @@ typedef struct {
     uint8 txCode;    //!< TX preamble code
     uint8 rxCode;    //!< RX preamble code
     uint8 nsSFD;     //!< Boolean should we use non-standard SFD for better
-                     //!performance
+                     //! performance
     uint8 dataRate;  //!< Data Rate {DWT_BR_110K, DWT_BR_850K or DWT_BR_6M8}
     uint8 phrMode;   //!< PHR mode {0x0 - standard DWT_PHRMODE_STD, 0x3 -
-                     //!extended frames DWT_PHRMODE_EXT}
+                     //! extended frames DWT_PHRMODE_EXT}
     uint16 sfdTO;    //!< SFD timeout value (in symbols)
 } dwt_config_t;
 

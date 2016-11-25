@@ -14,7 +14,8 @@ std::shared_ptr<CommModule> CommModule::Instance;
 
 CommModule::CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
                        std::shared_ptr<FlashingTimeoutLED> txTimeoutLED)
-    : m_rxThread(&CommModule::rxThreadHelper, this, osPriorityAboveNormal, STACK_SIZE),
+    : m_rxThread(&CommModule::rxThreadHelper, this, osPriorityAboveNormal,
+                 STACK_SIZE),
       m_txThread(&CommModule::txThreadHelper, this, osPriorityHigh, STACK_SIZE),
       m_rxTimeoutLED(rxTimeoutLED),
       m_txTimeoutLED(txTimeoutLED) {
