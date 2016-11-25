@@ -37,7 +37,7 @@ public:
     static constexpr size_t TX_QUEUE_SIZE = 3;
     static constexpr size_t RX_QUEUE_SIZE = 3;
 
-    /// global singleton instance of CommModule
+    /// Global singleton instance of CommModule
     static std::shared_ptr<CommModule> Instance;
 
     /// The constructor initializes and starts threads and mail queues
@@ -81,19 +81,24 @@ public:
     /// Check if everything is ready for sending/receiving packets
     bool isReady() const { return m_isReady; };
 
+    /// Retuns the number of ports with a binded callback function/method
     int numOpenSockets() const;
 
+    /// Retuns the number of currently received packets
     unsigned int numRxPackets() const;
+
+    /// Retuns the number of currently sent packets
     unsigned int numTxPackets() const;
 
+    /// Resets the counts for send/received packets
     void resetCount(unsigned int portNbr);
 
 #ifndef NDEBUG
+    /// Print debugging information
     void printInfo() const;
 #endif
 
 protected:
-    // Memory Queue IDs
     osMailQId m_txQueue;
     osMailQId m_rxQueue;
 
@@ -118,8 +123,7 @@ private:
     void txThread();
     void rxThread();
 
-    /// The threadHelper methods accept a CommModule pointer as a parameter
-    /// and call the corresponding instance methods on the module.
+    // The threadHelper methods accept a CommModule pointer as a parameter
     inline static void rxThreadHelper(const void* moduleInst) {
         auto module = reinterpret_cast<CommModule*>(
             const_cast<void*>(moduleInst));  // dangerous
