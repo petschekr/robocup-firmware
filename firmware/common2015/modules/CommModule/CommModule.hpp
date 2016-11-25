@@ -120,12 +120,12 @@ private:
 
     /// The threadHelper methods accept a CommModule pointer as a parameter
     /// and call the corresponding instance methods on the module.
-    inline void rxThreadHelper(const void* moduleInst) {
+    inline static void rxThreadHelper(const void* moduleInst) {
         auto module = reinterpret_cast<CommModule*>(
             const_cast<void*>(moduleInst));  // dangerous
         module->rxThread();
     }
-    inline void txThreadHelper(CommModule* const moduleInst) {
+    inline static void txThreadHelper(const void* moduleInst) {
         auto module = reinterpret_cast<CommModule*>(
             const_cast<void*>(moduleInst));  // dangerous
         module->txThread();
