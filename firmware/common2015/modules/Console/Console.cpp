@@ -22,8 +22,6 @@ Console::Console() : pc(USBTX, USBRX) {
     _rxBuffer.reserve(15);
 }
 
-Console::~Console() {}
-
 void Console::attachInputHandler() {
     pc.attach(this, &Console::RXCallback, Serial::RxIrq);
 }

@@ -6,17 +6,12 @@
 
 #include <ctime>
 
-using namespace std;
-
-constexpr auto COMM_MODULE_SIGNAL_START_THREAD = (1 << 0);
-
 std::shared_ptr<CommModule> CommModule::Instance;
 
 CommModule::CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
                        std::shared_ptr<FlashingTimeoutLED> txTimeoutLED)
-    : m_rxThread(&CommModule::rxThreadHelper, this, osPriorityAboveNormal,
-                 STACK_SIZE),
-      m_txThread(&CommModule::txThreadHelper, this, osPriorityHigh, STACK_SIZE),
+    : m_rxThread(&CommModule::rxThreadHelper, this, RX_PRIORITY, STACK_SIZE),
+      m_txThread(&CommModule::txThreadHelper, this, TX_PRIORITY, STACK_SIZE),
       m_rxTimeoutLED(rxTimeoutLED),
       m_txTimeoutLED(txTimeoutLED) {
     // Create the data queues.
@@ -26,17 +21,17 @@ CommModule::CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
 
 void CommModule::txThread() {
     // Only continue once we know there's 1+ hardware link(s) available
-    Thread::signal_wait(COMM_MODULE_SIGNAL_START_THREAD);
+    Thread::signal_wait(SIGNAL_START);
 
     // Store our priority so we know what to reset it to if ever needed
-    const osPriority threadPriority = m_txThread.get_priority();
+    const auto threadPriority = m_txThread.get_priority();
 
     LOG(INIT,
         "TX communication module ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     // Signal to the RX thread that it can begin
-    m_rxThread.signal_set(COMM_MODULE_SIGNAL_START_THREAD);
+    m_rxThread.signal_set(SIGNAL_START);
 
     while (true) {
         // Wait until new data is placed in the RX queue
@@ -70,7 +65,10 @@ void CommModule::txThread() {
                     port.txCallback()(p);
                     port.m_txCount++;
 
-                    LOG(INF2, "Transmission:\r\n    Port:\t%u\r\n", portNum);
+                    LOG(INF2,
+                        "Transmission:\r\n"
+                        "    Port:\t%u\r\n",
+                        portNum);
                 }
             }
 
@@ -81,11 +79,13 @@ void CommModule::txThread() {
             ASSERT(tState == osOK);
         }
     }
+
+    ASSERT(!"Execution is at an unreachable line!");
 }
 
 void CommModule::rxThread() {
     // Only continue once we know there's 1+ hardware link(s) available
-    Thread::signal_wait(COMM_MODULE_SIGNAL_START_THREAD);
+    Thread::signal_wait(SIGNAL_START);
 
     // set this true immediately after we are released execution
     m_isReady = true;
@@ -129,8 +129,10 @@ void CommModule::rxThread() {
                     port.rxCallback()(std::move(*p));
                     port.m_rxCount++;
 
-                    LOG(INF2, "Transmission:\r\n    Port:\t%u\r\n", portNum);
-                    LOG(INF2, "Reception:\r\n    Port:\t%u\r\n", portNum);
+                    LOG(INF2,
+                        "Reception:\r\n"
+                        "    Port:\t%u\r\n",
+                        portNum);
                 }
             }
 
@@ -140,6 +142,58 @@ void CommModule::rxThread() {
             tState = m_rxThread.set_priority(threadPriority);
             ASSERT(tState == osOK);
         }
+    }
+
+    ASSERT(!"Execution is at an unreachable line!");
+}
+
+void CommModule::send(RTP::Packet packet) {
+    const auto portNum = packet.header.port;
+    const auto portExists = m_ports.find(portNum) != m_ports.end();
+    const auto hasCallback = m_ports[portNum].txCallback() != nullptr;
+
+    // Check to make sure a socket for the port exists
+    if (portExists && hasCallback) {
+        // Allocate a block of memory for the data.
+        auto p =
+            static_cast<RTP::Packet*>(osMailAlloc(m_txQueue, osWaitForever));
+        if (p) {
+            // Copy the contents into the allocated memory block
+            *p = std::move(packet);
+            // Place the passed packet into the txQueue.
+            osMailPut(m_txQueue, p);
+        } else {
+            LOG(FATAL, "Unable to allocate memory for TX queue");
+        }
+    } else {
+        LOG(WARN,
+            "Failed to send %u byte packet: No TX socket on port %u exists",
+            packet.payload.size(), packet.header.port);
+    }
+}
+
+void CommModule::receive(RTP::Packet packet) {
+    const auto portNum = packet.header.port;
+    const auto portExists = m_ports.find(portNum) != m_ports.end();
+    const auto hasCallback = m_ports[portNum].rxCallback() != nullptr;
+
+    // Check to make sure a socket for the port exists
+    if (portExists && hasCallback) {
+        // Allocate a block of memory for the data.
+        auto p =
+            static_cast<RTP::Packet*>(osMailAlloc(m_rxQueue, osWaitForever));
+        if (p) {
+            // Move the contents into the allocated memory block
+            *p = std::move(packet);
+            // Place the passed packet into the rxQueue.
+            osMailPut(m_rxQueue, p);
+        } else {
+            LOG(FATAL, "Unable to allocate memory for RX queue");
+        }
+    } else {
+        LOG(WARN,
+            "Failed to send %u byte packet: No RX socket on port %u exists",
+            packet.payload.size(), packet.header.port);
     }
 }
 
@@ -155,79 +209,11 @@ void CommModule::setTxHandler(TxCallbackT callback, uint8_t portNbr) {
 
 void CommModule::ready() {
     if (m_isReady) return;
-
-    // Start running the TX thread - that then starts the RX once
-    m_txThread.signal_set(COMM_MODULE_SIGNAL_START_THREAD);
+    // Start the TX thread - it starts the RX once
+    m_txThread.signal_set(SIGNAL_START);
 }
 
-void CommModule::send(RTP::Packet packet) {
-    // Check to make sure a socket for the port exists
-    if (m_ports.find(packet.header.port) != m_ports.end() &&
-        m_ports[packet.header.port].txCallback() != nullptr) {
-        // Allocate a block of memory for the data.
-        auto p =
-            static_cast<RTP::Packet*>(osMailAlloc(m_txQueue, osWaitForever));
-        if (!p) {
-            LOG(FATAL, "Unable to allocate packet onto mail queue");
-            return;
-        }
-
-        // Copy the contents into the allocated memory block
-        *p = std::move(packet);
-
-        // Place the passed packet into the txQueue.
-        osMailPut(m_txQueue, p);
-
-    } else {
-        LOG(WARN,
-            "Failed to send %u byte packet: There is no open transmitting "
-            "socket for port %u",
-            packet.payload.size(), packet.header.port);
-    }
-}
-
-void CommModule::receive(RTP::Packet packet) {
-    // Check to make sure a socket for the port exists
-    if (m_ports.find(packet.header.port) != m_ports.end() &&
-        m_ports[packet.header.port].rxCallback() != nullptr) {
-        // Allocate a block of memory for the data.
-        auto p =
-            static_cast<RTP::Packet*>(osMailAlloc(m_rxQueue, osWaitForever));
-        if (!p) {
-            LOG(FATAL, "Unable to allocate packet onto mail queue");
-            return;
-        }
-
-        // Copy the contents into the allocated memory block
-        *p = std::move(packet);
-
-        // Place the passed packet into the rxQueue.
-        osMailPut(m_rxQueue, p);
-    } else {
-        LOG(WARN,
-            "Failed to receive %u byte packet: There is no open receiving "
-            "socket for port %u",
-            packet.payload.size(), packet.header.port);
-    }
-}
-
-unsigned int CommModule::numRxPackets() const {
-    auto count = 0;
-    for (auto& kvpair : m_ports) count += kvpair.second.m_rxCount;
-    return count;
-}
-
-unsigned int CommModule::numTxPackets() const {
-    auto count = 0;
-    for (auto& kvpair : m_ports) count += kvpair.second.m_txCount;
-    return count;
-}
-
-void CommModule::resetCount(unsigned int portNbr) {
-    m_ports[portNbr].resetPacketCount();
-}
-
-int CommModule::numOpenSockets() const {
+unsigned int CommModule::numOpenSockets() const {
     auto count = 0;
     for (const auto& kvpair : m_ports) {
         if (kvpair.second.rxCallback() != nullptr ||
@@ -238,6 +224,22 @@ int CommModule::numOpenSockets() const {
 }
 
 #ifndef NDEBUG
+unsigned int CommModule::numRxPackets() const {
+    auto count = 0;
+    for (const auto& kvpair : m_ports) count += kvpair.second.m_rxCount;
+    return count;
+}
+
+unsigned int CommModule::numTxPackets() const {
+    auto count = 0;
+    for (const auto& kvpair : m_ports) count += kvpair.second.m_txCount;
+    return count;
+}
+
+void CommModule::resetCount(unsigned int portNbr) {
+    m_ports[portNbr].resetPacketCount();
+}
+
 void CommModule::printInfo() const {
     printf("PORT\t\tIN\tOUT\tRX CBCK\t\tTX CBCK\r\n");
 

@@ -8,7 +8,7 @@
 
 class RadioProtocol {
 public:
-    enum State {
+    enum class State {
         STOPPED,
         DISCONNECTED,
         CONNECTED,
@@ -23,7 +23,7 @@ public:
         : _commModule(commModule),
           _radio(radio),
           _uid(uid),
-          _state(STOPPED),
+          _state(State::STOPPED),
           _replyTimer(this, &RadioProtocol::reply, osTimerOnce),
           _timeoutTimer(this, &RadioProtocol::_timeout, osTimerOnce) {
         ASSERT(commModule != nullptr);
@@ -51,11 +51,11 @@ public:
         rxCallback;
 
     void start() {
-        _state = DISCONNECTED;
+        _state = State::DISCONNECTED;
 
         _commModule->setRxHandler(this, &RadioProtocol::rxHandler,
                                   RTP::PortType::CONTROL);
-        _commModule->setTxHandler((CommLink*)global_radio,
+        _commModule->setTxHandler(dynamic_cast<CommLink*>(global_radio),
                                   &CommLink::sendPacket,
                                   RTP::PortType::CONTROL);
 
@@ -67,7 +67,7 @@ public:
         _commModule->close(RTP::PortType::CONTROL);
 
         _replyTimer.stop();
-        _state = STOPPED;
+        _state = State::STOPPED;
 
         LOG(INF1, "Radio protocol stopped");
     }
@@ -75,15 +75,15 @@ public:
     State state() const { return _state; }
 
     void rxHandler(RTP::Packet pkt) {
-        // LOG(INIT, "got pkt!");
+        LOG(INIT, "got pkt!");
         // TODO: check packet size before parsing
         bool addressed = false;
         const RTP::ControlMessage* msg;
         size_t slot;
         // printf("UUIDs: ");
         for (slot = 0; slot < 6; slot++) {
-            size_t offset = slot * sizeof(RTP::ControlMessage);
-            msg = (const RTP::ControlMessage*)(pkt.payload.data() + offset);
+            const auto offset = slot * sizeof(RTP::ControlMessage);
+            msg = reinterpret_cast<const RTP::ControlMessage*>(pkt.payload.data() + offset);
 
             // printf("%d:%d ", slot, msg->uid);
             if (msg->uid == _uid) {
@@ -98,7 +98,7 @@ public:
         // TODO(justin): double-check this
         const uint32_t SLOT_DELAY = 2;
 
-        _state = CONNECTED;
+        _state = State::CONNECTED;
 
         // reset timeout whenever we receive a packet
         _timeoutTimer.stop();
@@ -125,7 +125,7 @@ private:
         _commModule->send(std::move(pkt));
     }
 
-    void _timeout() { _state = DISCONNECTED; }
+    void _timeout() { _state = State::DISCONNECTED; }
 
     std::shared_ptr<CommModule> _commModule;
     Decawave* _radio;

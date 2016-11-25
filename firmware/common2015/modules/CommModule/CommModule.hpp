@@ -47,9 +47,6 @@ public:
     /// The destructor frees up allocated memory and stops threads
     ~CommModule(){};
 
-    /// initializes and starts rx/tx threads and mail queues
-    void init();
-
     /// Assign an RX callback function to a port
     void setRxHandler(RxCallbackT callback, uint8_t portNbr);
 
@@ -82,8 +79,9 @@ public:
     bool isReady() const { return m_isReady; };
 
     /// Retuns the number of ports with a binded callback function/method
-    int numOpenSockets() const;
+    unsigned int numOpenSockets() const;
 
+#ifndef NDEBUG
     /// Retuns the number of currently received packets
     unsigned int numRxPackets() const;
 
@@ -93,17 +91,21 @@ public:
     /// Resets the counts for send/received packets
     void resetCount(unsigned int portNbr);
 
-#ifndef NDEBUG
     /// Print debugging information
     void printInfo() const;
 #endif
 
 protected:
+    static constexpr size_t SIGNAL_START = (1 << 0);
+
     osMailQId m_txQueue;
     osMailQId m_rxQueue;
 
 private:
+    // DEFAULT_STACK_SIZE defined in rtos library
     static constexpr size_t STACK_SIZE = DEFAULT_STACK_SIZE / 2;
+    static constexpr osPriority RX_PRIORITY = osPriorityAboveNormal;
+    static constexpr osPriority TX_PRIORITY = osPriorityHigh;
 
     std::map<uint8_t, PortT> m_ports;
 

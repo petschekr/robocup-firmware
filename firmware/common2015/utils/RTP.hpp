@@ -6,8 +6,9 @@
 
 namespace RTP {
 
-constexpr uint8_t BROADCAST_ADDRESS =
-    0x00;  // configured by the PKT_CFG1 register
+// configured by the PKT_CFG1 register
+constexpr uint8_t BROADCAST_ADDRESS = 0x00;
+
 constexpr uint8_t BASE_STATION_ADDRESS = 0xFF - 1;
 constexpr uint8_t ROBOT_ADDRESS = 0x01;  // All robots have the same address
 constexpr uint8_t LOOPBACK_ADDRESS = 2;
@@ -20,9 +21,7 @@ template <typename PACKET_TYPE>
 void serializeToVector(const PACKET_TYPE& pkt, std::vector<uint8_t>* buf) {
     const auto data = reinterpret_cast<const uint8_t*>(&pkt);
     buf->reserve(sizeof(PACKET_TYPE));
-    for (size_t i = 0; i < sizeof(PACKET_TYPE); ++i) {
-        buf->push_back(data[i]);
-    }
+    for (size_t i = 0; i < sizeof(PACKET_TYPE); ++i) buf->push_back(data[i]);
 }
 
 // a hackish way of enforcing 'enum class' scopes without
@@ -38,8 +37,8 @@ enum MessageTypeEnum { CONTROL, TUNING, UPGRADE, MISC };
 using MessageType = MessageTypeNamespace::MessageTypeEnum;
 
 struct Header {
-    Header(PortType p = PortType::SINK)
-        : address(0), port(p), type(MessageType::CONTROL) {}
+    Header(PortType p = PortType::SINK, MessageType t = MessageType::CONTROL)
+        : address(0), port(p), type(t) {}
 
     uint8_t address;
     PortType port : 4;
@@ -55,7 +54,7 @@ struct ControlMessage {
      * is to avoid loss of precision when sending float velocity values across
      * the air as ints.
      */
-    static const uint16_t VELOCITY_SCALE_FACTOR = 1000;
+    static constexpr uint16_t VELOCITY_SCALE_FACTOR = 1000;
 
     int16_t bodyX;
     int16_t bodyY;
@@ -76,13 +75,18 @@ struct RobotStatusMessage {
      * is 0.100546875, but this has been adjusted after testing to the value
      * below.
      */
-    static constexpr float BATTERY_READING_SCALE_FACTOR = 0.09884;
+    static constexpr float BATTERY_READING_SCALE_FACTOR = 0.09884f;
 
     uint8_t battVoltage;
     uint8_t ballSenseStatus : 2;
     uint8_t motorErrors : 5;  // 1 bit for each motor - 1 = error, 0 = good
     uint8_t fpgaStatus : 2;   // 0 = good, 1 = not initialized, 2 = error
 };
+
+// Packet sizes
+static constexpr auto HeaderSize = sizeof(Header);
+static constexpr auto ForwardSize = HeaderSize + 6 * sizeof(ControlMessage);
+static constexpr auto ReverseSize = HeaderSize + sizeof(RobotStatusMessage);
 
 /**
  * @brief Real-Time packet definition
@@ -105,16 +109,16 @@ public:
         payload.push_back('\0');
     }
 
-    /// deserialize a packet from a buffer
+    /// Deserialize a packet from a buffer
     template <typename T, typename = std::enable_if_t<
                               std::is_convertible<T, uint8_t>::value>>
     void recv(const std::vector<T>& buf) {
         // check that the buffer is big enough
-        if (buf.size() >= sizeof(Header)) {
+        if (buf.size() >= HeaderSize) {
             // deserialize header
             header = *(reinterpret_cast<const Header*>(buf.data()));
             // set the payload bytes
-            payload.assign(buf.begin() + sizeof(Header), buf.end());
+            payload.assign(buf.begin() + HeaderSize, buf.end());
         }
     }
 
@@ -126,11 +130,7 @@ public:
         buf->insert(buf->end(), payload.begin(), payload.end());
     }
 
-    size_t size() const { return sizeof(Header) + payload.size(); }
+    size_t size() const { return HeaderSize + payload.size(); }
 };
-
-// Packet sizes
-constexpr auto ForwardSize = sizeof(Header) + 6 * sizeof(ControlMessage);
-constexpr auto ReverseSize = sizeof(Header) + sizeof(RobotStatusMessage);
 
 }  // namespace RTP

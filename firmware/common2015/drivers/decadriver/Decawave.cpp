@@ -3,7 +3,7 @@
 #include "assert.hpp"
 #include "logger.hpp"
 
-Decawave* global_radio = nullptr;
+#include <memory>
 
 namespace {
 dwt_config_t config = {
@@ -29,9 +29,8 @@ constexpr auto TX_TO_RX_DELAY_UUS = 60;
 constexpr auto RX_RESP_TO_UUS = 5000;
 }
 
-Decawave::Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
+Decawave::Decawave(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
     : CommLink(sharedSPI, nCs, intPin), dw1000_api() {
-    global_radio = this;  // TODO: This is very not good
     setSPIFrequency(2000000);
 
     if (dwt_initialise(DWT_LOADNONE) == DWT_ERROR) {
@@ -42,7 +41,7 @@ Decawave::Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
     reset();
     selfTest();
 
-    if (_isInit) {
+    if (m_isInit) {
         dwt_configure(&config);
         dwt_configuretxrf(&txconfig);
 
@@ -51,8 +50,8 @@ Decawave::Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
         // DWT_INT_RFCE | DWT_INT_RFSL | DWT_INT_RFTO | DWT_INT_SFDT |
         // DWT_INT_RXPTO | DWT_INT_ARFE, 1);
         dwt_setcallbacks(
-            nullptr, static_cast<dwt_cb_t>(&Decawave::getData_success), nullptr,
-            static_cast<dwt_cb_t>(&Decawave::getData_fail));
+            nullptr, static_cast<dwt_cb_t>(&Decawave::getDataSuccess), nullptr,
+            static_cast<dwt_cb_t>(&Decawave::getDataFail));
         // dwt_setinterrupt(DWT_INT_RFCG | DWT_INT_RPHE | DWT_INT_RFCE |
         // DWT_INT_RFSL | DWT_INT_SFDT, 1);
         dwt_setinterrupt(0x00002000 | DWT_INT_RFCG | DWT_INT_RPHE |
@@ -77,12 +76,12 @@ Decawave::Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
 // Virtual functions from CommLink
 int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     // Return failutre if not initialized
-    if (!_isInit) return COMM_FAILURE;
+    if (!m_isInit) return COMM_FAILURE;
 
     dwt_rxreset();
     dwt_forcetrxoff();
 
-    auto& txBuf = *tx_buffer;  // not copied
+    auto& txBuf = *m_txBufferPtr;  // not copied
 
     // 0x8841
     txBuf[0] = 0x41;
@@ -92,7 +91,7 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     txBuf[4] = 0xDE;
     txBuf[5] = pkt->header.address;
     txBuf[6] = 0;
-    txBuf[7] = _addr;
+    txBuf[7] = m_addr;
     txBuf[8] = 0;
 
     /*
@@ -100,11 +99,10 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     txBuf[1] = 0;
     */
 
-    const auto headerSize = sizeof(pkt->header);
     const auto headerData = reinterpret_cast<const uint8_t*>(&pkt->header);
 
     size_t i = 0;
-    for (; i < headerSize; ++i) txBuf[i + 9] = headerData[i];
+    for (; i < RTP::HeaderSize; ++i) txBuf[i + 9] = headerData[i];
 
     i += 8;
     for (auto byte : pkt->payload) txBuf[i++] = byte;
@@ -127,10 +125,10 @@ CommLink::BufferT Decawave::getData() {
     BufferT buf{};
 
     // Return empty data if not initialized
-    if (!_isInit) return std::move(buf);
+    if (!m_isInit) return std::move(buf);
 
-    // set the rx_buffer's point to our vector before calling the isr function
-    rx_buffer = &buf;
+    // set the m_rxBuffer's pointer to our vector before calling the isr function
+    m_rxBufferPtr = &buf;
 
     // manually invoke the isr routine & set back into RX mode
     dwt_isr();
@@ -148,23 +146,23 @@ CommLink::BufferT Decawave::getData() {
 }
 
 int32_t Decawave::selfTest() {
-    _chip_version = dwt_readdevid();
+    m_chipVersion = dwt_readdevid();
 
-    if (_chip_version != DWT_DEVICE_ID) {
+    if (m_chipVersion != DWT_DEVICE_ID) {
         LOG(FATAL,
             "Decawave part number error:\r\n"
             "    Found:\t0x%02X (expected 0x%02X)",
-            _chip_version, DWT_DEVICE_ID);
+            m_chipVersion, DWT_DEVICE_ID);
 
         return -1;
     } else {
-        _isInit = true;
+        m_isInit = true;
         return 0;
     }
 }
 
 void Decawave::setAddress(uint16_t addr) {
-    _addr = addr;
+    m_addr = addr;
     dwt_setpanid(0xDECA);
     dwt_setaddress16(addr);
     dwt_enableframefilter(DWT_FF_DATA_EN);
@@ -195,14 +193,14 @@ void Decawave::deca_sleep(unsigned int time_ms) { wait_ms(time_ms); }
 #endif
 
 // Callback functions for decawave interrupt
-void Decawave::getData_success(const dwt_cb_data_t* cb_data) {
+void Decawave::getDataSuccess(const dwt_cb_data_t* cb_data) {
     const auto dataLength = cb_data->datalength;
-    // Read recived data to rx_buffer array
-    rx_buffer->reserve(dataLength);
-    dwt_readrxdata(rx_buffer->data(), dataLength, 9);
+    // Read recived data to m_rxBufferPtr array
+    m_rxBufferPtr->reserve(dataLength);
+    dwt_readrxdata(m_rxBufferPtr->data(), dataLength, 9);
 }
 
-void Decawave::getData_fail(const dwt_cb_data_t* cb_data) {}
+void Decawave::getDataFail(const dwt_cb_data_t* cb_data) {}
 
 #if 0
 static void getData_success_cb(const dwt_cb_data_t* cb_data) {

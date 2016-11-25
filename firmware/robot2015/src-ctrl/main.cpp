@@ -8,7 +8,7 @@
 #include <assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
-#include <watchdog.hpp>
+#include <Watchdog.hpp>
 
 #include "BallSense.hpp"
 #include "Decawave.hpp"
@@ -92,7 +92,7 @@ int main() {
     rgbLED.clear();
 
     // Set the RGB LEDs to a medium blue while the threads are started up
-    float defaultBrightness = 0.02f;
+    auto defaultBrightness = 0.02f;
     rgbLED.brightness(3 * defaultBrightness);
     rgbLED.setPixel(0, NeoColorBlue);
     rgbLED.setPixel(1, NeoColorBlue);
@@ -102,10 +102,9 @@ int main() {
     RtosTimerHelper init_leds_off([]() { statusLights(false); }, osTimerOnce);
     init_leds_off.start(RJ_STARTUP_LED_TIMEOUT_MS);
 
-    /// A shared spi bus used for the fpga and cc1201 radio
-    shared_ptr<SharedSPI> sharedSPI =
-        make_shared<SharedSPI>(RJ_SPI_MOSI, RJ_SPI_MISO, RJ_SPI_SCK);
-    sharedSPI->format(8, 0);  // 8 bits per transfer
+    /// A shared spi bus
+    auto spiBus = make_shared<SharedSPI>(RJ_SPI_MOSI, RJ_SPI_MISO, RJ_SPI_SCK);
+    spiBus->format(8, 0);  // 8 bits per transfer
 
     // Initialize kicker board
     // HackedKickerBoard::Instance =
@@ -136,17 +135,15 @@ int main() {
         //     KickerBoard::Instance->kick(kickStrength);
         // }
     };
-    // uintptr_t p = (uintptr_t)(void*)&sharedSPI;
-    // LOG(INIT, "test 0 %p %d",(int)&sharedSPI, *reinterpret_cast<char
-    // *>((void*)&sharedSPI));
 
     // Initialize and configure the fpga with the given bitfile
-    FPGA::Instance = new FPGA(sharedSPI, RJ_FPGA_nCS, RJ_FPGA_INIT_B,
+    FPGA::Instance = new FPGA(spiBus, RJ_FPGA_nCS, RJ_FPGA_INIT_B,
                               RJ_FPGA_PROG_B, RJ_FPGA_DONE);
+
     const bool fpgaInitialized =
         FPGA::Instance->configure("/local/rj-fpga.nib");
+    auto fpgaError = false;
     uint8_t fpgaLastStatus = 0;
-    bool fpgaError = false;  // set based on status byte reading in main loop
 
     if (fpgaInitialized) {
         rgbLED.brightness(3 * defaultBrightness);
@@ -212,7 +209,7 @@ int main() {
 #endif
 
     // Initialize the CommModule and CC1201 radio
-    InitializeCommModule(sharedSPI);
+    InitializeCommModule(spiBus);
 
     // Make sure all of the motors are enabled
     motors_Init();
@@ -289,14 +286,8 @@ int main() {
             if (err) reply.motorErrors |= (1 << i);
         }
 
-        // fpga status
-        if (!fpgaInitialized) {
-            reply.fpgaStatus = 1;
-        } else if (fpgaError) {
-            reply.fpgaStatus = 2;
-        } else {
-            reply.fpgaStatus = 0;  // good
-        }
+        // fpga status, 0 when good
+        reply.fpgaStatus = !fpgaInitialized + fpgaError;
 
         vector<uint8_t> replyBuf;
         RTP::serializeToVector(reply, &replyBuf);
@@ -389,7 +380,8 @@ int main() {
         // Set error-indicating leds on the control board
         ioExpander.writeMask(~errorBitmask, IOExpanderErrorLEDMask);
 
-        if (errorBitmask || !fpgaInitialized || fpgaError) {
+        const auto robotHasError = errorBitmask || !fpgaInitialized || fpgaError;
+        if (robotHasError) {
             // orange - error
             rgbLED.brightness(6 * defaultBrightness);
             rgbLED.setPixel(0, NeoColorOrange);

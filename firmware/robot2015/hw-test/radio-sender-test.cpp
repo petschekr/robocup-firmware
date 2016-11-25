@@ -33,17 +33,16 @@ bool initRadio() {
     // Startup the CommModule interface
     CommModule::Instance = make_shared<CommModule>(rxTimeoutLED, txTimeoutLED);
 
-    // Create a new physical hardware communication link
-    global_radio =
-        new CC1201(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings,
-                   sizeof(preferredSettings) / sizeof(registerSetting_t));
+    // Construct an object pointer for the radio
+    constexpr auto settingsSize = sizeof(preferredSettings) / sizeof(registerSetting_t);
+    global_radio = std::make_unique<CC1201>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings, settingsSize);
 
     return global_radio->isConnected();
 }
 
 void radioRxHandler(RTP::Packet pkt) {
     static int rxCount = 0;
-    rxCount++;
+    ++rxCount;
     printf("<-- %d\r\n", rxCount);
 }
 

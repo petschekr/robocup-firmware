@@ -75,7 +75,7 @@ int32_t loopback_tx_cb(const RTP::Packet* p) {
 
 void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
 // leds that flash if tx/rx have happened recently
-#ifdef ENABLE_RX_TX_LEDS
+#if defined(ENABLE_RX_TX_LEDS)
     auto rxTimeoutLED = make_shared<FlashingTimeoutLED>(
         DigitalOut(RJ_RX_LED, OpenDrain), 160, 400);
     auto txTimeoutLED = make_shared<FlashingTimeoutLED>(
@@ -87,11 +87,11 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
 
     // Startup the CommModule interface
     CommModule::Instance = make_shared<CommModule>(rxTimeoutLED, txTimeoutLED);
-    shared_ptr<CommModule> commModule = CommModule::Instance;
+    auto commModule = CommModule::Instance;
 
     // TODO(justin): make this non-global
     // Create a new physical hardware communication link
-    global_radio = new Decawave(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
+    global_radio = std::make_unique<Decawave>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
 
     // Open a socket for running tests across the link layer
     // The LINK port handlers are always active, regardless of whether or not a
@@ -109,8 +109,7 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
         LOG(INIT, "Radio interface ready");
 
         // Legacy port
-        commModule->setTxHandler(dynamic_cast<CommLink*>(global_radio),
-                                 &CommLink::sendPacket, RTP::PortType::LEGACY);
+        commModule->setTxHandler(global_radio, &CommLink::sendPacket, RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
         LOG(INIT, "%u sockets opened", commModule->numOpenSockets());
@@ -121,6 +120,6 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
             Thread::wait(50);
         }
     } else {
-        LOG(FATAL, "No radio interface found!\r\n");
+        LOG(FATAL, "No radio interface found!");
     }
 }

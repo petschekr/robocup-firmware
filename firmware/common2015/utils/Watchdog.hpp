@@ -2,7 +2,10 @@
 
 #include "mbed.h"
 
-#define WDT_BASE LPC_WDT
+// #define WDT_BASE LPC_WDT
+namespace {
+volatile auto WDT_BASE = LPC_WDT;
+}
 
 /**
  * The Watchdog class is used for automatically resetting the microcontroller if
@@ -18,7 +21,7 @@ public:
         WDT_BASE->WDCLKSEL = 0x1;  // Set CLK src to PCLK
         uint32_t clk = SystemCoreClock >>
                        4;  // WD has a fixed /4 prescaler, PCLK default is /4
-        WDT_BASE->WDTC = s * (float)clk;
+        WDT_BASE->WDTC = s * static_cast<float>(clk);
         WDT_BASE->WDMOD = 0x3;  // Enabled and Reset
         Renew();
     }

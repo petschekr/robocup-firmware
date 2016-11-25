@@ -24,10 +24,7 @@ void ASSERT_IS_ADDR(uint16_t addr) {
            (addr == 0x007F) || (addr == 0x00BF) || (addr == 0x00FF));
 }
 
-// TODO(justin): remove this
-// CC1201* global_radio = nullptr;
-
-CC1201::CC1201(spiPtr_t sharedSPI, PinName nCs, PinName intPin,
+CC1201::CC1201(SpiPtrT sharedSPI, PinName nCs, PinName intPin,
                const registerSetting_t* regs, size_t len, int rssiOffset)
     : CommLink(sharedSPI, nCs, intPin) {
     reset();

@@ -1,20 +1,20 @@
 #pragma once
 
-#include <stdarg.h>
-
-#define ASSERT_ON
+#include <cstdarg>
 
 /**
  * A macro for assertion checks.
  * @param e The variable to check.
  * @return Nothing is returned.
  */
-#ifdef ASSERT_ON
-#define ASSERT(e) \
-    if (!(e)) assertFail(#e, __FILE__, __LINE__)
+/* clang-format off */
+#ifndef NDEBUG
+#   define ASSERT(e)  \
+        if (!(e)) assertFail((#e), __FILE__, __LINE__)
 #else
-#define ASSERT(x)
+#   define ASSERT(x)
 #endif
+/* clang-format on */
 
 /**
  * This is called when an assertion fails.

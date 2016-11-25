@@ -1,14 +1,14 @@
 #pragma once
 
-#include <mbed.h>
 #include <rtos.h>
 
 #include "CommModule.hpp"
 #include "RTP.hpp"
 #include "SharedSPI.hpp"
-#include "helper-funcs.hpp"
 #include "rj-macros.hpp"
 #include "rtos-mgmt/mail-helper.hpp"
+
+#include <memory>
 
 #define FOREACH_COMM_ERR(ERR) \
     ERR(COMM_SUCCESS)         \
@@ -38,7 +38,7 @@ public:
     static constexpr size_t RX_QUEUE_SIZE = 2;
 
     /// Constructor
-    CommLink(spiPtr_t spiBus, PinName nCs = NC, PinName intPin = NC);
+    CommLink(SpiPtrT spiBus, PinName nCs = NC, PinName intPin = NC);
 
     /// Virtual deconstructor
     /// Kills any threads and frees the allocated stack.
@@ -84,9 +84,6 @@ protected:
     }
 
 private:
-    // DEFAULT_STACK_SIZE defined in rtos library
-    static constexpr size_t STACK_SIZE = DEFAULT_STACK_SIZE / 2;
-
     Thread m_rxThread;
 
     // The working thread for handling RX data queue operations
@@ -98,3 +95,5 @@ private:
         link->rxThread();
     }
 };
+
+extern std::unique_ptr<CommLink> global_radio;

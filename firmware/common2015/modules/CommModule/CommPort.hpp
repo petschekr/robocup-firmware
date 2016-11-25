@@ -37,7 +37,7 @@ public:
     TxCallbackRefT txCallback() { return m_txCallback; }
     ConstTxCallbackRefT txCallback() const { return m_txCallback; }
 
-    // Returns the current packet counts to zero
+    /// Resets the current packet counts to zero
     void resetPacketCount() {
         m_rxCount = 0;
         m_txCount = 0;

@@ -12,6 +12,7 @@
 #include <KickerBoard.hpp>
 #include <logger.hpp>
 #include <numparser.hpp>
+#include <Watchdog.hpp>
 
 #include "ds2411.hpp"
 #include "fpga.hpp"
@@ -953,7 +954,7 @@ int cmd_heapfill(cmd_args_t& args) {
     }
 
     printf("Testing heap size...\r\n");
-    int count = 1;
+    auto count = sizeof(void*);
     while (true) {
         void* buf = malloc(count);
         if (!buf) {
@@ -962,8 +963,10 @@ int cmd_heapfill(cmd_args_t& args) {
         } else {
             printf("allocated %d bytes\r\n", count);
         }
-        count++;
         free(buf);
+        count += sizeof(void*);
+        // keep the watchdog timer renewed
+        Watchdog::Renew();
     }
 
     return 0;

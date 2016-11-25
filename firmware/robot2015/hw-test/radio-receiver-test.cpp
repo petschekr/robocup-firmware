@@ -35,7 +35,7 @@ bool initRadio() {
 
     // Create a new physical hardware communication link
     global_radio =
-        new CC1201(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings,
+        std::make_unique<CC1201>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings,
                    sizeof(preferredSettings) / sizeof(registerSetting_t));
 
     return global_radio->isConnected();

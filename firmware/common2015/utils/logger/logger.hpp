@@ -1,39 +1,44 @@
 #pragma once
 
 #include <cstdarg>
-#include <string>
 #include <sstream>
+#include <string>
 
 #include "rj-macros.hpp"
 
 // Do weird macro things for logging the filename and line for every call.
 // Also allows for disabling all logging through macros so all log calls can be
 // removed from production builds.
+/* clang-format off */
 #ifdef RJ_LOGGING_EN
+    // Gets curent file name without path
+    // see http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
+#   ifdef __FILE_NAME__
+#       define __BASE_FILE_NAME__                                                           \
+            (strrchr(__FILE_NAME__, '/') ? strrchr(__FILE_NAME__, '/') + 1 : __FILE_NAME__)
+#   else
+#       define __BASE_FILE_NAME__                                                           \
+            (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1) : __FILE__)
+#   endif
 
-// Gets curent file name without path
-// see http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
-#ifdef __FILE_NAME__
-#define __BASE_FILE_NAME__                                         \
-    (strrchr(__FILE_NAME__, '/') ? strrchr(__FILE_NAME__, '/') + 1 \
-                                 : __FILE_NAME__)
-#else  // __FILE_NAME__
-#define __BASE_FILE_NAME__ \
-    (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1) : __FILE__)
+#   define LOG(logLevel, ...)                                                               \
+        do {                                                                                \
+            log(logLevel, __BASE_FILE_NAME__, __LINE__, __func__, __VA_ARGS__);             \
+        } while (false)
+
+    /**
+     * Example usage:
+     *   S_LOG(INIT) << "Example";
+     */
+#   define S_LOG(logLevel)                                                                  \
+        do {                                                                                \
+            LogHelper(logLevel, __BASE_FILE_NAME__, __LINE__, __func__);                    \
+        } while (false)
+
+#else
+#   define LOG(...)
 #endif
-
-#define LOG(lvl, ...) \
-    log(lvl, __BASE_FILE_NAME__, __LINE__, __func__, __VA_ARGS__)
-
-/**
- * Example usage:
- *   S_LOG(INIT) << "Example";
- */
-#define S_LOG(lvl) LogHelper(lvl, __BASE_FILE_NAME__, __LINE__, __func__)
-
-#else             // RJ_LOGGING_EN
-#define LOG(...)  // Nothing
-#endif
+/* clang-format on */
 
 #define FOREACH_LEVEL(LEVEL) \
     LEVEL(LOG_LEVEL_START)   \
