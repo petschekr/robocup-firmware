@@ -4,7 +4,6 @@
 #include <type_traits>
 
 #include "logger.hpp"
-#include "assert.hpp"
 
 // The head of the linked list of active threads
 extern struct OS_XCB os_rdy;

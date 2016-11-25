@@ -19,7 +19,7 @@ public:
     static const uint32_t TIMEOUT_INTERVAL = 2000;
 
     RadioProtocol(std::shared_ptr<CommModule> commModule, Decawave* radio,
-                  uint8_t uid = rtp::INVALID_ROBOT_UID)
+                  uint8_t uid = RTP::INVALID_ROBOT_UID)
         : _commModule(commModule),
           _radio(radio),
           _uid(uid),
@@ -28,7 +28,7 @@ public:
           _timeoutTimer(this, &RadioProtocol::_timeout, osTimerOnce) {
         ASSERT(commModule != nullptr);
         ASSERT(radio != nullptr);
-        _radio->setAddress(rtp::ROBOT_ADDRESS);
+        _radio->setAddress(RTP::ROBOT_ADDRESS);
     }
 
     ~RadioProtocol() { stop(); }
@@ -46,22 +46,22 @@ public:
      * @param msg A pointer to the start of the message addressed to this robot
      * @return formatted reply buffer
      */
-    std::function<std::vector<uint8_t>(const rtp::ControlMessage* msg, const bool addresed)>
+    std::function<std::vector<uint8_t>(const RTP::ControlMessage* msg, const bool addresed)>
         rxCallback;
 
     void start() {
         _state = DISCONNECTED;
 
         _commModule->setRxHandler(this, &RadioProtocol::rxHandler,
-                                  rtp::Port::CONTROL);
+                                  RTP::PortType::CONTROL);
         _commModule->setTxHandler((CommLink*)global_radio,
-                                  &CommLink::sendPacket, rtp::Port::CONTROL);
+                                  &CommLink::sendPacket, RTP::PortType::CONTROL);
 
-        LOG(INF1, "Radio protocol listening on port %d", rtp::Port::CONTROL);
+        LOG(INF1, "Radio protocol listening on port %d", RTP::PortType::CONTROL);
     }
 
     void stop() {
-        _commModule->close(rtp::Port::CONTROL);
+        _commModule->close(RTP::PortType::CONTROL);
 
         _replyTimer.stop();
         _state = STOPPED;
@@ -71,16 +71,16 @@ public:
 
     State state() const { return _state; }
 
-    void rxHandler(rtp::packet pkt) {
+    void rxHandler(RTP::Packet pkt) {
         // LOG(INIT, "got pkt!");
         // TODO: check packet size before parsing
         bool addressed = false;
-        const rtp::ControlMessage* msg;
+        const RTP::ControlMessage* msg;
         size_t slot;
         // printf("UUIDs: ");
         for (slot = 0; slot < 6; slot++) {
-            size_t offset = slot * sizeof(rtp::ControlMessage);
-            msg = (const rtp::ControlMessage*)(pkt.payload.data() + offset);
+            size_t offset = slot * sizeof(RTP::ControlMessage);
+            msg = (const RTP::ControlMessage*)(pkt.payload.data() + offset);
 
             // printf("%d:%d ", slot, msg->uid);
             if (msg->uid == _uid) {
@@ -113,10 +113,10 @@ public:
 
 private:
     void reply() {
-        rtp::packet pkt;
-        pkt.header.port = rtp::Port::CONTROL;
-        pkt.header.type = rtp::header_data::Control;
-        pkt.header.address = rtp::BASE_STATION_ADDRESS;
+        RTP::Packet pkt;
+        pkt.header.port = RTP::PortType::CONTROL;
+        pkt.header.type = RTP::MessageType::CONTROL;
+        pkt.header.address = RTP::BASE_STATION_ADDRESS;
 
         pkt.payload = std::move(_reply);
 

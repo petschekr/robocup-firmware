@@ -39,15 +39,15 @@ bool initRadio() {
     return global_radio->isConnected();
 }
 
-void radioRxHandler(rtp::packet pkt) {
+void radioRxHandler(RTP::Packet pkt) {
     LOG(INF3, "radioRxHandler()");
     // write packet content (including header) out to EPBULK_IN
     vector<uint8_t> buf;
     pkt.pack(&buf);
 
     // drop the packet if it's the wrong size. Thsi will need to be changed if we have variable-sized reply packets
-    if (buf.size() != rtp::Reverse_Size) {
-        LOG(WARN, "Dropping packet, wrong size '%u', should be '%u'", buf.size(), rtp::Reverse_Size);
+    if (buf.size() != RTP::Reverse_Size) {
+        LOG(WARN, "Dropping packet, wrong size '%u', should be '%u'", buf.size(), RTP::Reverse_Size);
         return;
     }
 
@@ -79,8 +79,8 @@ int main() {
         // LOG(INIT, "Radio interface ready on %3.2fMHz!", global_radio->freq());
 
         // register handlers for any ports we might use
-        for (rtp::Port port :
-             {rtp::Port::CONTROL, rtp::Port::PING, rtp::Port::LEGACY}) {
+        for (RTP::Port port :
+             {RTP::Port::CONTROL, RTP::Port::PING, RTP::Port::LEGACY}) {
             CommModule::Instance->setRxHandler(&radioRxHandler, port);
             CommModule::Instance->setTxHandler((CommLink*)global_radio,
                                                &CommLink::sendPacket, port);
@@ -89,7 +89,7 @@ int main() {
         LOG(FATAL, "No radio interface found!");
     }
 
-    global_radio->setAddress(rtp::BASE_STATION_ADDRESS);
+    global_radio->setAddress(RTP::BASE_STATION_ADDRESS);
 
     DigitalOut radioStatusLed(LED4, global_radio->isConnected());
 
@@ -137,11 +137,11 @@ int main() {
             LOG(INF3, "Read %d bytes from BULK IN", bufSize);
 
             // construct packet from buffer received over USB
-            rtp::packet pkt;
+            RTP::Packet pkt;
             pkt.recv(buf, bufSize);
 
             // send to all robots
-            pkt.header.address = rtp::ROBOT_ADDRESS;
+            pkt.header.address = RTP::ROBOT_ADDRESS;
 
             // transmit!
             CommModule::Instance->send(std::move(pkt));

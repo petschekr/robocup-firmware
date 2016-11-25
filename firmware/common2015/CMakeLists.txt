@@ -29,7 +29,7 @@ set(UTILS_ROOT_NAME     utils)
 # subdirectories
 set(DRIVERS
     avr-isp
-    ball_sense
+    ball-sense
     buzzer
     cc1201
     cc1201/cfg

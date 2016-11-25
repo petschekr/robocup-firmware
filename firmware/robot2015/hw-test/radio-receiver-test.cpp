@@ -41,13 +41,13 @@ bool initRadio() {
     return global_radio->isConnected();
 }
 
-void radioRxHandler(rtp::packet pkt) {
+void radioRxHandler(RTP::Packet pkt) {
     static int rxCount = 0;
     rxCount++;
     printf("<-- %d\r\n", rxCount);
 
-    rtp::ControlMessage controlMsg;
-    bool success = rtp::DeserializeFromBuffer(&controlMsg, pkt.payload.data(),
+    RTP::ControlMessage controlMsg;
+    bool success = RTP::DeserializeFromBuffer(&controlMsg, pkt.payload.data(),
                                               pkt.payload.size());
     if (!success) {
         printf("bad rx\r\n");
@@ -60,15 +60,15 @@ void radioRxHandler(rtp::packet pkt) {
     }
 
     // send reply packet
-    rtp::packet replyPkt;
-    replyPkt.header.port = rtp::Port::CONTROL;
-    replyPkt.header.address = rtp::BROADCAST_ADDRESS;
+    RTP::Packet replyPkt;
+    replyPkt.header.port = RTP::Port::CONTROL;
+    replyPkt.header.address = RTP::BROADCAST_ADDRESS;
 
     // create control message and add it to the packet payload
-    rtp::RobotStatusMessage msg;
+    RTP::RobotStatusMessage msg;
     msg.uid = 1;
     msg.battVoltage = 12;
-    rtp::SerializeToVector(msg, &replyPkt.payload);
+    RTP::SerializeToVector(msg, &replyPkt.payload);
 
     // transmit!
     CommModule::Instance->send(std::move(replyPkt));
@@ -93,8 +93,8 @@ int main() {
         LOG(INIT, "Radio interface ready on %3.2fMHz!", global_radio->freq());
 
         // register handlers for any ports we might use
-        for (rtp::Port port :
-             {rtp::Port::CONTROL, rtp::Port::PING, rtp::Port::LEGACY}) {
+        for (RTP::Port port :
+             {RTP::Port::CONTROL, RTP::Port::PING, RTP::Port::LEGACY}) {
             CommModule::Instance->setRxHandler(&radioRxHandler, port);
             CommModule::Instance->setTxHandler((CommLink*)global_radio,
                                                &CommLink::sendPacket, port);

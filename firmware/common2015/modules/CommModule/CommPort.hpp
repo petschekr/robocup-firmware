@@ -12,35 +12,39 @@
 template <typename RX_CALLBACK, typename TX_CALLBACK>
 class CommPort {
 public:
-    CommPort(std::function<RX_CALLBACK> rxC = nullptr,
-             std::function<TX_CALLBACK> txC = nullptr)
-        : _rxCallback(rxC), _txCallback(txC){};
+    using RxCallbackT = std::function<RX_CALLBACK>;
+    using TxCallbackT = std::function<TX_CALLBACK>;
+    using RxCallbackRefT = RxCallbackT&;
+    using TxCallbackRefT = TxCallbackT&;
+    using ConstRxCallbackRefT = const RxCallbackT&;
+    using ConstTxCallbackRefT = const TxCallbackT&;
 
     /// Counters for the number of packets sent/received via this port
-    unsigned int rxCount = 0, txCount = 0;
+    unsigned int m_rxCount = 0;
+    unsigned int m_txCount = 0;
+
+    CommPort(RxCallbackT rxC = nullptr, TxCallbackT txC = nullptr)
+    :
+          m_rxCallback( rxC )
+        , m_txCallback( txC )
+    { }
 
     // Set functions for each RX/TX callback.
-    void setRxCallback(const std::function<RX_CALLBACK>& func) {
-        _rxCallback = func;
-    }
-    void setTxCallback(const std::function<TX_CALLBACK>& func) {
-        _txCallback = func;
-    }
+    void setRxCallback(ConstRxCallbackRefT func) { m_rxCallback = func; }
+    void setTxCallback(ConstTxCallbackRefT func) { m_txCallback = func; }
 
     /// Methods that return a reference to the TX/RX callback function pointers
-    std::function<RX_CALLBACK>& rxCallback() { return _rxCallback; }
-    const std::function<RX_CALLBACK>& rxCallback() const { return _rxCallback; }
-    std::function<TX_CALLBACK>& txCallback() { return _txCallback; }
-    const std::function<TX_CALLBACK>& txCallback() const { return _txCallback; }
+    RxCallbackRefT rxCallback() { return m_rxCallback; }
+    ConstRxCallbackRefT rxCallback() const { return m_rxCallback; }
+
+    TxCallbackRefT txCallback() { return m_txCallback; }
+    ConstTxCallbackRefT txCallback() const { return m_txCallback; }
 
     // Returns the current packet counts to zero
-    void resetPacketCount() {
-        rxCount = 0;
-        txCount = 0;
-    }
+    void resetPacketCount() { m_rxCount = 0; m_txCount = 0; }
 
 private:
     // the class members that hold the function pointers
-    std::function<RX_CALLBACK> _rxCallback;
-    std::function<TX_CALLBACK> _txCallback;
+    RxCallbackT m_rxCallback = nullptr;
+    TxCallbackT m_txCallback = nullptr;
 };

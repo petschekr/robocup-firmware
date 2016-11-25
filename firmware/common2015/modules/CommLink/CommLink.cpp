@@ -4,57 +4,47 @@
 #include "assert.hpp"
 #include "logger.hpp"
 
-#define COMM_LINK_SIGNAL_START_THREAD (1 << 0)
-#define COMM_LINK_SIGNAL_RX_TRIGGER (1 << 1)
+static constexpr const char* const COMM_ERR_STRING[] = { FOREACH_COMM_ERR(GENERATE_STRING) };
 
-const char* COMM_ERR_STRING[] = {FOREACH_COMM_ERR(GENERATE_STRING)};
-
-CommLink::CommLink(shared_ptr<SharedSPI> sharedSPI, PinName nCs,
-                   PinName int_pin)
-    : SharedSPIDevice(sharedSPI, nCs, true),
-      _int_in(int_pin),
-      _rxThread(&CommLink::rxThreadHelper, this, osPriorityNormal,
-                DEFAULT_STACK_SIZE / 2) {
+CommLink::CommLink(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
+    : SharedSPIDevice( sharedSPI, nCs, true )
+    , m_intIn( intPin )
+    , m_rxThread( &CommLink::rxThreadHelper, this, osPriorityNormal, STACK_SIZE )
+{
     setSPIFrequency(5000000);
-    _int_in.mode(PullDown);
+    m_intIn.mode(PullDown);
 }
 
-// =================== RX THREAD ===================
 // Task operations for placing received data into the received data queue
 void CommLink::rxThread() {
     // Store our priority so we know what to reset it to if ever needed
-    const auto threadPriority = _rxThread.get_priority();
+    const auto threadPriority = m_rxThread.get_priority();
 
     // Set the function to call on an interrupt trigger
-    _int_in.rise(this, &CommLink::ISR);
+    m_intIn.rise(this, &CommLink::ISR);
 
     // Only continue past this point once the hardware link is initialized
-    Thread::signal_wait(COMM_LINK_SIGNAL_START_THREAD);
+    Thread::signal_wait(SIGNAL_START);
 
-    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d", reinterpret_cast<P_TCB>(_rxThread.gettid())->task_id, threadPriority);
+    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d", reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {
-        // Wait until new data has arrived
-        // this is triggered by CommLink::ISR()
         // Thread::yield();
-        Thread::signal_wait(COMM_LINK_SIGNAL_RX_TRIGGER);
+
+        // Wait until new data has arrived
+        Thread::signal_wait(SIGNAL_RX);
 
         LOG(INF3, "RX interrupt triggered");
 
         // Get the received data from the external chip
         auto response = getData();
+
         // Thread::yield();
 
         if (!response.empty()) {
             // Write the data to the CommModule object's rxQueue
-            rtp::packet p(response);
-            // p.recv(buf);
+            RTP::Packet p(response);
             CommModule::Instance->receive(std::move(p));
         }
     }
 }
-
-// Called by the derived class to begin thread operations
-void CommLink::ready() { _rxThread.signal_set(COMM_LINK_SIGNAL_START_THREAD); }
-
-void CommLink::ISR() { _rxThread.signal_set(COMM_LINK_SIGNAL_RX_TRIGGER); }

@@ -4,7 +4,7 @@
 #include "logger.hpp"
 
 // clang-format off
-const char* CC1201_STATE_NAMES[] = {
+constexpr const char* const CC1201_STATE_NAMES[] = {
     "IDLE",
     "RX",
     "TX",
@@ -27,9 +27,9 @@ void ASSERT_IS_ADDR(uint16_t addr) {
 // TODO(justin): remove this
 // CC1201* global_radio = nullptr;
 
-CC1201::CC1201(shared_ptr<SharedSPI> sharedSPI, PinName nCs, PinName intPin,
-               const registerSetting_t* regs, size_t len, int rssiOffset)
-    : CommLink(sharedSPI, nCs, intPin) {
+CC1201::CC1201(spiPtr_t sharedSPI, PinName nCs, PinName intPin, const registerSetting_t* regs, size_t len, int rssiOffset)
+    : CommLink(sharedSPI, nCs, intPin)
+{
     reset();
     selfTest();
 
@@ -49,7 +49,7 @@ CC1201::CC1201(shared_ptr<SharedSPI> sharedSPI, PinName nCs, PinName intPin,
     }
 }
 
-int32_t CC1201::sendPacket(const rtp::packet* pkt) {
+int32_t CC1201::sendPacket(const RTP::Packet* pkt) {
     // Return if there's no functional radio transceiver - the system will
     // lockup otherwise
     if (!_isInit) return COMM_FAILURE;
@@ -261,7 +261,7 @@ void CC1201::printDebugInfo() {
     uint8_t state = (stateByte >> 4) & 7;
 
     printf("Radio Status:\r\n  ready: %u, state: %s, int pin: %u\r\n", ready,
-           CC1201_STATE_NAMES[state], _int_in == 1);
+           CC1201_STATE_NAMES[state], m_intIn == 1);
 }
 
 uint8_t CC1201::strobe(uint8_t addr) {

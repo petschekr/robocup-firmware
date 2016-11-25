@@ -7,21 +7,21 @@ Decawave* global_radio = nullptr;
 
 namespace {
 dwt_config_t config = {
-    4,               /* Channel number. */
-    DWT_PRF_64M,     /* Pulse repetition frequency. */
-    DWT_PLEN_128,   /* Preamble length. Used in TX only. */
-    DWT_PAC8,       /* Preamble acquisition chunk size. Used in RX only. */
-    17,               /* TX preamble code. Used in TX only. */
-    17,               /* RX preamble code. Used in RX only. */
-    1,               /* 0 to use standard SFD, 1 to use non-standard SFD. */
-    DWT_BR_6M8,     /* Data rate. */
-    DWT_PHRMODE_STD, /* PHY header mode. */
-    (128 + 1 + 64 - 8) /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
+    4,                  /* Channel number. */
+    DWT_PRF_64M,        /* Pulse repetition frequency. */
+    DWT_PLEN_128,       /* Preamble length. Used in TX only. */
+    DWT_PAC8,           /* Preamble acquisition chunk size. Used in RX only. */
+    17,                 /* TX preamble code. Used in TX only. */
+    17,                 /* RX preamble code. Used in RX only. */
+    1,                  /* 0 to use standard SFD, 1 to use non-standard SFD. */
+    DWT_BR_6M8,         /* Data rate. */
+    DWT_PHRMODE_STD,    /* PHY header mode. */
+    (128 + 1 + 64 - 8)  /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
 };
 
 dwt_txconfig_t txconfig = {
-    0x95,            /* PG delay. */
-    0x9A9A9A9A,      /* TX power. */
+    0x95,               /* PG delay. */
+    0x9A9A9A9A,         /* TX power. */
 };
 
 constexpr auto TX_TO_RX_DELAY_UUS = 60;
@@ -67,14 +67,14 @@ Decawave::Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
 }
 
 // Virtual functions from CommLink
-int32_t Decawave::sendPacket(const rtp::packet* pkt) {
+int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     // Return failutre if not initialized
     if (!_isInit) return COMM_FAILURE;
 
     dwt_rxreset();
     dwt_forcetrxoff();
 
-    auto& txBuf = *tx_buffer;   // not copied
+    auto& txBuf = *tx_buffer;  // not copied
 
     //0x8841
     txBuf[0] = 0x41;
@@ -92,9 +92,11 @@ int32_t Decawave::sendPacket(const rtp::packet* pkt) {
     txBuf[1] = 0;
     */
 
-    auto i = 0;
-    auto headerData = reinterpret_cast<const uint8_t*>(&pkt->header);
-    for (i = 0; i < sizeof(pkt->header); ++i) txBuf[i+9] = headerData[i];
+    const auto headerSize = sizeof(pkt->header);
+    const auto headerData = reinterpret_cast<const uint8_t*>(&pkt->header);
+
+    size_t i = 0;
+    for (; i < headerSize; ++i) txBuf[i+9] = headerData[i];
 
     i += 8;
     for (auto byte : pkt->payload) txBuf[i++] = byte;
@@ -112,8 +114,8 @@ int32_t Decawave::sendPacket(const rtp::packet* pkt) {
     return COMM_DEV_BUF_ERR;
 }
 
-CommLink::buffer_t Decawave::getData() {
-    buffer_t buf{};
+CommLink::BufferT Decawave::getData() {
+    BufferT buf{};
 
     // Return empty data if not initialized
     if (!_isInit) return std::move(buf);
@@ -163,16 +165,16 @@ void Decawave::setAddress(uint16_t addr) {
 // Virtual functions from dw1000_api
 int Decawave::writetospi(uint16 headerLength, const uint8* headerBuffer, uint32 bodylength, const uint8* bodyBuffer) {
   chipSelect();
-  for (auto i = 0; i < headerLength; ++i) _spi->write(headerBuffer[i]);
-  for (auto i = 0; i < bodylength; ++i) _spi->write(bodyBuffer[i]);
+  for (size_t i = 0; i < headerLength; ++i) _spi->write(headerBuffer[i]);
+  for (size_t i = 0; i < bodylength; ++i) _spi->write(bodyBuffer[i]);
   chipDeselect();
   return 0;
 }
 
 int Decawave::readfromspi(uint16 headerLength, const uint8* headerBuffer, uint32 readlength, uint8* readBuffer) {
   chipSelect();
-  for (auto i = 0; i < headerLength; ++i) _spi->write(headerBuffer[i]);
-  for (auto i = 0; i < readlength; ++i) readBuffer[i] = _spi->write(0);
+  for (size_t i = 0; i < headerLength; ++i) _spi->write(headerBuffer[i]);
+  for (size_t i = 0; i < readlength; ++i) readBuffer[i] = _spi->write(0);
   chipDeselect();
   return 0;
 }

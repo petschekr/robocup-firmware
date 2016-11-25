@@ -9,7 +9,7 @@
 #include "fpga.hpp"
 
 namespace {
-const int NUM_MOTORS = 5;
+constexpr auto NUM_MOTORS = 5;
 
 motor_t mtrEx = {.vel = 0x4D,
                  .hall = 0x0A,
@@ -33,9 +33,9 @@ void motors_Init() {
 
 uint8_t motors_refresh() {
     std::array<int16_t, NUM_MOTORS> enc_deltas = {0};
-    uint8_t status_byte = FPGA::Instance->read_encs(enc_deltas.data(), enc_deltas.size());
+    auto status_byte = FPGA::Instance->read_encs(enc_deltas.data(), enc_deltas.size());
 
-    for (auto i = 0; i < global_motors.size(); ++i)
+    for (size_t i = 0; i < global_motors.size(); ++i)
         global_motors[i].status.hasError = (status_byte & (1 << i)) ? true : false;
     return status_byte;
 }

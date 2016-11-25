@@ -8,7 +8,7 @@
 #include "helper-funcs.hpp"
 #include "rj-macros.hpp"
 #include "rtos-mgmt/mail-helper.hpp"
-#include "firmware-common/common2015/utils/rtp.hpp"
+#include "RTP.hpp"
 
 #define FOREACH_COMM_ERR(ERR) \
     ERR(COMM_SUCCESS)         \
@@ -29,18 +29,20 @@ enum { FOREACH_COMM_ERR(GENERATE_ENUM) };
  */
 class CommLink : public SharedSPIDevice<> {
 public:
-    using buffer_t = std::vector<uint8_t>;
-    using bufferPtr_t = buffer_t*;
+    // Type aliases
+    using BufferT = std::vector<uint8_t>;
+    using BufferPtrT = BufferT*;
+    using ConstBufferPtrT = const BufferT*;
+
+    // Class constants for data queues
+    static constexpr size_t RX_QUEUE_SIZE = 2;
 
     /// Constructor
-    CommLink(spiPtr_t spiBus, PinName nCs = NC, PinName int_pin = NC);
+    CommLink(spiPtr_t spiBus, PinName nCs = NC, PinName intPin = NC);
 
     /// Virtual deconstructor
     /// Kills any threads and frees the allocated stack.
     virtual ~CommLink() {}
-
-    // Class constants for data queues
-    static const size_t RX_QUEUE_SIZE = 2;
 
     // The pure virtual methods for making CommLink an abstract class
     /// Perform a soft reset for a communication link's hardware device
@@ -53,9 +55,14 @@ public:
     virtual bool isConnected() const = 0;
 
     /// Send & Receive through the rtp structure
-    virtual int32_t sendPacket(const rtp::packet* pkt) = 0;
+    virtual int32_t sendPacket(const RTP::Packet* pkt) = 0;
 
 protected:
+    static constexpr size_t SIGNAL_START = (1 << 1);
+    static constexpr size_t SIGNAL_RX = (1 << 1);
+
+    InterruptIn m_intIn;
+
     /**
      * @brief Read data from the radio's RX buffer
      *
@@ -63,31 +70,28 @@ protected:
      *
      * @return A vector of received bytes returned with std::move
      */
-    virtual buffer_t getData() = 0;
+    virtual BufferT getData() = 0;
 
-    /// Interrupt Service Routine - KEEP OPERATIONS TO ABSOLUTE MINIMUM HERE AND
-    /// IN ANY OVERRIDDEN BASE CLASS IMPLEMENTATIONS OF THIS CLASS METHOD
-    void ISR();
+    /// Interrupt Service Routine
+    void ISR() { m_rxThread.signal_set(SIGNAL_RX); }
 
-    /// Used for giving derived classes a standaradized way to inform the base
-    /// class that it is ready for communication and to begin the threads
-    //
-    // Always call CommLink::ready() after derived class is ready
-    void ready();
+    /// Called by the derived class to begin thread operations
+    void ready() { m_rxThread.signal_set(SIGNAL_START); }
 
     template <typename T>
-    T twos_compliment(T val) { return ~val + 1; }
-
-    InterruptIn _int_in;
+    constexpr static T twos_compliment(T val) { return ~val + 1; }
 
 private:
-    Thread _rxThread;
+    // DEFAULT_STACK_SIZE defined in rtos library
+    static constexpr size_t STACK_SIZE = DEFAULT_STACK_SIZE / 2;
+
+    Thread m_rxThread;
 
     // The working thread for handling RX data queue operations
     void rxThread();
 
-    static void rxThreadHelper(const void* linkInst) {
-        auto link = reinterpret_cast<CommLink*>(const_cast<void*>(linkInst));    // dangerous
+    inline static void rxThreadHelper(const void* linkInst) {
+        auto link = reinterpret_cast<CommLink*>(const_cast<void*>(linkInst));  // dangerous
         link->rxThread();
     }
 };

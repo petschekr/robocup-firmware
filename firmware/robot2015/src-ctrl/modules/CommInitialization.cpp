@@ -27,11 +27,11 @@ using namespace std;
  * https://www.overleaf.com/2187548nsfdps
  */
 
-void loopback_ack_pck(rtp::packet p) {
+void loopback_ack_pck(RTP::Packet p) {
     CommModule::Instance->send(std::move(p));
 }
 
-void legacy_rx_cb(rtp::packet p) {
+void legacy_rx_cb(RTP::Packet p) {
     if (p.payload.size()) {
         LOG(OK,
             "Legacy rx successful!\r\n"
@@ -42,7 +42,7 @@ void legacy_rx_cb(rtp::packet p) {
     }
 }
 
-void loopback_rx_cb(rtp::packet p) {
+void loopback_rx_cb(RTP::Packet p) {
     vector<uint16_t> duty_cycles;
     duty_cycles.assign(5, 100);
     for (size_t i = 0; i < duty_cycles.size(); ++i)
@@ -58,7 +58,7 @@ void loopback_rx_cb(rtp::packet p) {
     }
 }
 
-int32_t loopback_tx_cb(const rtp::packet* p) {
+int32_t loopback_tx_cb(const RTP::Packet* p) {
     if (p->payload.size()) {
         LOG(OK,
             "Loopback tx successful!\r\n"
@@ -96,8 +96,8 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
     // Open a socket for running tests across the link layer
     // The LINK port handlers are always active, regardless of whether or not a
     // working radio is connected.
-    commModule->setRxHandler(&loopback_rx_cb, rtp::Port::LINK);
-    commModule->setTxHandler(&loopback_tx_cb, rtp::Port::LINK);
+    commModule->setRxHandler(&loopback_rx_cb, RTP::PortType::LINK);
+    commModule->setTxHandler(&loopback_tx_cb, RTP::PortType::LINK);
 
     /*
      * Ports are always displayed in ascending (lowest -> highest) order
@@ -108,9 +108,9 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
         LOG(INIT, "Radio interface ready");
 
         // Legacy port
-        commModule->setTxHandler((CommLink*)global_radio, &CommLink::sendPacket,
-                                 rtp::Port::LEGACY);
-        commModule->setRxHandler(&legacy_rx_cb, rtp::Port::LEGACY);
+        commModule->setTxHandler(dynamic_cast<CommLink*>(global_radio), &CommLink::sendPacket,
+                                 RTP::PortType::LEGACY);
+        commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
         LOG(INIT, "%u sockets opened", commModule->numOpenSockets());
 

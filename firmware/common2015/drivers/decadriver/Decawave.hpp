@@ -7,14 +7,13 @@
 #include "deca_device_api.hpp"
 #include "deca_regs.h"
 
-#define FRAME_LEN_MAX 127
 
 class Decawave : public CommLink, public dw1000_api {
 public:
     Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin);
 
-    int32_t sendPacket(const rtp::packet* pkt) override;
-    buffer_t getData() override;
+    int32_t sendPacket(const RTP::Packet* pkt) override;
+    BufferT getData() override;
     void reset() override { dwt_softreset(); }
     int32_t selfTest() override;
     bool isConnected() const override { return _isInit; }
@@ -31,10 +30,10 @@ public:
     void setAddress(uint16_t addr);
     void setLED(bool ledOn) { dwt_setleds(ledOn); };
 private:
-    bufferPtr_t rx_buffer = nullptr;
-    bufferPtr_t tx_buffer = nullptr;
+    BufferPtrT rx_buffer = nullptr;
+    BufferPtrT tx_buffer = nullptr;
     uint32_t _chip_version;
-    uint8_t _addr = rtp::INVALID_ROBOT_UID;
+    uint8_t _addr = RTP::INVALID_ROBOT_UID;
     bool _isInit = false;
 
     void getData_success(const dwt_cb_data_t* cb_data);

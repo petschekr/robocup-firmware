@@ -11,7 +11,6 @@
 #include <watchdog.hpp>
 
 #include "BallSense.hpp"
-// #include "CC1201.cpp"
 #include "Decawave.hpp"
 #include "HackedKickerBoard.hpp"
 #include "RadioProtocol.hpp"
@@ -30,7 +29,7 @@
 
 using namespace std;
 
-void Task_Controller(void const* args);
+void Task_Controller(const void* args);
 void Task_Controller_UpdateTarget(Eigen::Vector3f targetVel);
 void Task_Controller_UpdateDribbler(uint8_t dribbler);
 
@@ -239,16 +238,16 @@ int main() {
     radioProtocol.setUID(robotShellID);
     radioProtocol.start();
 
-    radioProtocol.rxCallback = [&](const rtp::ControlMessage* msg, const bool addressed) {
+    radioProtocol.rxCallback = [&](const RTP::ControlMessage* msg, const bool addressed) {
         // reset timeout
         radioTimeoutTimer.start(RADIO_TIMEOUT);
 
         if (addressed) {
             // update target velocity from packet
             Task_Controller_UpdateTarget({
-                static_cast<float>(msg->bodyX) / rtp::ControlMessage::VELOCITY_SCALE_FACTOR,
-                static_cast<float>(msg->bodyY) / rtp::ControlMessage::VELOCITY_SCALE_FACTOR,
-                static_cast<float>(msg->bodyW) / rtp::ControlMessage::VELOCITY_SCALE_FACTOR,
+                static_cast<float>(msg->bodyX) / RTP::ControlMessage::VELOCITY_SCALE_FACTOR,
+                static_cast<float>(msg->bodyY) / RTP::ControlMessage::VELOCITY_SCALE_FACTOR,
+                static_cast<float>(msg->bodyW) / RTP::ControlMessage::VELOCITY_SCALE_FACTOR,
             });
 
             // dribbler
@@ -271,7 +270,7 @@ int main() {
             }
         }
 
-        rtp::RobotStatusMessage reply;
+        RTP::RobotStatusMessage reply;
         reply.uid = robotShellID;
         reply.battVoltage = battVoltage;
         reply.ballSenseStatus = ballSense.have_ball() ? 1 : 0;
@@ -293,7 +292,7 @@ int main() {
         }
 
         vector<uint8_t> replyBuf;
-        rtp::SerializeToVector(reply, &replyBuf);
+        RTP::serializeToVector(reply, &replyBuf);
 
         return replyBuf;
     };
