@@ -24,10 +24,7 @@ public:
     unsigned int m_txCount = 0;
 
     CommPort(RxCallbackT rxC = nullptr, TxCallbackT txC = nullptr)
-    :
-          m_rxCallback( rxC )
-        , m_txCallback( txC )
-    { }
+        : m_rxCallback(rxC), m_txCallback(txC) {}
 
     // Set functions for each RX/TX callback.
     void setRxCallback(ConstRxCallbackRefT func) { m_rxCallback = func; }
@@ -41,7 +38,10 @@ public:
     ConstTxCallbackRefT txCallback() const { return m_txCallback; }
 
     // Returns the current packet counts to zero
-    void resetPacketCount() { m_rxCount = 0; m_txCount = 0; }
+    void resetPacketCount() {
+        m_rxCount = 0;
+        m_txCount = 0;
+    }
 
 private:
     // the class members that hold the function pointers

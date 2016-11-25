@@ -6,7 +6,8 @@
 
 namespace RTP {
 
-constexpr uint8_t BROADCAST_ADDRESS = 0x00;  // configured by the PKT_CFG1 register
+constexpr uint8_t BROADCAST_ADDRESS =
+    0x00;  // configured by the PKT_CFG1 register
 constexpr uint8_t BASE_STATION_ADDRESS = 0xFF - 1;
 constexpr uint8_t ROBOT_ADDRESS = 0x01;  // All robots have the same address
 constexpr uint8_t LOOPBACK_ADDRESS = 2;
@@ -26,31 +27,24 @@ void serializeToVector(const PACKET_TYPE& pkt, std::vector<uint8_t>* buf) {
 
 // a hackish way of enforcing 'enum class' scopes without
 // the bitfield restrictions
-namespace PortTypeNamespace
-{
-     enum PortTypeEnum { SINK, LINK, CONTROL, LEGACY, PING };
+namespace PortTypeNamespace {
+enum PortTypeEnum { SINK, LINK, CONTROL, LEGACY, PING };
 }
 using PortType = PortTypeNamespace::PortTypeEnum;
 
-namespace MessageTypeNamespace
-{
-    enum MessageTypeEnum { CONTROL, TUNING, UPGRADE, MISC };
+namespace MessageTypeNamespace {
+enum MessageTypeEnum { CONTROL, TUNING, UPGRADE, MISC };
 }
 using MessageType = MessageTypeNamespace::MessageTypeEnum;
 
 struct Header {
     Header(PortType p = PortType::SINK)
-    :
-          address( 0 )
-        , port( p )
-        , type( MessageType::CONTROL )
-    { }
+        : address(0), port(p), type(MessageType::CONTROL) {}
 
     uint8_t address;
     PortType port : 4;
     MessageType type : 4;
 } __attribute__((packed));
-
 
 // binary-packed version of Control.proto
 struct ControlMessage {
@@ -86,8 +80,8 @@ struct RobotStatusMessage {
 
     uint8_t battVoltage;
     uint8_t ballSenseStatus : 2;
-    uint8_t motorErrors:5;      // 1 bit for each motor - 1 = error, 0 = good
-    uint8_t fpgaStatus:2;       // 0 = good, 1 = not initialized, 2 = error
+    uint8_t motorErrors : 5;  // 1 bit for each motor - 1 = error, 0 = good
+    uint8_t fpgaStatus : 2;   // 0 = good, 1 = not initialized, 2 = error
 };
 
 /**
@@ -100,24 +94,20 @@ public:
 
     Packet(){};
 
-    template <typename T, typename = std::enable_if_t<std::is_convertible<T, uint8_t>::value>>
-    Packet(const std::vector<T>& v, PortType p = PortType::SINK)
-    :
-        header(p)
-    {
+    template <typename T, typename = std::enable_if_t<
+                              std::is_convertible<T, uint8_t>::value>>
+    Packet(const std::vector<T>& v, PortType p = PortType::SINK) : header(p) {
         recv(v);
     }
 
-    Packet(const std::string& s, PortType p = PortType::SINK)
-    :
-        header(p)
-    {
+    Packet(const std::string& s, PortType p = PortType::SINK) : header(p) {
         payload.assign(s.begin(), s.end());
         payload.push_back('\0');
     }
 
     /// deserialize a packet from a buffer
-    template <typename T, typename = std::enable_if_t<std::is_convertible<T, uint8_t>::value>>
+    template <typename T, typename = std::enable_if_t<
+                              std::is_convertible<T, uint8_t>::value>>
     void recv(const std::vector<T>& buf) {
         // check that the buffer is big enough
         if (buf.size() >= sizeof(Header)) {
@@ -128,7 +118,8 @@ public:
         }
     }
 
-    template <typename T, typename = std::enable_if_t<std::is_convertible<T, uint8_t>::value>>
+    template <typename T, typename = std::enable_if_t<
+                              std::is_convertible<T, uint8_t>::value>>
     void pack(std::vector<T>* buf) const {
         buf->reserve(size());
         serializeToVector(header, buf);

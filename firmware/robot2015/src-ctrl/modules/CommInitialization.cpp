@@ -4,12 +4,12 @@
 #include <vector>
 
 // #include <CC1201Radio.hpp>
-#include "Decawave.hpp"
 #include <CommModule.hpp>
 #include <CommPort.hpp>
 #include <assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
+#include "Decawave.hpp"
 
 #include "TimeoutLED.hpp"
 #include "fpga.hpp"
@@ -104,12 +104,13 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
      * according to its port number when using the console.
      */
     if (global_radio->isConnected() == true) {
-        // LOG(INIT, "Radio interface ready on %3.2fMHz!", global_radio->freq());
+        // LOG(INIT, "Radio interface ready on %3.2fMHz!",
+        // global_radio->freq());
         LOG(INIT, "Radio interface ready");
 
         // Legacy port
-        commModule->setTxHandler(dynamic_cast<CommLink*>(global_radio), &CommLink::sendPacket,
-                                 RTP::PortType::LEGACY);
+        commModule->setTxHandler(dynamic_cast<CommLink*>(global_radio),
+                                 &CommLink::sendPacket, RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
         LOG(INIT, "%u sockets opened", commModule->numOpenSockets());

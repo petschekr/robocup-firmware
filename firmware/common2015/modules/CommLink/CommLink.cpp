@@ -4,13 +4,14 @@
 #include "assert.hpp"
 #include "logger.hpp"
 
-static constexpr const char* const COMM_ERR_STRING[] = { FOREACH_COMM_ERR(GENERATE_STRING) };
+static constexpr const char* const COMM_ERR_STRING[] = {
+    FOREACH_COMM_ERR(GENERATE_STRING)};
 
 CommLink::CommLink(spiPtr_t sharedSPI, PinName nCs, PinName intPin)
-    : SharedSPIDevice( sharedSPI, nCs, true )
-    , m_intIn( intPin )
-    , m_rxThread( &CommLink::rxThreadHelper, this, osPriorityNormal, STACK_SIZE )
-{
+    : SharedSPIDevice(sharedSPI, nCs, true),
+      m_intIn(intPin),
+      m_rxThread(&CommLink::rxThreadHelper, this, osPriorityNormal,
+                 STACK_SIZE) {
     setSPIFrequency(5000000);
     m_intIn.mode(PullDown);
 }
@@ -26,7 +27,8 @@ void CommLink::rxThread() {
     // Only continue past this point once the hardware link is initialized
     Thread::signal_wait(SIGNAL_START);
 
-    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d", reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
+    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d",
+        reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {
         // Thread::yield();

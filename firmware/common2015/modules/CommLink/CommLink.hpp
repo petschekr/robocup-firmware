@@ -4,11 +4,11 @@
 #include <rtos.h>
 
 #include "CommModule.hpp"
+#include "RTP.hpp"
 #include "SharedSPI.hpp"
 #include "helper-funcs.hpp"
 #include "rj-macros.hpp"
 #include "rtos-mgmt/mail-helper.hpp"
-#include "RTP.hpp"
 
 #define FOREACH_COMM_ERR(ERR) \
     ERR(COMM_SUCCESS)         \
@@ -79,7 +79,9 @@ protected:
     void ready() { m_rxThread.signal_set(SIGNAL_START); }
 
     template <typename T>
-    constexpr static T twos_compliment(T val) { return ~val + 1; }
+    constexpr static T twos_compliment(T val) {
+        return ~val + 1;
+    }
 
 private:
     // DEFAULT_STACK_SIZE defined in rtos library
@@ -91,7 +93,8 @@ private:
     void rxThread();
 
     inline static void rxThreadHelper(const void* linkInst) {
-        auto link = reinterpret_cast<CommLink*>(const_cast<void*>(linkInst));  // dangerous
+        auto link = reinterpret_cast<CommLink*>(
+            const_cast<void*>(linkInst));  // dangerous
         link->rxThread();
     }
 };

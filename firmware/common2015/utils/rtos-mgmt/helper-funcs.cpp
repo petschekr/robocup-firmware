@@ -1,7 +1,7 @@
 #include "helper-funcs.hpp"
 
-#include <vector>
 #include <type_traits>
+#include <vector>
 
 #include "logger.hpp"
 

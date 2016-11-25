@@ -7,7 +7,6 @@
 #include "deca_device_api.hpp"
 #include "deca_regs.h"
 
-
 class Decawave : public CommLink, public dw1000_api {
 public:
     Decawave(spiPtr_t sharedSPI, PinName nCs, PinName intPin);
@@ -18,8 +17,10 @@ public:
     int32_t selfTest() override;
     bool isConnected() const override { return _isInit; }
 
-    int writetospi(uint16 headerLength, const uint8* headerBuffer, uint32 bodylength, const uint8* bodyBuffer);
-    int readfromspi(uint16 headerLength, const uint8* headerBuffer, uint32 readlength, uint8* readBuffer);
+    int writetospi(uint16 headerLength, const uint8* headerBuffer,
+                   uint32 bodylength, const uint8* bodyBuffer);
+    int readfromspi(uint16 headerLength, const uint8* headerBuffer,
+                    uint32 readlength, uint8* readBuffer);
     decaIrqStatus_t decamutexon() { return 0; }
 
 #if 0
@@ -29,6 +30,7 @@ public:
 
     void setAddress(uint16_t addr);
     void setLED(bool ledOn) { dwt_setleds(ledOn); };
+
 private:
     BufferPtrT rx_buffer = nullptr;
     BufferPtrT tx_buffer = nullptr;

@@ -1,7 +1,7 @@
 #include "CommModule.hpp"
 #include "CommPort.hpp"
-#include "helper-funcs.hpp"
 #include "assert.hpp"
+#include "helper-funcs.hpp"
 #include "logger.hpp"
 
 #include <ctime>
@@ -15,12 +15,11 @@ std::shared_ptr<CommModule> CommModule::Instance;
 CommModule::CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
                        std::shared_ptr<FlashingTimeoutLED> txTimeoutLED)
     : m_rxThread(&CommModule::rxThreadHelper, this, osPriorityAboveNormal,
-                DEFAULT_STACK_SIZE / 2),
+                 DEFAULT_STACK_SIZE / 2),
       m_txThread(&CommModule::txThreadHelper, this, osPriorityHigh,
-                DEFAULT_STACK_SIZE / 2),
+                 DEFAULT_STACK_SIZE / 2),
       m_rxTimeoutLED(rxTimeoutLED),
-      m_txTimeoutLED(txTimeoutLED)
-{
+      m_txTimeoutLED(txTimeoutLED) {
     // Create the data queues.
     m_txQueue = osMailCreate(m_txQueueHelper.def(), nullptr);
     m_rxQueue = osMailCreate(m_rxQueueHelper.def(), nullptr);
@@ -42,7 +41,9 @@ void CommModule::txThread() {
     // Store our priority so we know what to reset it to if ever needed
     const osPriority threadPriority = m_txThread.get_priority();
 
-    LOG(INIT, "TX communication module ready!\r\n    Thread ID: %u, Priority: %d", reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
+    LOG(INIT,
+        "TX communication module ready!\r\n    Thread ID: %u, Priority: %d",
+        reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     // Signal to the RX thread that it can begin
     m_rxThread.signal_set(COMM_MODULE_SIGNAL_START_THREAD);
@@ -103,7 +104,8 @@ void CommModule::rxThread() {
     const auto threadPriority = m_rxThread.get_priority();
 
     LOG(INIT,
-        "RX communication module ready!\r\n    Thread ID: %u, Priority: %d", reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
+        "RX communication module ready!\r\n    Thread ID: %u, Priority: %d",
+        reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {
         // Wait until new data is placed in the RX queue
@@ -173,7 +175,8 @@ void CommModule::send(RTP::Packet packet) {
     if (m_ports.find(packet.header.port) != m_ports.end() &&
         m_ports[packet.header.port].txCallback() != nullptr) {
         // Allocate a block of memory for the data.
-        auto p = static_cast<RTP::Packet*>(osMailAlloc(m_txQueue, osWaitForever));
+        auto p =
+            static_cast<RTP::Packet*>(osMailAlloc(m_txQueue, osWaitForever));
         if (!p) {
             LOG(FATAL, "Unable to allocate packet onto mail queue");
             return;
@@ -198,7 +201,8 @@ void CommModule::receive(RTP::Packet packet) {
     if (m_ports.find(packet.header.port) != m_ports.end() &&
         m_ports[packet.header.port].rxCallback() != nullptr) {
         // Allocate a block of memory for the data.
-        auto p = static_cast<RTP::Packet*>(osMailAlloc(m_rxQueue, osWaitForever));
+        auto p =
+            static_cast<RTP::Packet*>(osMailAlloc(m_rxQueue, osWaitForever));
         if (!p) {
             LOG(FATAL, "Unable to allocate packet onto mail queue");
             return;
@@ -234,8 +238,9 @@ void CommModule::printInfo() const {
 
     for (const auto& kvpair : m_ports) {
         const PortT& p = kvpair.second;
-        printf("%d\t\t%u\t%u\t%s\t\t%s\r\n", kvpair.first, p.m_rxCount, p.m_txCount,
-               p.rxCallback() ? "YES" : "NO", p.txCallback() ? "YES" : "NO");
+        printf("%d\t\t%u\t%u\t%s\t\t%s\r\n", kvpair.first, p.m_rxCount,
+               p.m_txCount, p.rxCallback() ? "YES" : "NO",
+               p.txCallback() ? "YES" : "NO");
     }
 
     printf(

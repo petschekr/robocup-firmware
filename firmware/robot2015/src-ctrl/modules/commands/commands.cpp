@@ -7,8 +7,8 @@
 #include <mbed_rpc.h>
 #include <rtos.h>
 #include <CC1201.hpp>
-#include <Decawave.hpp>
 #include <CommModule.hpp>
+#include <Decawave.hpp>
 #include <KickerBoard.hpp>
 #include <logger.hpp>
 #include <numparser.hpp>
@@ -986,7 +986,8 @@ int cmd_radio(cmd_args_t& args) {
         RTP::Packet pck("LINK TEST PAYLOAD");
         auto portNbr = RTP::PortType::LINK;
 
-        if (args.size() > 1) portNbr = static_cast<RTP::PortType>(atoi(args[1].c_str()));
+        if (args.size() > 1)
+            portNbr = static_cast<RTP::PortType>(atoi(args[1].c_str()));
 
         pck.header.port = portNbr;
         pck.header.address = RTP::BASE_STATION_ADDRESS;
@@ -1027,15 +1028,15 @@ int cmd_radio(cmd_args_t& args) {
                 Thread::wait(50);
             }
 
-        // } else if (args[0] == "strobe") {
+            // } else if (args[0] == "strobe") {
             // global_radio->strobe(0x30 + atoi(args[1].c_str()));
-        // } else if (args[0] == "debug") {
+            // } else if (args[0] == "debug") {
             // bool wasEnabled = global_radio->isDebugEnabled();
             // global_radio->setDebugEnabled(!wasEnabled);
             // printf("Radio debugging now %s\r\n",
-                //    wasEnabled ? "DISABLED" : "ENABLED");
+            //    wasEnabled ? "DISABLED" : "ENABLED");
             // if (!wasEnabled)
-                // printf("All strobes will appear in the INF2 logs\r\n");
+            // printf("All strobes will appear in the INF2 logs\r\n");
         } else {
             show_invalid_args(args[0]);
             return 1;
@@ -1098,8 +1099,8 @@ int cmd_radio(cmd_args_t& args) {
 }
 
 int cmd_pong(cmd_args_t& args) {
-    CommModule::Instance->setTxHandler((CommLink*)global_radio,
-                                       &CommLink::sendPacket, RTP::PortType::PING);
+    CommModule::Instance->setTxHandler(
+        (CommLink*)global_radio, &CommLink::sendPacket, RTP::PortType::PING);
 
     // Any packets received on the PING port are placed in a queue.
     Queue<RTP::Packet, 2> pings;
@@ -1122,7 +1123,8 @@ int cmd_pong(cmd_args_t& args) {
             printf("Got ping %d\r\n", pingNbr);
 
             // reply with ack
-            CommModule::Instance->send(RTP::Packet({pingNbr}, RTP::PortType::PING));
+            CommModule::Instance->send(
+                RTP::Packet({pingNbr}, RTP::PortType::PING));
             printf("  Sent ack %d\r\n", pingNbr);
         }
 
@@ -1137,8 +1139,8 @@ int cmd_pong(cmd_args_t& args) {
 }
 
 int cmd_ping(cmd_args_t& args) {
-    CommModule::Instance->setTxHandler((CommLink*)global_radio,
-                                       &CommLink::sendPacket, RTP::PortType::PING);
+    CommModule::Instance->setTxHandler(
+        (CommLink*)global_radio, &CommLink::sendPacket, RTP::PortType::PING);
 
     // Any packets received on the PING port are placed in a queue
     Queue<RTP::Packet, 2> acks;

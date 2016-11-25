@@ -5,10 +5,10 @@
 
 #include "CommPort.hpp"
 #include "Console.hpp"
+#include "RTP.hpp"
 #include "TimeoutLED.hpp"
 #include "helper-funcs.hpp"
 #include "rtos-mgmt/mail-helper.hpp"
-#include "RTP.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -25,8 +25,6 @@
  */
 class CommModule {
 private:
-
-
 public:
     // Type aliases
     using RxCallbackSigT = void(RTP::Packet);
@@ -46,7 +44,7 @@ public:
                std::shared_ptr<FlashingTimeoutLED> txTimeoutLED);
 
     /// The destructor frees up allocated memory and stops threads
-    ~CommModule() {};
+    ~CommModule(){};
 
     /// global singleton instance of CommModule
     static std::shared_ptr<CommModule> Instance;
