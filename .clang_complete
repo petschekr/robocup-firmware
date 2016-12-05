@@ -1,4 +1,5 @@
 -DNDEBUG
+-Wno-pragma-once-outside-header
 -Icommon
 -Icommon/firmware-common/base2015
 -Icommon/firmware-common/common2015/utils

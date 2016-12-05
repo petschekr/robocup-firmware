@@ -78,10 +78,10 @@ public:
     /// Check if everything is ready for sending/receiving packets
     bool isReady() const { return m_isReady; };
 
+#ifndef NDEBUG
     /// Retuns the number of ports with a binded callback function/method
     unsigned int numOpenSockets() const;
 
-#ifndef NDEBUG
     /// Retuns the number of currently received packets
     unsigned int numRxPackets() const;
 

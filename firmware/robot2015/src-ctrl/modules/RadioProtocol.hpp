@@ -18,17 +18,15 @@ public:
     /// base station, we are considered "disconnected"
     static const uint32_t TIMEOUT_INTERVAL = 2000;
 
-    RadioProtocol(std::shared_ptr<CommModule> commModule, Decawave* radio,
-                  uint8_t uid = RTP::INVALID_ROBOT_UID)
+    RadioProtocol(std::shared_ptr<CommModule> commModule, uint8_t uid = RTP::INVALID_ROBOT_UID)
         : _commModule(commModule),
-          _radio(radio),
           _uid(uid),
           _state(State::STOPPED),
           _replyTimer(this, &RadioProtocol::reply, osTimerOnce),
           _timeoutTimer(this, &RadioProtocol::_timeout, osTimerOnce) {
         ASSERT(commModule != nullptr);
-        ASSERT(radio != nullptr);
-        _radio->setAddress(RTP::ROBOT_ADDRESS);
+        ASSERT(global_radio != nullptr);
+        global_radio->setAddress(RTP::ROBOT_ADDRESS);
     }
 
     ~RadioProtocol() { stop(); }
@@ -53,14 +51,10 @@ public:
     void start() {
         _state = State::DISCONNECTED;
 
-        _commModule->setRxHandler(this, &RadioProtocol::rxHandler,
-                                  RTP::PortType::CONTROL);
-        _commModule->setTxHandler(dynamic_cast<CommLink*>(global_radio),
-                                  &CommLink::sendPacket,
-                                  RTP::PortType::CONTROL);
+        _commModule->setRxHandler(this, &RadioProtocol::rxHandler, RTP::PortType::CONTROL);
+        _commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket, RTP::PortType::CONTROL);
 
-        LOG(INF1, "Radio protocol listening on port %d",
-            RTP::PortType::CONTROL);
+        LOG(INF1, "Radio protocol listening on port %d", RTP::PortType::CONTROL);
     }
 
     void stop() {
@@ -75,7 +69,7 @@ public:
     State state() const { return _state; }
 
     void rxHandler(RTP::Packet pkt) {
-        LOG(INIT, "got pkt!");
+        // LOG(INIT, "got pkt!");
         // TODO: check packet size before parsing
         bool addressed = false;
         const RTP::ControlMessage* msg;
@@ -128,7 +122,6 @@ private:
     void _timeout() { _state = State::DISCONNECTED; }
 
     std::shared_ptr<CommModule> _commModule;
-    Decawave* _radio;
 
     uint32_t _lastReceiveTime = 0;
 

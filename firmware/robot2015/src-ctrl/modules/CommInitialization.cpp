@@ -3,13 +3,13 @@
 #include <memory>
 #include <vector>
 
-// #include <CC1201Radio.hpp>
 #include <CommModule.hpp>
 #include <CommPort.hpp>
 #include <assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
-#include "Decawave.hpp"
+#include <SharedSPI.hpp>
+#include <Decawave.hpp>
 
 #include "TimeoutLED.hpp"
 #include "fpga.hpp"
@@ -73,7 +73,7 @@ int32_t loopback_tx_cb(const RTP::Packet* p) {
     return COMM_SUCCESS;
 }
 
-void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
+void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
 // leds that flash if tx/rx have happened recently
 #if defined(ENABLE_RX_TX_LEDS)
     auto rxTimeoutLED = make_shared<FlashingTimeoutLED>(
@@ -109,7 +109,7 @@ void InitializeCommModule(shared_ptr<SharedSPI> sharedSPI) {
         LOG(INIT, "Radio interface ready");
 
         // Legacy port
-        commModule->setTxHandler(global_radio, &CommLink::sendPacket, RTP::PortType::LEGACY);
+        commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket, RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
         LOG(INIT, "%u sockets opened", commModule->numOpenSockets());

@@ -57,10 +57,13 @@ public:
     /// Send & Receive through the rtp structure
     virtual int32_t sendPacket(const RTP::Packet* pkt) = 0;
 
+    virtual void setAddress(int addr) { m_address = addr; }
+
 protected:
     static constexpr size_t SIGNAL_START = (1 << 1);
     static constexpr size_t SIGNAL_RX = (1 << 1);
 
+    int m_address = RTP::INVALID_ROBOT_UID;
     InterruptIn m_intIn;
 
     /**

@@ -91,7 +91,7 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     txBuf[4] = 0xDE;
     txBuf[5] = pkt->header.address;
     txBuf[6] = 0;
-    txBuf[7] = m_addr;
+    txBuf[7] = m_address;
     txBuf[8] = 0;
 
     /*
@@ -161,10 +161,11 @@ int32_t Decawave::selfTest() {
     }
 }
 
-void Decawave::setAddress(uint16_t addr) {
-    m_addr = addr;
+void Decawave::setAddress(int addr) {
+    CommLink::setAddress(addr);
+
     dwt_setpanid(0xDECA);
-    dwt_setaddress16(addr);
+    dwt_setaddress16(static_cast<uint16_t>(addr));
     dwt_enableframefilter(DWT_FF_DATA_EN);
 }
 
@@ -187,35 +188,13 @@ int Decawave::readfromspi(uint16 headerLength, const uint8* headerBuffer,
     return 0;
 }
 
-#if 0
-void Decawave::decamutexoff(decaIrqStatus_t s) {}
-void Decawave::deca_sleep(unsigned int time_ms) { wait_ms(time_ms); }
-#endif
-
 // Callback functions for decawave interrupt
 void Decawave::getDataSuccess(const dwt_cb_data_t* cb_data) {
-    const auto dataLength = cb_data->datalength;
+    const auto offset = 9;
+    const auto dataLength = cb_data->datalength - offset;
     // Read recived data to m_rxBufferPtr array
     m_rxBufferPtr->reserve(dataLength);
-    dwt_readrxdata(m_rxBufferPtr->data(), dataLength, 9);
+    dwt_readrxdata(m_rxBufferPtr->data(), dataLength, offset);
 }
 
 void Decawave::getDataFail(const dwt_cb_data_t* cb_data) {}
-
-#if 0
-static void getData_success_cb(const dwt_cb_data_t* cb_data) {
-    global_radio->getData_success(cb_data);
-}
-
-static void getData_fail_cb(const dwt_cb_data_t* cb_data) {
-    global_radio->getData_fail(cb_data);
-}
-
-int readfromspi(uint16 headerLength, const uint8* headerBuffer, uint32 readlength, uint8* readBuffer) {
-    return global_radio->readfromspi(headerLength, headerBuffer, readlength, readBuffer);
-}
-
-int writetospi(uint16 headerLength, const uint8* headerBuffer, uint32 bodylength, const uint8 *bodyBuffer) {
-    return global_radio->writetospi(headerLength, headerBuffer, bodylength, bodyBuffer);
-}
-#endif

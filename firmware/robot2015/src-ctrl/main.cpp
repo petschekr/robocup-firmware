@@ -32,6 +32,7 @@ using namespace std;
 void Task_Controller(const void* args);
 void Task_Controller_UpdateTarget(Eigen::Vector3f targetVel);
 void Task_Controller_UpdateDribbler(uint8_t dribbler);
+void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI);
 
 /**
  * @brief Sets the hardware configurations for the status LEDs & places
@@ -193,14 +194,10 @@ int main() {
     // though this is multi-threaded code, that dosen't mean it's
     // a multi-core system.
 
-    // LOG(INIT, "test 1");
-
     // Start the thread task for the on-board control loop
     Thread controller_task(Task_Controller, mainID, osPriorityHigh,
                            DEFAULT_STACK_SIZE / 2);
     Thread::signal_wait(MAIN_TASK_CONTINUE, osWaitForever);
-
-// LOG(INIT, "test 2");
 
 #ifdef RJ_ENABLE_ROBOT_CONSOLE
     // Start the thread task for the serial console
@@ -208,7 +205,7 @@ int main() {
     Thread::signal_wait(MAIN_TASK_CONTINUE, osWaitForever);
 #endif
 
-    // Initialize the CommModule and CC1201 radio
+    // Initialize CommModule and radio
     InitializeCommModule(spiBus);
 
     // Make sure all of the motors are enabled
@@ -220,7 +217,7 @@ int main() {
     uint8_t battVoltage = 0;
 
     // Radio timeout timer
-    const uint32_t RADIO_TIMEOUT = 100;
+    const auto RADIO_TIMEOUT = 100;
     RtosTimerHelper radioTimeoutTimer(
         [&]() {
             // reset radio
@@ -234,7 +231,7 @@ int main() {
     radioTimeoutTimer.start(RADIO_TIMEOUT);
 
     // Setup radio protocol handling
-    RadioProtocol radioProtocol(CommModule::Instance, global_radio);
+    RadioProtocol radioProtocol(CommModule::Instance);
     radioProtocol.setUID(robotShellID);
     radioProtocol.start();
 
