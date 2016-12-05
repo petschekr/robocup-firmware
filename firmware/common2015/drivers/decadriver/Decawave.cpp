@@ -127,7 +127,8 @@ CommLink::BufferT Decawave::getData() {
     // Return empty data if not initialized
     if (!m_isInit) return std::move(buf);
 
-    // set the m_rxBuffer's pointer to our vector before calling the isr function
+    // set the m_rxBuffer's pointer to our vector before calling the isr
+    // function
     m_rxBufferPtr = &buf;
 
     // manually invoke the isr routine & set back into RX mode

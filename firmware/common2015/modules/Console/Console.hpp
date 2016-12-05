@@ -80,7 +80,7 @@ public:
     /**
      * Deconstructor
      */
-    ~Console() {};
+    ~Console(){};
 
     /**
      * flushes stdout. Should be called after every putc or printf block.

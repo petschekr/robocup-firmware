@@ -34,8 +34,10 @@ bool initRadio() {
     CommModule::Instance = make_shared<CommModule>(rxTimeoutLED, txTimeoutLED);
 
     // Construct an object pointer for the radio
-    constexpr auto settingsSize = sizeof(preferredSettings) / sizeof(registerSetting_t);
-    global_radio = std::make_unique<CC1201>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings, settingsSize);
+    constexpr auto settingsSize =
+        sizeof(preferredSettings) / sizeof(registerSetting_t);
+    global_radio = std::make_unique<CC1201>(
+        sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings, settingsSize);
 
     return global_radio->isConnected();
 }

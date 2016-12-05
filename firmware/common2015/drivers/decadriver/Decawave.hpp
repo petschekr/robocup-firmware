@@ -20,9 +20,9 @@ public:
     virtual void setAddress(int addr) override;
 
     virtual int writetospi(uint16 headerLength, const uint8* headerBuffer,
-                   uint32 bodylength, const uint8* bodyBuffer) override;
+                           uint32 bodylength, const uint8* bodyBuffer) override;
     virtual int readfromspi(uint16 headerLength, const uint8* headerBuffer,
-                    uint32 readlength, uint8* readBuffer) override;
+                            uint32 readlength, uint8* readBuffer) override;
     virtual decaIrqStatus_t decamutexon() override { return 0; }
 
     void setLED(bool ledOn) { dwt_setleds(ledOn); };

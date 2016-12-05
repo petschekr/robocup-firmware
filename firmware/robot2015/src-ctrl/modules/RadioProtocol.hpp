@@ -18,7 +18,8 @@ public:
     /// base station, we are considered "disconnected"
     static const uint32_t TIMEOUT_INTERVAL = 2000;
 
-    RadioProtocol(std::shared_ptr<CommModule> commModule, uint8_t uid = RTP::INVALID_ROBOT_UID)
+    RadioProtocol(std::shared_ptr<CommModule> commModule,
+                  uint8_t uid = RTP::INVALID_ROBOT_UID)
         : _commModule(commModule),
           _uid(uid),
           _state(State::STOPPED),
@@ -51,10 +52,13 @@ public:
     void start() {
         _state = State::DISCONNECTED;
 
-        _commModule->setRxHandler(this, &RadioProtocol::rxHandler, RTP::PortType::CONTROL);
-        _commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket, RTP::PortType::CONTROL);
+        _commModule->setRxHandler(this, &RadioProtocol::rxHandler,
+                                  RTP::PortType::CONTROL);
+        _commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket,
+                                  RTP::PortType::CONTROL);
 
-        LOG(INF1, "Radio protocol listening on port %d", RTP::PortType::CONTROL);
+        LOG(INF1, "Radio protocol listening on port %d",
+            RTP::PortType::CONTROL);
     }
 
     void stop() {
@@ -77,7 +81,8 @@ public:
         // printf("UUIDs: ");
         for (slot = 0; slot < 6; slot++) {
             const auto offset = slot * sizeof(RTP::ControlMessage);
-            msg = reinterpret_cast<const RTP::ControlMessage*>(pkt.payload.data() + offset);
+            msg = reinterpret_cast<const RTP::ControlMessage*>(
+                pkt.payload.data() + offset);
 
             // printf("%d:%d ", slot, msg->uid);
             if (msg->uid == _uid) {

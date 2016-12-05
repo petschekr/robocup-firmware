@@ -5,11 +5,11 @@
 
 #include <CommModule.hpp>
 #include <CommPort.hpp>
+#include <Decawave.hpp>
+#include <SharedSPI.hpp>
 #include <assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
-#include <SharedSPI.hpp>
-#include <Decawave.hpp>
 
 #include "TimeoutLED.hpp"
 #include "fpga.hpp"
@@ -91,7 +91,8 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
 
     // TODO(justin): make this non-global
     // Create a new physical hardware communication link
-    global_radio = std::make_unique<Decawave>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
+    global_radio =
+        std::make_unique<Decawave>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
 
     // Open a socket for running tests across the link layer
     // The LINK port handlers are always active, regardless of whether or not a
@@ -109,7 +110,8 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
         LOG(INIT, "Radio interface ready");
 
         // Legacy port
-        commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket, RTP::PortType::LEGACY);
+        commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket,
+                                 RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
         LOG(INIT, "%u sockets opened", commModule->numOpenSockets());

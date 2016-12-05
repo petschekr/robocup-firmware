@@ -34,9 +34,9 @@ bool initRadio() {
     CommModule::Instance = make_shared<CommModule>(rxTimeoutLED, txTimeoutLED);
 
     // Create a new physical hardware communication link
-    global_radio =
-        std::make_unique<CC1201>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings,
-                   sizeof(preferredSettings) / sizeof(registerSetting_t));
+    global_radio = std::make_unique<CC1201>(
+        sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings,
+        sizeof(preferredSettings) / sizeof(registerSetting_t));
 
     return global_radio->isConnected();
 }

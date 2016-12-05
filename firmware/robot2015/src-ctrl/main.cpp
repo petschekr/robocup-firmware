@@ -5,10 +5,10 @@
 
 #include <rtos.h>
 
+#include <Watchdog.hpp>
 #include <assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
-#include <Watchdog.hpp>
 
 #include "BallSense.hpp"
 #include "Decawave.hpp"
@@ -377,7 +377,8 @@ int main() {
         // Set error-indicating leds on the control board
         ioExpander.writeMask(~errorBitmask, IOExpanderErrorLEDMask);
 
-        const auto robotHasError = errorBitmask || !fpgaInitialized || fpgaError;
+        const auto robotHasError =
+            errorBitmask || !fpgaInitialized || fpgaError;
         if (robotHasError) {
             // orange - error
             rgbLED.brightness(6 * defaultBrightness);

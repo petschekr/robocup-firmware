@@ -10,9 +10,9 @@
 #include <CommModule.hpp>
 #include <Decawave.hpp>
 #include <KickerBoard.hpp>
+#include <Watchdog.hpp>
 #include <logger.hpp>
 #include <numparser.hpp>
-#include <Watchdog.hpp>
 
 #include "ds2411.hpp"
 #include "fpga.hpp"
@@ -1102,7 +1102,8 @@ int cmd_radio(cmd_args_t& args) {
 }
 
 int cmd_pong(cmd_args_t& args) {
-    CommModule::Instance->setTxHandler(global_radio.get(), &CommLink::sendPacket, RTP::PortType::PING);
+    CommModule::Instance->setTxHandler(
+        global_radio.get(), &CommLink::sendPacket, RTP::PortType::PING);
 
     // Any packets received on the PING port are placed in a queue.
     Queue<RTP::Packet, 2> pings;
@@ -1141,7 +1142,8 @@ int cmd_pong(cmd_args_t& args) {
 }
 
 int cmd_ping(cmd_args_t& args) {
-    CommModule::Instance->setTxHandler(global_radio.get(), &CommLink::sendPacket, RTP::PortType::PING);
+    CommModule::Instance->setTxHandler(
+        global_radio.get(), &CommLink::sendPacket, RTP::PortType::PING);
 
     // Any packets received on the PING port are placed in a queue
     Queue<RTP::Packet, 2> acks;
