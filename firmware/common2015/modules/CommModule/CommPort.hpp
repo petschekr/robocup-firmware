@@ -1,13 +1,6 @@
 #pragma once
 
-#include <mbed.h>
-#include <rtos.h>
-#include "logger.hpp"
-
-#include <algorithm>
 #include <functional>
-#include <map>
-#include <stdexcept>
 
 template <typename RX_CALLBACK, typename TX_CALLBACK>
 class CommPort {

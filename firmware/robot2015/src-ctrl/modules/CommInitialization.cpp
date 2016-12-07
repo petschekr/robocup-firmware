@@ -58,7 +58,7 @@ void loopback_rx_cb(RTP::Packet p) {
     }
 }
 
-int32_t loopback_tx_cb(const RTP::Packet* p) {
+uint32_t loopback_tx_cb(const RTP::Packet* p) {
     if (p->payload.size()) {
         LOG(OK,
             "Loopback tx successful!\r\n"

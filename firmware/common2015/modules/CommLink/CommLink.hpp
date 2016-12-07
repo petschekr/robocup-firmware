@@ -57,6 +57,7 @@ public:
     /// Send & Receive through the rtp structure
     virtual int32_t sendPacket(const RTP::Packet* pkt) = 0;
 
+    /// Set the MAC layer filtering address for the link
     virtual void setAddress(int addr) { m_address = addr; }
 
 protected:

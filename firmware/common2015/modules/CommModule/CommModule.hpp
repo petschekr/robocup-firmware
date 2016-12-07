@@ -4,7 +4,6 @@
 #include <rtos.h>
 
 #include "CommPort.hpp"
-#include "Console.hpp"
 #include "RTP.hpp"
 #include "TimeoutLED.hpp"
 #include "helper-funcs.hpp"
@@ -12,9 +11,11 @@
 
 #include <algorithm>
 #include <functional>
+#include <map>
 #include <memory>
 #include <vector>
 
+#include "CommLink.hpp"
 /**
  * @brief A high-level firmware class for packet handling & routing
  *
@@ -24,11 +25,10 @@
  * hardware interface.
  */
 class CommModule {
-private:
 public:
     /// Type aliases
     using RxCallbackSigT = void(RTP::Packet);
-    using TxCallbackSigT = int32_t(const RTP::Packet*);
+    using TxCallbackSigT = uint32_t(const RTP::Packet*);
     using RxCallbackT = std::function<RxCallbackSigT>;
     using TxCallbackT = std::function<TxCallbackSigT>;
     using PortT = CommPort<RxCallbackSigT, TxCallbackSigT>;

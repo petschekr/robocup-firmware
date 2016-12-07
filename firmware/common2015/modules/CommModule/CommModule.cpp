@@ -3,6 +3,7 @@
 #include "assert.hpp"
 #include "helper-funcs.hpp"
 #include "logger.hpp"
+#include "Console.hpp"
 
 #include <ctime>
 

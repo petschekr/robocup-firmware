@@ -116,7 +116,7 @@ int main() {
     // bool kickerReady = KickerBoard::Instance->flash(false, false);
 
     // flag fro kicking when the ball sense triggers
-    bool kickOnBreakBeam = false;
+    auto kickOnBreakBeam = false;
     // Made up value right now, this is the amount of time in ms to
     // allow the capacitor dump power into kicker. Will need to be
     // adjusted once hardware is available.
@@ -141,7 +141,7 @@ int main() {
     FPGA::Instance = new FPGA(spiBus, RJ_FPGA_nCS, RJ_FPGA_INIT_B,
                               RJ_FPGA_PROG_B, RJ_FPGA_DONE);
 
-    const bool fpgaInitialized =
+    const auto fpgaInitialized =
         FPGA::Instance->configure("/local/rj-fpga.nib");
     auto fpgaError = false;
     uint8_t fpgaLastStatus = 0;

@@ -38,7 +38,7 @@ using MessageType = MessageTypeNamespace::MessageTypeEnum;
 
 struct Header {
     Header(PortType p = PortType::SINK, MessageType t = MessageType::CONTROL)
-        : address(0), port(p), type(t) {}
+        : address(INVALID_ROBOT_UID), port(p), type(t) {}
 
     uint8_t address;
     PortType port : 4;
@@ -47,15 +47,14 @@ struct Header {
 
 // binary-packed version of Control.proto
 struct ControlMessage {
-    uint8_t uid;  // robot id
-
     /** body{X,Y,W} are multiplied by this value before being sent over the
      * radio and must be then divided by this value on the receiving side. This
      * is to avoid loss of precision when sending float velocity values across
      * the air as ints.
      */
-    static constexpr uint16_t VELOCITY_SCALE_FACTOR = 1000;
+    static constexpr auto VELOCITY_SCALE_FACTOR = 1000;
 
+    uint8_t uid;
     int16_t bodyX;
     int16_t bodyY;
     int16_t bodyW;
@@ -67,21 +66,21 @@ struct ControlMessage {
 } __attribute__((packed));
 
 struct RobotStatusMessage {
-    uint8_t uid;  // robot id
-
     /** @battVoltage is a direct reading from the mbed's ADC and is sent over
      * the air as-is.  Soccer must convert this reading into an actual voltage
      * value by multiplying it by the scale factor. The theoretical scale factor
      * is 0.100546875, but this has been adjusted after testing to the value
      * below.
      */
-    static constexpr float BATTERY_READING_SCALE_FACTOR = 0.09884f;
+    static constexpr auto BATTERY_SCALE_FACTOR = 0.09884f;
 
+    uint8_t uid;
     uint8_t battVoltage;
-    uint8_t ballSenseStatus : 2;
-    uint8_t motorErrors : 5;  // 1 bit for each motor - 1 = error, 0 = good
-    uint8_t fpgaStatus : 2;   // 0 = good, 1 = not initialized, 2 = error
-};
+    unsigned ballSenseStatus : 2;
+    unsigned motorErrors : 10;  // 2 bits per motor: 0 = good, 1 = hall error, 2
+                                // = encoder error, 3 = hall+encoder error
+    unsigned fpgaStatus : 2;    // 0 = good, 1 = not initialized, 2 = error
+} __attribute__((packed));
 
 // Packet sizes
 static constexpr auto HeaderSize = sizeof(Header);
@@ -100,12 +99,19 @@ public:
 
     template <typename T, typename = std::enable_if_t<
                               std::is_convertible<T, uint8_t>::value>>
-    Packet(const std::vector<T>& v, PortType p = PortType::SINK) : header(p) {
+    Packet(const std::vector<T>& v, PortType p = PortType::LEGACY) {
         recv(v);
     }
 
-    Packet(const std::string& s, PortType p = PortType::SINK) : header(p) {
-        payload.assign(s.begin(), s.end());
+    template <typename T, typename = std::enable_if_t<
+                              std::is_convertible<T, uint8_t>::value>>
+    Packet(const std::initializer_list<T>& payloadBytes,
+           PortType p = PortType::PING)
+        : header(p, MessageType::MISC),
+          payload(payloadBytes.begin(), payloadBytes.end()) {}
+
+    Packet(const std::string& s, PortType p = PortType::SINK)
+        : header(p, MessageType::MISC), payload(s.begin(), s.end()) {
         payload.push_back('\0');
     }
 

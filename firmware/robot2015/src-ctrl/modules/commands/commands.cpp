@@ -13,6 +13,7 @@
 #include <Watchdog.hpp>
 #include <logger.hpp>
 #include <numparser.hpp>
+#include "Console.hpp"
 
 #include "ds2411.hpp"
 #include "fpga.hpp"

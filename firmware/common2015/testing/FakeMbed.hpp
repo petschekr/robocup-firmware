@@ -1,6 +1,7 @@
 #pragma once
 
-#include "mbed.h"
+#include <cassert>
+#include <vector>
 
 /**
  * This file provides some helper classes for emulating an mbed's hardware.  It
@@ -20,13 +21,17 @@ private:
     int m_value;
 };
 
+const auto NC = 0xFFFFFFFF;
+
 class SPI {
 public:
-    PinName m_mosi = NC;
-    PinName m_miso = NC;
-    PinName m_sclk = NC PinName m_ssel = NC;
+    int m_mosi = NC;
+    int m_miso = NC;
+    int m_sclk = NC;
+    int m_ssel = NC;
+    std::vector<int> m_rxData;
 
-    SPI(PinName mosi, PinName miso, PinName sclk, PinName ssel = NC)
+    SPI(int mosi, int miso, int sclk, int ssel = NC)
         : m_mosi(mosi), m_miso(miso), m_sclk(sclk), m_ssel(ssel) {}
 
     void format(int bits, int mode = 0) {
@@ -34,9 +39,15 @@ public:
         m_mode = mode;
     }
 
-    void frequency(int hz = 1000000) { m_hz = hz }
+    void frequency(int hz = 1'000'000) { m_hz = hz; }
 
-    int write(int value) {}
+    int write(int value) {
+        assert(!m_rxData.empty());
+
+        const auto rxByte = m_rxData.at(0);
+        m_rxData.erase(m_rxData.begin());
+        return rxByte;
+    }
 
 private:
     int m_bits;
