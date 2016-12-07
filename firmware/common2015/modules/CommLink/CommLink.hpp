@@ -10,18 +10,8 @@
 
 #include <memory>
 
-#define FOREACH_COMM_ERR(ERR) \
-    ERR(COMM_SUCCESS)         \
-    ERR(COMM_FAILURE)         \
-    ERR(COMM_DEV_BUF_ERR)     \
-    ERR(COMM_FUNC_BUF_ERR)    \
-    ERR(COMM_FALSE_TRIG)      \
-    ERR(COMM_NO_DATA)
-
-/**
- * CommLink Error Levels.
- */
-enum { FOREACH_COMM_ERR(GENERATE_ENUM) };
+/// CommLink error levels
+enum { COMM_SUCCESS, COMM_FAILURE, COMM_DEV_BUF_ERR, COMM_NO_DATA };
 
 /**
  * CommLink Class used as the hal (hardware abstraction layer) module for
@@ -40,7 +30,6 @@ public:
     /// Constructor
     CommLink(SpiPtrT spiBus, PinName nCs = NC, PinName intPin = NC);
 
-    /// Virtual deconstructor
     /// Kills any threads and frees the allocated stack.
     virtual ~CommLink() {}
 

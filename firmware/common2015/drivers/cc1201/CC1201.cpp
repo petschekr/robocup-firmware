@@ -41,7 +41,7 @@ CC1201::CC1201(SpiPtrT sharedSPI, PinName nCs, PinName intPin,
         // start out in RX mode
         strobe(CC1201_STROBE_SRX);
 
-        LOG(INIT, "CC1201 ready!");
+        LOG(INFO, "CC1201 ready!");
         CommLink::ready();
     }
 }
@@ -129,7 +129,7 @@ int32_t CC1201::getData(std::vector<uint8_t>* buf) {
         chipDeselect();
         strobe(CC1201_STROBE_SFRX);
 
-        LOG(INF3, "Bytes in RX buffer: %u, size_byte: %u", num_rx_bytes,
+        LOG(DEBUG, "Bytes in RX buffer: %u, size_byte: %u", num_rx_bytes,
             size_byte);
     } else {
         // flush rx
@@ -308,7 +308,7 @@ uint8_t CC1201::strobe(uint8_t addr) {
         int state = (ret >> 4) & 7;
         int rdy2_n = ret2 & (1 << 7);
         int state2 = (ret2 >> 4) & 7;
-        LOG(INF2,
+        LOG(DEBUG,
             "strobe '%s' sent, status = {rdy_n: %d, state: %s}, "
             "after %dms = {rdy_n: %d, state: %s}",
             strobe_names[addr - 0x30], rdy_n, CC1201_STATE_NAMES[state], delay,
@@ -344,7 +344,7 @@ int32_t CC1201::selfTest() {
     _chip_version = readReg(CC1201_PARTNUMBER);
 
     if (_chip_version != CC1201_EXPECTED_PARTNUMBER) {
-        LOG(FATAL,
+        LOG(SEVERE,
             "CC1201 part number error:\r\n"
             "    Found:\t0x%02X (expected 0x%02X)",
             _chip_version, CC1201_EXPECTED_PARTNUMBER);
@@ -430,7 +430,7 @@ float CC1201::freq() {
 
     float freq = f_vco / lo_divider / 1000000;
 
-    LOG(INF2, "Operating Frequency: %3.2f MHz", freq);
+    LOG(DEBUG, "Operating Frequency: %3.2f MHz", freq);
 
     return freq;
 }

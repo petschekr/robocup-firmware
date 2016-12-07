@@ -33,7 +33,7 @@ void loopback_ack_pck(RTP::Packet p) {
 
 void legacy_rx_cb(RTP::Packet p) {
     if (p.payload.size()) {
-        LOG(OK,
+        LOG(DEBUG,
             "Legacy rx successful!\r\n"
             "    Received: %u bytes\r\n",
             p.payload.size());
@@ -49,7 +49,7 @@ void loopback_rx_cb(RTP::Packet p) {
         duty_cycles.at(i) = 100 + 206 * i;
 
     if (p.payload.size()) {
-        LOG(OK,
+        LOG(DEBUG,
             "Loopback rx successful!\r\n"
             "    Received: %u bytes",
             p.payload.size());
@@ -60,7 +60,7 @@ void loopback_rx_cb(RTP::Packet p) {
 
 uint32_t loopback_tx_cb(const RTP::Packet* p) {
     if (p->payload.size()) {
-        LOG(OK,
+        LOG(DEBUG,
             "Loopback tx successful!\r\n"
             "    Sent: %u bytes\r\n",
             p->payload.size());
@@ -105,16 +105,14 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
      * according to its port number when using the console.
      */
     if (globalRadio->isConnected() == true) {
-        // LOG(INIT, "Radio interface ready on %3.2fMHz!",
-        // globalRadio->freq());
-        LOG(INIT, "Radio interface ready");
+        LOG(OK, "Radio interface ready!");
 
         // Legacy port
         commModule->setTxHandler(globalRadio.get(), &CommLink::sendPacket,
                                  RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
-        LOG(INIT, "%u sockets opened", commModule->numOpenSockets());
+        LOG(INFO, "%u sockets opened", commModule->numOpenSockets());
 
         // Wait until the threads with the commModule are all started up
         // and ready
@@ -122,6 +120,6 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
             Thread::wait(50);
         }
     } else {
-        LOG(FATAL, "No radio interface found!");
+        LOG(SEVERE, "No radio interface found!");
     }
 }

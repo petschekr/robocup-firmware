@@ -41,7 +41,7 @@ bool initRadio() {
 }
 
 void radioRxHandler(RTP::Packet pkt) {
-    LOG(INF3, "radioRxHandler()");
+    LOG(DEBUG, "radioRxHandler()");
     // write packet content (including header) out to EPBULK_IN
     vector<uint8_t> buf;
     pkt.pack(&buf);
@@ -76,10 +76,10 @@ int main() {
     rjLogLevel = INIT;
 
     printf("****************************************\r\n");
-    LOG(INIT, "Base station starting...");
+    LOG(INFO, "Base station starting...");
 
     if (initRadio()) {
-        // LOG(INIT, "Radio interface ready on %3.2fMHz!",
+        // LOG(OK, "Radio interface ready on %3.2fMHz!",
         // globalRadio->freq());
 
         // register handlers for any ports we might use
@@ -90,7 +90,7 @@ int main() {
                                                &CommLink::sendPacket, port);
         }
     } else {
-        LOG(FATAL, "No radio interface found!");
+        LOG(SEVERE, "No radio interface found!");
     }
 
     globalRadio->setAddress(RTP::BASE_STATION_ADDRESS);
@@ -100,30 +100,30 @@ int main() {
     // set callbacks for usb control transfers
     usbLink.writeRegisterCallback = [](
         uint8_t reg, uint8_t val) {  // globalRadio->writeReg(reg, val);
-        LOG(INIT, "Trying to write");
+        LOG(DEBUG, "Trying to write");
     };
     usbLink.readRegisterCallback =
         [](uint8_t reg) {  // return globalRadio->readReg(reg);
-            LOG(INIT, "Tring to read");
+            LOG(DEBUG, "Tring to read");
             return 0;
         };
     usbLink.strobeCallback =
         [](uint8_t strobe) {  // globalRadio->strobe(strobe);
-            LOG(INIT, "trying to strobe");
+            LOG(DEBUG, "trying to strobe");
         };
     usbLink.setRadioChannelCallback = [](uint8_t chanNumber) {
         // globalRadio->setChannel(chanNumber);
-        LOG(INIT, "(Not) Set radio channel to %u", chanNumber);
+        LOG(OK, "(Not) Set radio channel to %u", chanNumber);
     };
 
-    LOG(INIT, "Initializing USB interface...");
+    LOG(OK, "Initializing USB interface...");
     usbLink.connect();  // note: this blocks until the link is connected
-    LOG(INIT, "Initialized USB interface!");
+    LOG(OK, "Initialized USB interface!");
 
     // Set the watdog timer's initial config
     Watchdog::Set(RJ_WATCHDOG_TIMER_VALUE);
 
-    LOG(INIT, "Listening for commands over USB");
+    LOG(OK, "Listening for commands over USB");
 
     // buffer to read data from usb bulk transfers into
     uint8_t buf[MAX_PACKET_SIZE_EPBULK];
@@ -137,7 +137,7 @@ int main() {
         // if data is available, write it into @pkt and send it
         if (usbLink.readEP_NB(EPBULK_OUT, buf, &bufSize,
                               MAX_PACKET_SIZE_EPBULK)) {
-            LOG(INF3, "Read %d bytes from BULK IN", bufSize);
+            LOG(DEBUG, "Read %d bytes from BULK IN", bufSize);
 
             // construct packet from buffer received over USB
             RTP::Packet pkt;

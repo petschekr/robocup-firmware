@@ -57,7 +57,7 @@ public:
         _commModule->setTxHandler(globalRadio.get(), &CommLink::sendPacket,
                                   RTP::PortType::CONTROL);
 
-        LOG(INF1, "Radio protocol listening on port %d",
+        LOG(INFO, "Radio protocol listening on port %d",
             RTP::PortType::CONTROL);
     }
 
@@ -67,13 +67,12 @@ public:
         _replyTimer.stop();
         _state = State::STOPPED;
 
-        LOG(INF1, "Radio protocol stopped");
+        LOG(INFO, "Radio protocol stopped");
     }
 
     State state() const { return _state; }
 
     void rxHandler(RTP::Packet pkt) {
-        // LOG(INIT, "got pkt!");
         // TODO: check packet size before parsing
         bool addressed = false;
         const RTP::ControlMessage* msg;
@@ -86,7 +85,6 @@ public:
 
             // printf("%d:%d ", slot, msg->uid);
             if (msg->uid == _uid) {
-                // LOG(INIT, "")
                 addressed = true;
                 break;
             }

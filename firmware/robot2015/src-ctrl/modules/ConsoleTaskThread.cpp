@@ -28,7 +28,7 @@ void Task_SerialConsole(void const* args) {
     console->changeUser(git_head_author);
 
     // Let everyone know we're ok
-    LOG(INIT,
+    LOG(OK,
         "Serial console ready!\r\n"
         "    Thread ID: %u, Priority: %d",
         ((P_TCB)threadID)->task_id, threadPriority);

@@ -4,6 +4,7 @@
 -Icommon/firmware-common/base2015
 -Icommon/firmware-common/common2015/utils
 -Ifirmware/base2015
+-Ifirmware/common2015
 -Ifirmware/common2015/testing
 -Ifirmware/common2015/utils
 -Ifirmware/common2015/utils/assert

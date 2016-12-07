@@ -12,7 +12,7 @@
  */
 
 #include <logger.hpp>
-#include "mbed.h"
+#include "Mbed.hpp"
 
 #include "deca_device_api.hpp"
 #include "deca_param_types.h"
@@ -95,7 +95,7 @@ int dw1000_api::dwt_initialise(uint16 config) {
     if (DWT_DEVICE_ID !=
         chip_version)  // MP IC ONLY (i.e. DW1000) FOR THIS CODE
     {
-        LOG(FATAL,
+        LOG(SEVERE,
             "Decawave part number error:\r\n"
             "    Found:\t0x%02X (expected 0x%02X)",
             chip_version, DWT_DEVICE_ID);

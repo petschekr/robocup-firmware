@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mbed.h>
-#include <rtos.h>
+#include "Mbed.hpp"
+#include "rtos.h"
 
 #include "CommPort.hpp"
 #include "RTP.hpp"
@@ -32,10 +32,6 @@ public:
     using RxCallbackT = std::function<RxCallbackSigT>;
     using TxCallbackT = std::function<TxCallbackSigT>;
     using PortT = CommPort<RxCallbackSigT, TxCallbackSigT>;
-
-    /// Class constants
-    static constexpr size_t TX_QUEUE_SIZE = 3;
-    static constexpr size_t RX_QUEUE_SIZE = 3;
 
     /// Global singleton instance of CommModule
     static std::shared_ptr<CommModule> Instance;
@@ -102,6 +98,8 @@ protected:
     osMailQId m_rxQueue;
 
 private:
+    static constexpr size_t TX_QUEUE_SIZE = 3;
+    static constexpr size_t RX_QUEUE_SIZE = 3;
     // DEFAULT_STACK_SIZE defined in rtos library
     static constexpr size_t STACK_SIZE = DEFAULT_STACK_SIZE / 2;
     static constexpr osPriority RX_PRIORITY = osPriorityAboveNormal;
@@ -121,7 +119,6 @@ private:
     bool m_isReady = false;
 
     void ready();
-
     void txThread();
     void rxThread();
 

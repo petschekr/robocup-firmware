@@ -8,7 +8,7 @@
  * is useful for unit-testing code on a computer when an mbed is not available
  * or convenient.
  */
-namespace fake_mbed {
+namespace MbedTest {
 
 class DigitalIn {
 public:
@@ -55,4 +55,4 @@ private:
     int m_hz;
 };
 
-}  // namespace fake_mbed
+}  // namespace FakeMbed

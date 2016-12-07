@@ -1,6 +1,6 @@
 #include "assert.hpp"
 
-#include "mbed.h"
+#include "Mbed.hpp"
 
 /**
  * This is called when an assertion fails

@@ -72,7 +72,7 @@ int main() {
 
     // Set the default logging configurations
     isLogging = RJ_LOGGING_EN;
-    rjLogLevel = INIT;
+    rjLogLevel = INFO;
 
     /* Always send out an empty line at startup for keeping the console
      * clean on after a 'reboot' command is called;
@@ -150,13 +150,13 @@ int main() {
         rgbLED.brightness(3 * defaultBrightness);
         rgbLED.setPixel(1, NeoColorGreen);
 
-        LOG(INIT, "FPGA Configuration Successful!");
+        LOG(OK, "FPGA Configuration Successful!");
 
     } else {
         rgbLED.brightness(4 * defaultBrightness);
         rgbLED.setPixel(1, NeoColorOrange);
 
-        LOG(FATAL, "FPGA Configuration Failed!");
+        LOG(SEVERE, "FPGA Configuration Failed!");
     }
     rgbLED.write();
 
@@ -293,7 +293,7 @@ int main() {
     };
 
     // KickerBoard::Instance->charge();
-    LOG(INIT, "Started charging kicker board.");
+    LOG(DEBUG, "Started charging kicker board.");
     uint8_t kickerVoltage = 0;
 
     // Set the watdog timer's initial config
@@ -360,7 +360,7 @@ int main() {
 
         // get kicker voltage
         // KickerBoard::Instance->read_voltage(&kickerVoltage);
-        LOG(INF1, "Kicker voltage: %u", kickerVoltage);
+        LOG(DEBUG, "Kicker voltage: %u", kickerVoltage);
 
         // update shell id
         robotShellID = rotarySelector.read();
@@ -371,7 +371,7 @@ int main() {
         if (newRadioChannel != currentRadioChannel) {
             // globalRadio->setChannel(newRadioChannel);
             currentRadioChannel = newRadioChannel;
-            LOG(INIT, "Changed radio channel to %u", newRadioChannel);
+            LOG(INFO, "Changed radio channel to %u", newRadioChannel);
         }
 
         // Set error-indicating leds on the control board
@@ -429,7 +429,7 @@ _EXTERN void HARD_FAULT_HANDLER(uint32_t* stackAddr) {
     pc = stackAddr[6];
     psr = stackAddr[7];
 
-    LOG(FATAL,
+    LOG(SEVERE,
         "\r\n"
         "================================\r\n"
         "========== HARD FAULT ==========\r\n"

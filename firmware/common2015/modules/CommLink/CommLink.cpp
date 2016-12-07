@@ -11,9 +11,6 @@ constexpr auto RX_PRIORITY = osPriorityNormal;
 
 std::unique_ptr<CommLink> globalRadio = nullptr;
 
-static constexpr const char* COMM_ERR_STRING[] = {
-    FOREACH_COMM_ERR(GENERATE_STRING)};
-
 CommLink::CommLink(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
     : SharedSPIDevice(sharedSPI, nCs, true),
       m_intIn(intPin),
@@ -35,7 +32,7 @@ void CommLink::rxThread() {
     // Only continue past this point once the hardware link is initialized
     Thread::signal_wait(SIGNAL_START);
 
-    LOG(INIT, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d",
+    LOG(OK, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {
@@ -44,7 +41,7 @@ void CommLink::rxThread() {
         // Wait until new data has arrived
         Thread::signal_wait(SIGNAL_RX);
 
-        LOG(INF3, "RX interrupt triggered");
+        LOG(DEBUG, "RX interrupt triggered");
 
         // Get the received data from the external chip
         auto response = getData();

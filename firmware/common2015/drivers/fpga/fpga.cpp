@@ -50,7 +50,7 @@ bool FPGA::configure(const std::string& filepath) {
     // make sure the binary exists before doing anything
     FILE* fp = fopen(filepath.c_str(), "r");
     if (fp == nullptr) {
-        LOG(FATAL, "No FPGA bitfile!");
+        LOG(SEVERE, "No FPGA bitfile!");
 
         return false;
     }
@@ -75,7 +75,7 @@ bool FPGA::configure(const std::string& filepath) {
 
     // show INIT_B error if it never went low
     if (!fpgaReady) {
-        LOG(FATAL, "INIT_B pin timed out\t(PRE CONFIGURATION ERROR)");
+        LOG(SEVERE, "INIT_B pin timed out\t(PRE CONFIGURATION ERROR)");
 
         return false;
     }
@@ -96,15 +96,15 @@ bool FPGA::configure(const std::string& filepath) {
         if (configSuccess) {
             // everything worked are we're good to go!
             _isInit = true;
-            LOG(INF1, "DONE pin state:\t%s", _done ? "HIGH" : "LOW");
+            LOG(DEBUG, "DONE pin state:\t%s", _done ? "HIGH" : "LOW");
 
             return true;
         }
 
-        LOG(FATAL, "DONE pin timed out\t(POST CONFIGURATION ERROR)");
+        LOG(SEVERE, "DONE pin timed out\t(POST CONFIGURATION ERROR)");
     }
 
-    LOG(FATAL, "FPGA bitstream write error");
+    LOG(SEVERE, "FPGA bitstream write error");
 
     return false;
 }
@@ -134,7 +134,7 @@ bool FPGA::send_config(const std::string& filepath) {
         filesize = ftell(fp);
         fseek(fp, 0, SEEK_SET);
 
-        LOG(INF1, "Sending %s (%u bytes) out to the FPGA", filepath.c_str(),
+        LOG(DEBUG, "Sending %s (%u bytes) out to the FPGA", filepath.c_str(),
             filesize);
 
         for (size_t i = 0; i < filesize; i++) {
@@ -163,7 +163,7 @@ bool FPGA::send_config(const std::string& filepath) {
         return true;
     }
 
-    LOG(INIT, "FPGA configuration failed\r\n    Unable to open %s",
+    LOG(SEVERE, "FPGA configuration failed\r\n    Unable to open %s",
         filepath.c_str());
 
     return false;

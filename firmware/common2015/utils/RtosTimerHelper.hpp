@@ -17,8 +17,7 @@ public:
     template <class T>
     RtosTimerHelper(T* instance, void (T::*method)(), os_timer_type type)
         : RtosTimer(&timerFired, type, this),
-          m_callback(std::bind(method, instance));
-    {}
+          m_callback(std::bind(method, instance)) {}
 
     /// Call a function/lambda when the timer fires
     RtosTimerHelper(std::function<void()> callback, os_timer_type type)

@@ -53,15 +53,15 @@ bool KickerBoard::flash(bool onlyIfDifferent, bool verbose) {
         return false;
     } else {
         // Program it!
-        LOG(INIT, "Opened kicker binary, attempting to program kicker.");
-        bool shouldProgram = true;
+        LOG(DEBUG, "Opened kicker binary, attempting to program kicker.");
+        auto shouldProgram = true;
         if (onlyIfDifferent &&
             (checkMemory(ATTINY84A_PAGESIZE, ATTINY84A_NUM_PAGES, fp, false) ==
              0))
             shouldProgram = false;
 
         if (!shouldProgram) {
-            LOG(INIT, "Kicker up-to-date, no need to flash.");
+            LOG(DEBUG, "Kicker up-to-date, no need to flash.");
 
             // exit programming mode by bringing nReset high
             exitProgramming();
@@ -72,7 +72,7 @@ bool KickerBoard::flash(bool onlyIfDifferent, bool verbose) {
             if (nSuccess) {
                 LOG(WARN, "Failed to program kicker.");
             } else {
-                LOG(INIT, "Kicker successfully programmed.");
+                LOG(DEBUG, "Kicker successfully programmed.");
             }
         }
 
@@ -83,7 +83,7 @@ bool KickerBoard::flash(bool onlyIfDifferent, bool verbose) {
 }
 
 bool KickerBoard::send_to_kicker(uint8_t cmd, uint8_t arg, uint8_t* ret_val) {
-    LOG(INF2, "Sending: CMD:%02X, ARG:%02X", cmd, arg);
+    LOG(DEBUG, "Sending: CMD:%02X, ARG:%02X", cmd, arg);
     chipSelect();
     // Returns state (charging, not charging), but we don't care about that
     uint8_t charge_resp = _spi->write(cmd);
@@ -98,7 +98,7 @@ bool KickerBoard::send_to_kicker(uint8_t cmd, uint8_t arg, uint8_t* ret_val) {
     }
 
     bool command_acked = command_resp == cmd;
-    LOG(INF2, "ACK?:%s, CHG:%02X, CMD:%02X, RET:%02X",
+    LOG(DEBUG, "ACK?:%s, CHG:%02X, CMD:%02X, RET:%02X",
         command_acked ? "true" : "false", charge_resp, command_resp, ret);
 
     return command_acked;

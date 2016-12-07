@@ -27,7 +27,7 @@ void CommModule::txThread() {
     // Store our priority so we know what to reset it to if ever needed
     const auto threadPriority = m_txThread.get_priority();
 
-    LOG(INIT,
+    LOG(OK,
         "TX communication module ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
@@ -59,14 +59,13 @@ void CommModule::txThread() {
 
             // Call the user callback function
             if (m_ports.find(portNum) != m_ports.end()) {
-                // only seek the port's reference once
+                // only grab the port's reference once
                 auto& port = m_ports[portNum];
 
-                if (port.txCallback() != nullptr) {
-                    port.txCallback()(p);
-                    port.m_txCount++;
+                if (port.hasTxCallback()) {
+                    port.getTxCallback()(p);
 
-                    LOG(INF2,
+                    LOG(INFO,
                         "Transmission:\r\n"
                         "    Port:\t%u\r\n",
                         portNum);
@@ -94,7 +93,7 @@ void CommModule::rxThread() {
     // Store our priority so we know what to reset it to if ever needed
     const auto threadPriority = m_rxThread.get_priority();
 
-    LOG(INIT,
+    LOG(OK,
         "RX communication module ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
@@ -123,14 +122,13 @@ void CommModule::rxThread() {
 
             // Call the user callback function
             if (m_ports.find(portNum) != m_ports.end()) {
-                // only seek the port's reference once
+                // only grab the port's reference once
                 auto& port = m_ports[portNum];
 
-                if (port.rxCallback() != nullptr) {
-                    port.rxCallback()(std::move(*p));
-                    port.m_rxCount++;
+                if (port.hasRxCallback()) {
+                    port.getRxCallback()(std::move(*p));
 
-                    LOG(INF2,
+                    LOG(INFO,
                         "Reception:\r\n"
                         "    Port:\t%u\r\n",
                         portNum);
@@ -151,7 +149,7 @@ void CommModule::rxThread() {
 void CommModule::send(RTP::Packet packet) {
     const auto portNum = packet.header.port;
     const auto portExists = m_ports.find(portNum) != m_ports.end();
-    const auto hasCallback = m_ports[portNum].txCallback() != nullptr;
+    const auto hasCallback = m_ports[portNum].hasTxCallback();
 
     // Check to make sure a socket for the port exists
     if (portExists && hasCallback) {
@@ -164,7 +162,7 @@ void CommModule::send(RTP::Packet packet) {
             // Place the passed packet into the txQueue.
             osMailPut(m_txQueue, p);
         } else {
-            LOG(FATAL, "Unable to allocate memory for TX queue");
+            LOG(SEVERE, "Unable to allocate memory for TX queue");
         }
     } else {
         LOG(WARN,
@@ -176,7 +174,7 @@ void CommModule::send(RTP::Packet packet) {
 void CommModule::receive(RTP::Packet packet) {
     const auto portNum = packet.header.port;
     const auto portExists = m_ports.find(portNum) != m_ports.end();
-    const auto hasCallback = m_ports[portNum].rxCallback() != nullptr;
+    const auto hasCallback = m_ports[portNum].hasRxCallback();
 
     // Check to make sure a socket for the port exists
     if (portExists && hasCallback) {
@@ -189,7 +187,7 @@ void CommModule::receive(RTP::Packet packet) {
             // Place the passed packet into the rxQueue.
             osMailPut(m_rxQueue, p);
         } else {
-            LOG(FATAL, "Unable to allocate memory for RX queue");
+            LOG(SEVERE, "Unable to allocate memory for RX queue");
         }
     } else {
         LOG(WARN,
@@ -199,12 +197,12 @@ void CommModule::receive(RTP::Packet packet) {
 }
 
 void CommModule::setRxHandler(RxCallbackT callback, uint8_t portNbr) {
-    m_ports[portNbr].rxCallback() = std::bind(callback, std::placeholders::_1);
+    m_ports[portNbr].setRxCallback(std::bind(callback, std::placeholders::_1));
     ready();
 }
 
 void CommModule::setTxHandler(TxCallbackT callback, uint8_t portNbr) {
-    m_ports[portNbr].txCallback() = std::bind(callback, std::placeholders::_1);
+    m_ports[portNbr].setTxCallback(std::bind(callback, std::placeholders::_1));
     ready();
 }
 
@@ -214,31 +212,30 @@ void CommModule::ready() {
     m_txThread.signal_set(SIGNAL_START);
 }
 
+#ifndef NDEBUG
 unsigned int CommModule::numOpenSockets() const {
     auto count = 0;
     for (const auto& kvpair : m_ports) {
-        if (kvpair.second.rxCallback() != nullptr ||
-            kvpair.second.txCallback() != nullptr)
-            count++;
+        if (kvpair.second.hasRxCallback() || kvpair.second.hasTxCallback())
+            ++count;
     }
     return count;
 }
 
-#ifndef NDEBUG
 unsigned int CommModule::numRxPackets() const {
     auto count = 0;
-    for (const auto& kvpair : m_ports) count += kvpair.second.m_rxCount;
+    for (const auto& kvpair : m_ports) count += kvpair.second.getRxCount();
     return count;
 }
 
 unsigned int CommModule::numTxPackets() const {
     auto count = 0;
-    for (const auto& kvpair : m_ports) count += kvpair.second.m_txCount;
+    for (const auto& kvpair : m_ports) count += kvpair.second.getTxCount();
     return count;
 }
 
 void CommModule::resetCount(unsigned int portNbr) {
-    m_ports[portNbr].resetPacketCount();
+    m_ports[portNbr].resetCounts();
 }
 
 void CommModule::printInfo() const {
@@ -246,9 +243,9 @@ void CommModule::printInfo() const {
 
     for (const auto& kvpair : m_ports) {
         const PortT& p = kvpair.second;
-        printf("%d\t\t%u\t%u\t%s\t\t%s\r\n", kvpair.first, p.m_rxCount,
-               p.m_txCount, p.rxCallback() ? "YES" : "NO",
-               p.txCallback() ? "YES" : "NO");
+        printf("%d\t\t%u\t%u\t%s\t\t%s\r\n", kvpair.first, p.getRxCount(),
+               p.getTxCount(), p.hasRxCallback() ? "YES" : "NO",
+               p.hasTxCallback() ? "YES" : "NO");
     }
 
     printf(

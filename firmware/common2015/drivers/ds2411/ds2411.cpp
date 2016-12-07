@@ -95,7 +95,7 @@ DS2411Result_t ds2411_read_id(PinName pin, DS2411_t* id) {
     ASSERT(id != nullptr);
     ASSERT(pin != NC);
 
-    LOG(INF3, "Communicating with ID Chip...");
+    LOG(DEBUG, "Communicating with ID Chip...");
 
     DigitalInOut idPin(pin, PIN_OUTPUT, PullUp, 1);
 

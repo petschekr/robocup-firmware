@@ -18,7 +18,7 @@ public:
     void kick(uint8_t power) {
         uint32_t t = us_ticker_read();
 
-        // LOG(INIT, "%08X - %08X = %08X : %08X", t, _lastKickTime, t -
+        // LOG(DEBUG, "%08X - %08X = %08X : %08X", t, _lastKickTime, t -
         // _lastKickTime, MIN_CHARGE_TIME);
 
         // don't do anything - it hasn't charged enough since the last kick
@@ -26,14 +26,14 @@ public:
             return;
         }
 
-        // LOG(INIT, "KICK %08X", _kickLine.read());
+        // LOG(DEBUG, "KICK %08X", _kickLine.read());
 
         _lastKickTime = t;
 
         // power = 255 corresponds to 8ms kick time.  Everything lower is
         // linearly scaled
         uint8_t time = (float)power / 255.0f * 8.0f;
-        LOG(INIT, "KICK : %08X, %08X", power, time);
+        LOG(DEBUG, "KICK : %08X, %08X", power, time);
         if (time == 0) {
             return;
         }

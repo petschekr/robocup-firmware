@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mbed.h"
+#include "Mbed.hpp"
 
 // #define WDT_BASE LPC_WDT
 namespace {
@@ -19,8 +19,8 @@ public:
      */
     static void set(float s) {
         WDT_BASE->WDCLKSEL = 0x1;  // Set CLK src to PCLK
-        uint32_t clk = SystemCoreClock >>
-                       4;  // WD has a fixed /4 prescaler, PCLK default is /4
+        auto clk = SystemCoreClock >>
+                   4;  // WD has a fixed /4 prescaler, PCLK default is /4
         WDT_BASE->WDTC = s * static_cast<float>(clk);
         WDT_BASE->WDMOD = 0x3;  // Enabled and Reset
         renew();

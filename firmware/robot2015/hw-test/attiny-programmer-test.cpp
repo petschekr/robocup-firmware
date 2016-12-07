@@ -23,7 +23,7 @@ void imAlive() { ledOne = !ledOne; }
 
 int main() {
     isLogging = RJ_LOGGING_EN;
-    rjLogLevel = INF2;
+    rjLogLevel = DEBUG;
 
     lifeLight.attach(&imAlive, ALIVE_BLINK_RATE);
     pc.baud(BAUD_RATE);

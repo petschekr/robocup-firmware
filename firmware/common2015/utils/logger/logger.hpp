@@ -23,12 +23,12 @@
 
 #   define LOG(logLevel, ...)                                                               \
         do {                                                                                \
-            log(logLevel, __BASE_FILE_NAME__, __LINE__, __func__, __VA_ARGS__);             \
+            globalLogger(logLevel, __BASE_FILE_NAME__, __LINE__, __func__, __VA_ARGS__);    \
         } while (false)
 
     /**
      * Example usage:
-     *   S_LOG(INIT) << "Example";
+     *   S_LOG(INFO) << "Example";
      */
 #   define S_LOG(logLevel)                                                                  \
         do {                                                                                \
@@ -37,43 +37,34 @@
 
 #else
 #   define LOG(...)
+#   define S_LOG(...) ((void)0)
 #endif
 /* clang-format on */
 
 #define FOREACH_LEVEL(LEVEL) \
     LEVEL(LOG_LEVEL_START)   \
-    LEVEL(FATAL)             \
     LEVEL(SEVERE)            \
     LEVEL(WARN)              \
-    LEVEL(INIT)              \
     LEVEL(OK)                \
-    LEVEL(INF1)              \
-    LEVEL(INF2)              \
-    LEVEL(INF3)              \
+    LEVEL(INFO)              \
+    LEVEL(DEBUG)             \
     LEVEL(LOG_LEVEL_END)
 
-/**
- * Log levels.
- */
+/// The available log levels
 enum LOG_LEVEL { FOREACH_LEVEL(GENERATE_ENUM) };
 
-/**
- * Enumeration -> String conversions.
- */
-extern const char* LOG_LEVEL_STRING[];
+/// String mappings for the enum log levels
+extern const char* const LOG_LEVEL_STRING[];
 
-/**
- * Active logging.
- */
+/// Enable/disable logging globally
 extern bool isLogging;
 
-/**
- * Current log level.
- */
+/// The runtime log level
 extern uint8_t rjLogLevel;
 
 /**
  * Collects the stream log message into a single string to print
+ *
  * @param logLevel The "importance level" of the called log message.
  * @param source   The source of the message.
  * @param format   The string format for displaying the log message.
@@ -84,20 +75,21 @@ public:
     ~LogHelper();
 
 private:
-    uint8_t _logLevel;
-    const char* _source;
-    int _line;
-    const char* _func;
+    const char* m_source;
+    const char* m_func;
+    int m_line;
+    uint8_t m_logLevel;
 };
 
 /**
  * The system-wide logging interface function. All log messages go through
  * this.
+ *
  * @param logLevel The "importance level" of the called log message.
  * @param source   The source of the message.
  * @param format   The string format for displaying the log message.
  */
-void log(uint8_t logLevel, const char* source, int line, const char* func,
-         const char* format, ...);
+void globalLogger(uint8_t logLevel, const char* source, int line,
+                  const char* func, const char* format, ...);
 
 int logLvlChange(const std::string& s);

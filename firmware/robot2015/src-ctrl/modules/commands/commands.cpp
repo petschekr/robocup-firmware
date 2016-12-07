@@ -761,11 +761,12 @@ int cmd_log_level(cmd_args_t& args) {
             isLogging = false;
             printf("Logging disabled.\r\n");
         } else {
-            // this will return a signed int, so the level
-            // could increase or decrease...or stay the same.
-            int newLvl = (int)rjLogLevel;  // rjLogLevel is unsigned, so we'll
-            // need to change that first
-            newLvl += logLvlChange(args[0]);
+            auto newLvl = static_cast<int>(rjLogLevel);
+            {
+                // count the difference between '+' and '-' characters
+                string s(args[0]);
+                newLvl += std::count(s.begin(), s.end(), '+') - std::count(s.begin(), s.end(), '-');
+            }
 
             if (newLvl >= LOG_LEVEL_END) {
                 printf("Unable to set log level above maximum value.\r\n");
@@ -955,7 +956,7 @@ int cmd_heapfill(cmd_args_t& args) {
     }
 
     printf("Testing heap size...\r\n");
-    const auto count = sizeof(void*);
+    auto count = sizeof(void*);
     while (true) {
         void* buf = malloc(count);
         if (!buf) {
@@ -1039,8 +1040,6 @@ int cmd_radio(cmd_args_t& args) {
             // globalRadio->setDebugEnabled(!wasEnabled);
             // printf("Radio debugging now %s\r\n",
             //    wasEnabled ? "DISABLED" : "ENABLED");
-            // if (!wasEnabled)
-            // printf("All strobes will appear in the INF2 logs\r\n");
         } else {
             show_invalid_args(args[0]);
             return 1;

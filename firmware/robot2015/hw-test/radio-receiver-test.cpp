@@ -87,10 +87,10 @@ int main() {
     rjLogLevel = INIT;
 
     printf("****************************************\r\n");
-    LOG(INIT, "Radio test receiver starting...");
+    LOG(INFO, "Radio test receiver starting...");
 
     if (initRadio()) {
-        LOG(INIT, "Radio interface ready on %3.2fMHz!", globalRadio->freq());
+        LOG(OK, "Radio interface ready on %3.2fMHz!", globalRadio->freq());
 
         // register handlers for any ports we might use
         for (RTP::Port port :
@@ -100,7 +100,7 @@ int main() {
                                                &CommLink::sendPacket, port);
         }
     } else {
-        LOG(FATAL, "No radio interface found!");
+        LOG(SEVERE, "No radio interface found!");
     }
 
     DigitalOut radioStatusLed(LED4, globalRadio->isConnected());
