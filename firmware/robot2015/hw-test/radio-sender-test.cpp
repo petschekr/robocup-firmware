@@ -36,10 +36,10 @@ bool initRadio() {
     // Construct an object pointer for the radio
     constexpr auto settingsSize =
         sizeof(preferredSettings) / sizeof(registerSetting_t);
-    global_radio = std::make_unique<CC1201>(
+    globalRadio = std::make_unique<CC1201>(
         sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT, preferredSettings, settingsSize);
 
-    return global_radio->isConnected();
+    return globalRadio->isConnected();
 }
 
 void radioRxHandler(RTP::Packet pkt) {
@@ -61,13 +61,13 @@ int main() {
     LOG(INIT, "Radio test sender starting...");
 
     if (initRadio()) {
-        LOG(INIT, "Radio interface ready on %3.2fMHz!", global_radio->freq());
+        LOG(INIT, "Radio interface ready on %3.2fMHz!", globalRadio->freq());
 
         // register handlers for any ports we might use
         for (RTP::Port port :
              {RTP::Port::CONTROL, RTP::Port::PING, RTP::Port::LEGACY}) {
             CommModule::Instance->setRxHandler(&radioRxHandler, port);
-            CommModule::Instance->setTxHandler((CommLink*)global_radio,
+            CommModule::Instance->setTxHandler((CommLink*)globalRadio,
                                                &CommLink::sendPacket, port);
         }
     } else {
@@ -75,7 +75,7 @@ int main() {
     }
 
     DigitalOut senderIndicator(LED3, 1);
-    DigitalOut radioStatusLed(LED4, global_radio->isConnected());
+    DigitalOut radioStatusLed(LED4, globalRadio->isConnected());
 
     // send packets every @TRANSMIT_INTERVAL forever
     while (true) {

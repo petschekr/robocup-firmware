@@ -16,14 +16,12 @@ public:
     /// Call an instance method on a given object when the timer fires
     template <class T>
     RtosTimerHelper(T* instance, void (T::*method)(), os_timer_type type)
-        : RtosTimer(&_timerFired, type, this) {
-        _callback = std::bind(method, instance);
+        : RtosTimer(&timerFired, type, this), m_callback(std::bind(method, instance));{
     }
 
     /// Call a function/lambda when the timer fires
     RtosTimerHelper(std::function<void()> callback, os_timer_type type)
-        : RtosTimer(&_timerFired, type, this) {
-        _callback = callback;
+        : RtosTimer(&timerFired, type, this), m_callback(callback) {
     }
 
     virtual ~RtosTimerHelper() {
@@ -33,11 +31,11 @@ public:
     RtosTimerHelper(const RtosTimerHelper& other) = delete;
 
 private:
-    static void _timerFired(const void* instance) {
-        RtosTimerHelper* thiss = const_cast<RtosTimerHelper*>(
+    static void timerFired(const void* instance) {
+        auto mutableThis = const_cast<RtosTimerHelper*>(
             reinterpret_cast<const RtosTimerHelper*>(instance));
-        thiss->_callback();
+        mutableThis->m_callback();
     }
 
-    std::function<void()> _callback;
+    std::function<void()> m_callback;
 };

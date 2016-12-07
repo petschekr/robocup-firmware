@@ -9,7 +9,7 @@ constexpr auto STACK_SIZE = DEFAULT_STACK_SIZE / 2;
 constexpr auto RX_PRIORITY = osPriorityNormal;
 }
 
-std::unique_ptr<CommLink> global_radio = nullptr;
+std::unique_ptr<CommLink> globalRadio = nullptr;
 
 static constexpr const char* COMM_ERR_STRING[] = {
     FOREACH_COMM_ERR(GENERATE_STRING)};

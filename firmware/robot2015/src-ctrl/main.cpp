@@ -221,9 +221,9 @@ int main() {
     RtosTimerHelper radioTimeoutTimer(
         [&]() {
             // reset radio
-            // global_radio->strobe(CC1201_STROBE_SIDLE);
-            // global_radio->strobe(CC1201_STROBE_SFRX);
-            // global_radio->strobe(CC1201_STROBE_SRX);
+            // globalRadio->strobe(CC1201_STROBE_SIDLE);
+            // globalRadio->strobe(CC1201_STROBE_SFRX);
+            // globalRadio->strobe(CC1201_STROBE_SRX);
 
             radioTimeoutTimer.start(RADIO_TIMEOUT);
         },
@@ -297,7 +297,7 @@ int main() {
     uint8_t kickerVoltage = 0;
 
     // Set the watdog timer's initial config
-    Watchdog::Set(RJ_WATCHDOG_TIMER_VALUE);
+    Watchdog::set(RJ_WATCHDOG_TIMER_VALUE);
 
     // Release each thread into its operations in a structured manner
     controller_task.signal_set(SUB_TASK_CONTINUE);
@@ -322,7 +322,7 @@ int main() {
     while (true) {
         // make sure we can always reach back to main by
         // renewing the watchdog timer periodicly
-        Watchdog::Renew();
+        Watchdog::renew();
 
         // periodically reset the console text's format
         ll++;
@@ -334,7 +334,7 @@ int main() {
         Thread::wait(RJ_WATCHDOG_TIMER_VALUE * 250);
 
         // Pack errors into bitmask
-        errorBitmask |= (!global_radio || !global_radio->isConnected())
+        errorBitmask |= (!globalRadio || !globalRadio->isConnected())
                         << RJ_ERR_LED_RADIO;
 
         fpgaLastStatus = motors_refresh();
@@ -369,7 +369,7 @@ int main() {
         // update radio channel
         uint8_t newRadioChannel = radioChannelSwitch.read();
         if (newRadioChannel != currentRadioChannel) {
-            // global_radio->setChannel(newRadioChannel);
+            // globalRadio->setChannel(newRadioChannel);
             currentRadioChannel = newRadioChannel;
             LOG(INIT, "Changed radio channel to %u", newRadioChannel);
         }

@@ -34,10 +34,10 @@ bool initRadio() {
     CommModule::Instance = make_shared<CommModule>(rxTimeoutLED, txTimeoutLED);
 
     // Construct an object pointer for the radio
-    global_radio =
+    globalRadio =
         std::make_unique<Decawave>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
 
-    return global_radio->isConnected();
+    return globalRadio->isConnected();
 }
 
 void radioRxHandler(RTP::Packet pkt) {
@@ -80,39 +80,39 @@ int main() {
 
     if (initRadio()) {
         // LOG(INIT, "Radio interface ready on %3.2fMHz!",
-        // global_radio->freq());
+        // globalRadio->freq());
 
         // register handlers for any ports we might use
         for (RTP::Port port :
              {RTP::Port::CONTROL, RTP::Port::PING, RTP::Port::LEGACY}) {
             CommModule::Instance->setRxHandler(&radioRxHandler, port);
-            CommModule::Instance->setTxHandler((CommLink*)global_radio,
+            CommModule::Instance->setTxHandler((CommLink*)globalRadio,
                                                &CommLink::sendPacket, port);
         }
     } else {
         LOG(FATAL, "No radio interface found!");
     }
 
-    global_radio->setAddress(RTP::BASE_STATION_ADDRESS);
+    globalRadio->setAddress(RTP::BASE_STATION_ADDRESS);
 
-    DigitalOut radioStatusLed(LED4, global_radio->isConnected());
+    DigitalOut radioStatusLed(LED4, globalRadio->isConnected());
 
     // set callbacks for usb control transfers
     usbLink.writeRegisterCallback = [](
-        uint8_t reg, uint8_t val) {  // global_radio->writeReg(reg, val);
+        uint8_t reg, uint8_t val) {  // globalRadio->writeReg(reg, val);
         LOG(INIT, "Trying to write");
     };
     usbLink.readRegisterCallback =
-        [](uint8_t reg) {  // return global_radio->readReg(reg);
+        [](uint8_t reg) {  // return globalRadio->readReg(reg);
             LOG(INIT, "Tring to read");
             return 0;
         };
     usbLink.strobeCallback =
-        [](uint8_t strobe) {  // global_radio->strobe(strobe);
+        [](uint8_t strobe) {  // globalRadio->strobe(strobe);
             LOG(INIT, "trying to strobe");
         };
     usbLink.setRadioChannelCallback = [](uint8_t chanNumber) {
-        // global_radio->setChannel(chanNumber);
+        // globalRadio->setChannel(chanNumber);
         LOG(INIT, "(Not) Set radio channel to %u", chanNumber);
     };
 

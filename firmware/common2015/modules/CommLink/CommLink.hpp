@@ -100,4 +100,4 @@ private:
     }
 };
 
-extern std::unique_ptr<CommLink> global_radio;
+extern std::unique_ptr<CommLink> globalRadio;

@@ -91,7 +91,7 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
 
     // TODO(justin): make this non-global
     // Create a new physical hardware communication link
-    global_radio =
+    globalRadio =
         std::make_unique<Decawave>(sharedSPI, RJ_RADIO_nCS, RJ_RADIO_INT);
 
     // Open a socket for running tests across the link layer
@@ -104,13 +104,13 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
      * Ports are always displayed in ascending (lowest -> highest) order
      * according to its port number when using the console.
      */
-    if (global_radio->isConnected() == true) {
+    if (globalRadio->isConnected() == true) {
         // LOG(INIT, "Radio interface ready on %3.2fMHz!",
-        // global_radio->freq());
+        // globalRadio->freq());
         LOG(INIT, "Radio interface ready");
 
         // Legacy port
-        commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket,
+        commModule->setTxHandler(globalRadio.get(), &CommLink::sendPacket,
                                  RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 

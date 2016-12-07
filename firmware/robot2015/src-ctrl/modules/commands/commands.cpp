@@ -955,7 +955,7 @@ int cmd_heapfill(cmd_args_t& args) {
     }
 
     printf("Testing heap size...\r\n");
-    auto count = sizeof(void*);
+    const auto count = sizeof(void*);
     while (true) {
         void* buf = malloc(count);
         if (!buf) {
@@ -967,7 +967,7 @@ int cmd_heapfill(cmd_args_t& args) {
         free(buf);
         count += sizeof(void*);
         // keep the watchdog timer renewed
-        Watchdog::Renew();
+        Watchdog::renew();
     }
 
     return 0;
@@ -1033,10 +1033,10 @@ int cmd_radio(cmd_args_t& args) {
             }
 
             // } else if (args[0] == "strobe") {
-            // global_radio->strobe(0x30 + atoi(args[1].c_str()));
+            // globalRadio->strobe(0x30 + atoi(args[1].c_str()));
             // } else if (args[0] == "debug") {
-            // bool wasEnabled = global_radio->isDebugEnabled();
-            // global_radio->setDebugEnabled(!wasEnabled);
+            // bool wasEnabled = globalRadio->isDebugEnabled();
+            // globalRadio->setDebugEnabled(!wasEnabled);
             // printf("Radio debugging now %s\r\n",
             //    wasEnabled ? "DISABLED" : "ENABLED");
             // if (!wasEnabled)
@@ -1104,7 +1104,7 @@ int cmd_radio(cmd_args_t& args) {
 
 int cmd_pong(cmd_args_t& args) {
     CommModule::Instance->setTxHandler(
-        global_radio.get(), &CommLink::sendPacket, RTP::PortType::PING);
+        globalRadio.get(), &CommLink::sendPacket, RTP::PortType::PING);
 
     // Any packets received on the PING port are placed in a queue.
     Queue<RTP::Packet, 2> pings;
@@ -1144,7 +1144,7 @@ int cmd_pong(cmd_args_t& args) {
 
 int cmd_ping(cmd_args_t& args) {
     CommModule::Instance->setTxHandler(
-        global_radio.get(), &CommLink::sendPacket, RTP::PortType::PING);
+        globalRadio.get(), &CommLink::sendPacket, RTP::PortType::PING);
 
     // Any packets received on the PING port are placed in a queue
     Queue<RTP::Packet, 2> acks;

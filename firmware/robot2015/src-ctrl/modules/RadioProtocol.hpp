@@ -26,8 +26,8 @@ public:
           _replyTimer(this, &RadioProtocol::reply, osTimerOnce),
           _timeoutTimer(this, &RadioProtocol::_timeout, osTimerOnce) {
         ASSERT(commModule != nullptr);
-        ASSERT(global_radio != nullptr);
-        global_radio->setAddress(RTP::ROBOT_ADDRESS);
+        ASSERT(globalRadio != nullptr);
+        globalRadio->setAddress(RTP::ROBOT_ADDRESS);
     }
 
     ~RadioProtocol() { stop(); }
@@ -54,7 +54,7 @@ public:
 
         _commModule->setRxHandler(this, &RadioProtocol::rxHandler,
                                   RTP::PortType::CONTROL);
-        _commModule->setTxHandler(global_radio.get(), &CommLink::sendPacket,
+        _commModule->setTxHandler(globalRadio.get(), &CommLink::sendPacket,
                                   RTP::PortType::CONTROL);
 
         LOG(INF1, "Radio protocol listening on port %d",
