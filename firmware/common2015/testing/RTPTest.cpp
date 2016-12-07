@@ -40,7 +40,8 @@ TEST(RTP, Packet_HasCorrectSizesAfterConstruction) {
     RTP::Packet p1;
     EXPECT_EQ(p1.size(), RTP::HeaderSize);
 
-    RTP::Packet p2{std::vector<uint8_t>{99, static_cast<uint8_t>(RTP::PortType::LEGACY), 1, 1, 1}};
+    RTP::Packet p2{std::vector<uint8_t>{
+        99, static_cast<uint8_t>(RTP::PortType::LEGACY), 1, 1, 1}};
     EXPECT_EQ(p2.size(), 5);
     EXPECT_EQ(p2.header.address, 99);
     EXPECT_EQ(p2.header.port, RTP::PortType::LEGACY);
@@ -58,5 +59,4 @@ TEST(RTP, Packet_HasCorrectSizesAfterConstruction) {
     EXPECT_EQ(p4.header.address, RTP::INVALID_ROBOT_UID);
     EXPECT_EQ(p4.header.port, RTP::PortType::SINK);
     EXPECT_EQ(p4.header.type, RTP::MessageType::MISC);
-
 }

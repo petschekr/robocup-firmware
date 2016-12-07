@@ -1,7 +1,7 @@
 #pragma once
 
-#include "rtos.h"
 #include <functional>
+#include "rtos.h"
 
 /**
  * This class adds some nifty features to RtosTimer to make it more convenient
@@ -16,17 +16,15 @@ public:
     /// Call an instance method on a given object when the timer fires
     template <class T>
     RtosTimerHelper(T* instance, void (T::*method)(), os_timer_type type)
-        : RtosTimer(&timerFired, type, this), m_callback(std::bind(method, instance));{
-    }
+        : RtosTimer(&timerFired, type, this),
+          m_callback(std::bind(method, instance));
+    {}
 
     /// Call a function/lambda when the timer fires
     RtosTimerHelper(std::function<void()> callback, os_timer_type type)
-        : RtosTimer(&timerFired, type, this), m_callback(callback) {
-    }
+        : RtosTimer(&timerFired, type, this), m_callback(callback) {}
 
-    virtual ~RtosTimerHelper() {
-        stop();
-    }
+    virtual ~RtosTimerHelper() { stop(); }
 
     RtosTimerHelper(const RtosTimerHelper& other) = delete;
 
