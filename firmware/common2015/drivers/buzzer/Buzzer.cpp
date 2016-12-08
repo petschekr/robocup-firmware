@@ -1,7 +1,8 @@
-#include "buzzer.hpp"
+#include "Buzzer.hpp"
 
 #include "const-math.hpp"
 #include "HelperFuncs.hpp"
+#include "Rtos.hpp"
 #include "RtosTimerHelper.hpp"
 
 #include <array>
