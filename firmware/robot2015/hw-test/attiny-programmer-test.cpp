@@ -1,6 +1,6 @@
+#include "Logger.hpp"
 #include "Mbed.hpp"
 #include "Rtos.hpp"
-#include "Logger.hpp"
 
 #include "AVR910.hpp"
 #include "SharedSPI.hpp"

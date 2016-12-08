@@ -74,17 +74,12 @@ add_custom_target(cc1201_register_export
     COMMENT "Generating C header file for cc1201 registers from '${CC1201_CONFIG_NAME}' smartrf xml file"
 )
 set_target_properties(cc1201_register_export PROPERTIES EXCLUDE_FROM_ALL TRUE)
+
 add_dependencies(common2015 cc1201_register_export)
 target_include_directories(common2015 PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
-
 # depends on the mbed libraries and all of the accessory libraries
 add_dependencies(common2015 mbed_libraries ${MBED_ASSEC_LIBS_DEPENDS})
-
 target_link_libraries(common2015 ${MBED_LIBRARY})
-
-# target_include_directories(common2015 PUBLIC ${common2015_INCLUDE_DIRS})
-
-# only build firmware library if required
 set_target_properties(common2015 PROPERTIES EXCLUDE_FROM_ALL TRUE)
 
 # See common/CMakeLists for more info on how this works

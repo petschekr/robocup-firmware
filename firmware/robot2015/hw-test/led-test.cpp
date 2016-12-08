@@ -1,11 +1,11 @@
-#include "Rtos.hpp"
 #include "Mbed.hpp"
-#include "robot-config.hpp"
-#include "pins-ctrl-2015.hpp"
-#include "mcp23017.hpp"
-#include "io-expander.hpp"
-#include "neostrip.hpp"
 #include "RotarySelector.hpp"
+#include "Rtos.hpp"
+#include "io-expander.hpp"
+#include "mcp23017.hpp"
+#include "neostrip.hpp"
+#include "pins-ctrl-2015.hpp"
+#include "robot-config.hpp"
 
 // For some reason, the linker fails if there is no call to Thread::wait()...
 void fix() { Thread::wait(1); }

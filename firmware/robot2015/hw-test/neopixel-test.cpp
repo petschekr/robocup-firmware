@@ -2,8 +2,8 @@
 
 #include "Mbed.hpp"
 
-#include "robot-devices.hpp"
 #include "neostrip.hpp"
+#include "robot-devices.hpp"
 
 DigitalOut ledOne(LED1, 1);
 

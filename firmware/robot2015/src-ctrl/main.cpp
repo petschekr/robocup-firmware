@@ -5,9 +5,9 @@
 
 #include "Rtos.hpp"
 
-#include <Watchdog.hpp>
 #include <Assert.hpp>
 #include <HelperFuncs.hpp>
+#include <Watchdog.hpp>
 #include "Logger.hpp"
 
 #include "BallSense.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Mbed.hpp"
 #include <memory>
+#include "Mbed.hpp"
 
 #include "I2CMasterRtos.hpp"
 

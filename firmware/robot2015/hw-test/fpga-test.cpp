@@ -3,9 +3,9 @@
 
 #include <string>
 
-#include "Logger.hpp"
 #include <HelperFuncs.hpp>
 #include <software-spi.hpp>
+#include "Logger.hpp"
 
 #include "robot-devices.hpp"
 

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Mbed.hpp"
-#include "Logger.hpp"
 #include <string>
 #include "AVR910.hpp"
+#include "Logger.hpp"
+#include "Mbed.hpp"
 #include "kicker_commands.h"
 
 /**

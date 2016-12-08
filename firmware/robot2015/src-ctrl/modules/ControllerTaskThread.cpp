@@ -1,8 +1,8 @@
 #include <RPCVariable.h>
 #include "Rtos.hpp"
 
-#include <Console.hpp>
 #include <Assert.hpp>
+#include <Console.hpp>
 #include "Logger.hpp"
 
 #include "PidMotionController.hpp"

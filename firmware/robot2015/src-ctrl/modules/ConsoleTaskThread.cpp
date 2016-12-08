@@ -1,5 +1,5 @@
-#include "mbed_rpc.h"
 #include "Rtos.hpp"
+#include "mbed_rpc.h"
 
 #include "Assert.hpp"
 #include "Console.hpp"
@@ -55,8 +55,7 @@ void Task_SerialConsole(const void* args) {
         if (Console::Instance->CommandReady() == true) {
             // Increase the thread's priority first so we can make sure the
             // scheduler will select it to run
-            auto tState =
-                osThreadSetPriority(threadID, osPriorityAboveNormal);
+            auto tState = osThreadSetPriority(threadID, osPriorityAboveNormal);
             ASSERT(tState == osOK);
 
             // Execute the command
@@ -71,7 +70,8 @@ void Task_SerialConsole(const void* args) {
             Console::Instance->detachInputHandler();
             execute_line(rx);
             // flush any extra characters that were input while executing cmd
-            while (Console::Instance->pc.readable()) Console::Instance->pc.getc();
+            while (Console::Instance->pc.readable())
+                Console::Instance->pc.getc();
             Console::Instance->attachInputHandler();
 
             // Now, reset the priority of the thread to its idle state

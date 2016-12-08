@@ -1,14 +1,14 @@
 #include <cmsis_os.h>
-#include "Mbed.hpp"
 #include <memory>
+#include "Mbed.hpp"
 
 #include "CC1201Radio.hpp"
 #include "Decawave.hpp"
+#include "Logger.hpp"
+#include "Logger.hpp"
 #include "RJBaseUSBDevice.hpp"
 #include "SharedSPI.hpp"
 #include "firmware-common/base2015/usb-interface.hpp"
-#include "Logger.hpp"
-#include "Logger.hpp"
 #include "pins.hpp"
 #include "watchdog.hpp"
 

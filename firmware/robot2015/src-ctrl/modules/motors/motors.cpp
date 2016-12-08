@@ -1,9 +1,9 @@
 #include "motors.hpp"
 
-#include "Mbed.hpp"
-#include "Rtos.hpp"
 #include "Console.hpp"
 #include "HelperFuncs.hpp"
+#include "Mbed.hpp"
+#include "Rtos.hpp"
 
 #include "commands.hpp"
 #include "fpga.hpp"

@@ -2,8 +2,8 @@
 
 #include <USBDevice.h>
 #include <USBEndpoints.h>
-#include "Mbed.hpp"
 #include <functional>
+#include "Mbed.hpp"
 
 /** Subclass of USBDevice to customize usb descriptors and setup two bulk
  * endpoints, one IN and one OUT.

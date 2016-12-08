@@ -1,8 +1,8 @@
 #include "CommModule.hpp"
 
+#include "Assert.hpp"
 #include "CommPort.hpp"
 #include "Console.hpp"
-#include "Assert.hpp"
 #include "HelperFuncs.hpp"
 #include "Logger.hpp"
 
@@ -57,13 +57,12 @@ void CommModule::txThread() {
             // grab the port number
             const auto portNum = header.port;
 
-            // Call the user callback function
-            if (m_ports.find(portNum) != m_ports.end()) {
-                // only grab the port's reference once
-                auto& port = m_ports[portNum];
+            // grab an iterator to the port, lookup only once
+            const auto portIter = m_ports.find(portNum);
 
-                if (port.hasTxCallback()) {
-                    port.getTxCallback()(p);
+            if (portIter != m_ports.end()) {
+                if (portIter->second.hasTxCallback()) {
+                    portIter->second.getTxCallback()(p);
 
                     LOG(INFO,
                         "Transmission:\r\n"
@@ -119,13 +118,12 @@ void CommModule::rxThread() {
             // grab the port number
             const auto portNum = header.port;
 
-            // Call the user callback function
-            if (m_ports.find(portNum) != m_ports.end()) {
-                // only grab the port's reference once
-                auto& port = m_ports[portNum];
+            // grab an iterator to the port, lookup only once
+            const auto portIter = m_ports.find(portNum);
 
-                if (port.hasRxCallback()) {
-                    port.getRxCallback()(std::move(*p));
+            if (portIter != m_ports.end()) {
+                if (portIter->second.hasRxCallback()) {
+                    portIter->second.getRxCallback()(std::move(p));
 
                     LOG(INFO,
                         "Reception:\r\n"

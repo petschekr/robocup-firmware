@@ -3,12 +3,12 @@
 #include <memory>
 #include <vector>
 
+#include <Assert.hpp>
 #include <CommModule.hpp>
 #include <CommPort.hpp>
 #include <Decawave.hpp>
-#include <SharedSPI.hpp>
-#include <Assert.hpp>
 #include <HelperFuncs.hpp>
+#include <SharedSPI.hpp>
 #include "Logger.hpp"
 
 #include "TimeoutLED.hpp"

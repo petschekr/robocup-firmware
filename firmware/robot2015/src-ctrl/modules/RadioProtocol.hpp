@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Rtos.hpp"
 #include "CC1201.hpp"
 #include "CommModule.hpp"
 #include "Decawave.hpp"
+#include "Rtos.hpp"
 #include "RtosTimerHelper.hpp"
 
 class RadioProtocol {

@@ -7,12 +7,12 @@
  */
 
 #include <cmsis_os.h>
-#include "Mbed.hpp"
 #include <memory>
+#include "Mbed.hpp"
 
 #include "CC1201Radio.hpp"
-#include "SharedSPI.hpp"
 #include "Logger.hpp"
+#include "SharedSPI.hpp"
 #include "pins-ctrl-2015.hpp"
 
 using namespace std;

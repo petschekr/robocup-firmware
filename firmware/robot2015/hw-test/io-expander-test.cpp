@@ -1,8 +1,8 @@
 #include "Mbed.hpp"
 #include "Rtos.hpp"
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 #include <HelperFuncs.hpp>
 

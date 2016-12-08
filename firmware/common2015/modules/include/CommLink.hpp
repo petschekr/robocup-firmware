@@ -1,10 +1,10 @@
 #pragma once
 
 #include "CommModule.hpp"
-#include "MailHelpers.hpp"
 #include "MacroHelpers.hpp"
-#include "Rtos.hpp"
+#include "MailHelpers.hpp"
 #include "RTP.hpp"
+#include "Rtos.hpp"
 #include "SharedSPI.hpp"
 
 #include <memory>

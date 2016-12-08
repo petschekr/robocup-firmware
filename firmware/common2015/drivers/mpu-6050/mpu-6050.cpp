@@ -6,8 +6,8 @@
 
 #include <cmath>
 
-#include "Rtos.hpp"
 #include "Logger.hpp"
+#include "Rtos.hpp"
 
 MPU6050::MPU6050(PinName sda, PinName scl, int freq)
     : connection(sda, scl, freq) {

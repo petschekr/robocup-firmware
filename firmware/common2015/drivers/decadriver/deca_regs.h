@@ -59,6 +59,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     0x01 */
 #define DEV_ID_RIDTAG_MASK                                                     \
     0xFFFF0000UL /* Register Identification Tag 0XDECA \ \ \ \ \ \ \ \ \ \ \ \ \
@@ -76,6 +77,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 
 /****************************************************************************/ /**
@@ -135,6 +137,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     filtering functionality */
 #define SYS_CFG_FFBC                                                           \
     0x00000002UL /* Frame Filtering Behave as a Co-ordinator \ \ \ \ \ \ \ \ \ \
@@ -155,6 +158,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define SYS_CFG_FFAB \
     0x00000004UL /* Frame Filtering Allow Beacon frame reception */
@@ -193,6 +197,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     (binary 100) */
 /*offset 8 */
 #define SYS_CFG_FFA5                                                           \
@@ -222,6 +227,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     (binary 101) */
 #define SYS_CFG_HIRQ_POL 0x00000200UL /* Host interrupt polarity */
 #define SYS_CFG_SPI_EDGE 0x00000400UL /* SPI data launch edge */
@@ -245,6 +251,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     */
 #define SYS_CFG_FCS_INIT2F                                                     \
     0x00008000UL /* initial seed value for the FCS generation and checking \ \ \
@@ -272,6 +279,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     function */
 /*offset 16 */
 #define SYS_CFG_PHR_MODE_SHFT 16
@@ -307,6 +315,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     receiver to re-enable automatically */
 #define SYS_CFG_AUTOACK 0x40000000UL /* Automatic Acknowledgement Enable */
 #define SYS_CFG_AACKPEND \
@@ -367,6 +376,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     (PSR). */
 #define TX_FCTRL_PE_MASK \
     0x00300000UL /* bit mask to access Preamble Extension */
@@ -397,6 +407,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     (PSR). */
 #define TX_FCTRL_SAFE_MASK_32 \
     0xFFFFE3FFUL /* FSCTRL has fields which should always be writen zero */
@@ -446,6 +457,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             of non-standard values */
 #define TX_FCTRL_TXPSR_PE_16 \
     0x00000000UL /* bit mask to access Preamble Extension = 16 */
@@ -494,6 +506,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     field */
 /*offset 32 */
 #define TX_FCTRL_IFSDELAY_MASK \
@@ -558,6 +571,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     should always be writen as zero) */
 /*offset 0 */
 #define SYS_CTRL_SFCST \
@@ -588,6 +602,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     SYS_TIME == TXD_TIME */
 #define SYS_CTRL_CANSFCS                                                      \
     0x00000008UL /* Cancel Suppression of auto-FCS transmission (on the \ \ \ \
@@ -614,6 +629,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     current frame) */
 #define SYS_CTRL_TRXOFF                                                       \
     0x00000040UL /* Transceiver Off. Force Transciever OFF abort TX or RX \ \ \
@@ -641,6 +657,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     immediately */
 #define SYS_CTRL_WAIT4RESP 0x00000080UL /* Wait for Response */
 /*offset 8 */
@@ -667,6 +684,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     SY_TIME[0x??] == RXD_TIME[0x??] CHECK comment*/
 /*offset 16 */
 /*offset 24 */
@@ -696,6 +714,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     host side data set pointer */
 #define SYS_CTRL_HRBT (SYS_CTRL_HSRBTOGGLE)
 #define SYS_CTRL_HRBT_OFFSET (3)
@@ -734,6 +753,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     should always be writen as zero) */
 /*offset 0 */
 #define SYS_MASK_MCPLOCK 0x00000002UL /* Mask clock PLL lock event    */
@@ -768,6 +788,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define SYS_MASK_MRXDFR                                                        \
     0x00002000UL /* Mask receiver data frame ready event \ \ \ \ \ \ \ \ \ \ \ \
@@ -786,6 +807,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define SYS_MASK_MRXFCG 0x00004000UL /* Mask receiver FCS good event */
 #define SYS_MASK_MRXFCE 0x00008000UL /* Mask receiver FCS error event    */
@@ -845,6 +867,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     fields should always be writen as zero) */
 /*offset 0 */
 #define SYS_STATUS_IRQS 0x00000001UL   /* Interrupt Request Status READ ONLY */
@@ -882,6 +905,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     completed the sending of a frame */
 /*offset 8 */
 #define SYS_STATUS_RXPRD 0x00000100UL /* Receiver Preamble Detected status */
@@ -927,6 +951,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     */
 #define SYS_STATUS_HSRBP 0x40000000UL /* Host Side Receive Buffer Pointer */
 #define SYS_STATUS_ICRBP \
@@ -963,6 +988,7 @@ extern "C" {
                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                 and HPDWARN flags */
 
 /* All RX events after a correct packet reception mask. */
@@ -1019,6 +1045,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     fields should always be writen as zero) */
 #define RX_FINFO_RXFLEN_MASK                                                  \
     0x0000007FUL /* Receive Frame Length (0 to 127) \ \ \ \ \ \ \ \ \ \ \ \ \ \
@@ -1035,6 +1062,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \                                                                            \
                   * \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     */
 #define RX_FINFO_RXFLE_MASK \
     0x00000380UL /* Receive Frame Length Extension (0 to 7)<<7 */
@@ -1071,6 +1099,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     10 = 1024 symbols, 11 = 4096 symbols */
 
 #define RX_FINFO_RXPEL_MASK \
@@ -1111,6 +1140,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     bit rate */
 #define RX_FINFO_RXBR_110k 0x00000000UL /* Received bit rate = 110 kbps */
 #define RX_FINFO_RXBR_850k 0x00002000UL /* Received bit rate = 850 kbps */
@@ -1144,6 +1174,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     identifying the frame as a ranging packet. */
 #define RX_FINFO_RNG_SHIFT (15)
 
@@ -1184,6 +1215,7 @@ extern "C" {
                    * \ \ \ \ \ \ \ \ \                                                                             \
                    * \ \ \ \ \ \ \ \ \ \                                                                             \
                    * \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                   * \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                      */
 #define RX_EQUAL_STD_NOISE_SHIFT (0)
 #define STD_NOISE_MASK RX_EQUAL_STD_NOISE_MASK
@@ -1203,6 +1235,7 @@ extern "C" {
                    * \ \ \ \ \ \ \ \ \ \                                                                            \
                    * \ \ \ \ \ \ \ \ \ \ \                                                                            \
                    * \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                      */
 #define RX_EQUAL_FP_AMPL2_SHIFT (16)
 #define FP_AMPL2_MASK RX_EQUAL_FP_AMPL2_MASK
@@ -1266,6 +1299,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     fields should always be writen as zero) */
 /*offset 0 */
 #define RX_TTCKO_RXTOFS_MASK                                                   \
@@ -1294,6 +1328,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     signed quantity*/
 /*offset 24 */
 #define RX_TTCKO_RSMPDEL_MASK                                                 \
@@ -1322,6 +1357,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     value */
 /*offset 32 */
 #define RX_TTCKO_RCPHASE_MASK                                                 \
@@ -1351,6 +1387,7 @@ extern "C" {
                          \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                          \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                          \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                         \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                          adjustment at time the ranging timestamp is made. */
 
 /****************************************************************************/ /**
@@ -1468,6 +1505,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     1mkS, or 128 system clock cycles.*/
 #define SNIFF_OFFT_MASK RX_SNIFF_SNIFF_OFFT_MASK
 
@@ -1504,6 +1542,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     not fall */
 #define BOOSTNORM_MASK TX_POWER_BOOSTNORM_MASK
 #define TX_POWER_BOOSTNORM_SHIFT (0)
@@ -1534,6 +1573,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the 6.8 Mbps data rate frames that are less than 0.5 ms  \ \
                     \                                                          \
                     \ \                                                                             \
@@ -1560,6 +1600,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     duration */
 #define BOOSTP500_MASK TX_POWER_BOOSTP500_MASK
 #define TX_POWER_BOOSTP500_SHIFT (8)
@@ -1590,6 +1631,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the 6.8 Mbps data rate frames that are less than 0.25 ms \ \
                     \                                                          \
                     \ \                                                                             \
@@ -1616,6 +1658,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     duration */
 #define BOOSTP250_MASK TX_POWER_BOOSTP250_MASK
 #define TX_POWER_BOOSTP250_SHIFT (16)
@@ -1646,6 +1689,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the 6.8 Mbps data rate frames that are less than 0.125 ms  \
                     \                                                          \
                     \ \                                                                             \
@@ -1673,6 +1717,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define BOOSTP125_MASK TX_POWER_BOOSTP125_MASK
 #define TX_POWER_BOOSTP125_SHIFT (24)
@@ -1706,6 +1751,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the PHY header (PHR) portion of the frame. */
 #define TX_POWER_TXPOWSD_MASK                                                  \
     0x00FF0000UL /* This power setting is applied during the transmission of \ \
@@ -1734,6 +1780,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the synchronisation header (SHR) and data portions of the  \
                     \                                                          \
                     \ \                                                                             \
@@ -1761,6 +1808,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     frame. */
 
 /****************************************************************************/ /**
@@ -1807,6 +1855,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     00 = 4 MHz, 01 = 16 MHz, 10 = 64MHz. */
 #define CHAN_CTRL_RXFPRF_SHIFT (18)
 /* Specific RXFPRF configuration */
@@ -1838,6 +1887,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     16 MHz, 10 = 64MHz. */
 #define CHAN_CTRL_RXFPRF_16                                                    \
     0x00040000UL /* Specify (Force) RX Pulse Repetition Rate: 00 = 4 MHz, 01 = \
@@ -1867,6 +1917,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     16 MHz, 10 = 64MHz. */
 #define CHAN_CTRL_RXFPRF_64                                                    \
     0x00080000UL /* Specify (Force) RX Pulse Repetition Rate: 00 = 4 MHz, 01 = \
@@ -1896,6 +1947,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     16 MHz, 10 = 64MHz. */
 #define CHAN_CTRL_TX_PCOD_MASK \
     0x07C00000UL /* Bits 22..26      TX Preamble Code selection, 1 to 24. */
@@ -1927,6 +1979,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     proprietary SFD sequence. */
 #define CHAN_CTRL_DWSFD_SHIFT (17)
 #define CHAN_CTRL_TNSSFD                                                       \
@@ -1956,6 +2009,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     transmitting */
 #define CHAN_CTRL_TNSSFD_SHIFT (20)
 #define CHAN_CTRL_RNSSFD                                                       \
@@ -1985,6 +2039,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     receiving */
 #define CHAN_CTRL_RNSSFD_SHIFT (21)
 
@@ -2019,6 +2074,7 @@ extern "C" {
        * \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
        * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
        * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+       * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
          */
 
 /****************************************************************************/ /**
@@ -2064,6 +2120,7 @@ extern "C" {
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               */
 #define AGC_TUNE1_16M 0x8870
 #define AGC_TUNE1_64M 0x889B
@@ -2107,6 +2164,7 @@ extern "C" {
                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                 measurement. */
 #define AGC_STAT1_EDG2_MASK                                                    \
     0x0FF800 /* This 9-bit value relates to the input noise power measurement. \
@@ -2136,6 +2194,7 @@ extern "C" {
               * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                 */
 
 /****************************************************************************/ /**
@@ -2173,6 +2232,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     counter configuration register */
 #define EC_CTRL_OSTSM \
     0x00000001UL /* External transmit synchronisation mode enable */
@@ -2207,6 +2267,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     and external timebase reset */
 /* offset from EXT_SYNC_ID in bytes */
 #define EC_RXTC_OFFSET (0x04)
@@ -2239,6 +2300,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 /* offset from EXT_SYNC_ID in bytes */
 #define EC_GOLP (0x08)
@@ -2270,6 +2332,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     path 1 GHz counter, EC_GOLP */
 #define EC_GOLP_OFFSET_EXT_MASK                                                \
     0x0000003FUL /* This register contains the 1 GHz count from the arrival of \
@@ -2299,6 +2362,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the RMARKER and the next edge of the external clock. */
 
 /****************************************************************************/ /**
@@ -2329,6 +2393,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             */
 #define GPIO_CTRL_LEN (44)
 
@@ -2365,6 +2430,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define GPIO_PIN3_TXLED                                                        \
     0x00001000UL /* The pin operates as the TXLED output \ \ \ \ \ \ \ \ \ \ \ \
@@ -2383,6 +2449,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define GPIO_PIN4_EXTPA                                                        \
     0x00004000UL /* The pin operates as the EXTPA output \ \ \ \ \ \ \ \ \ \ \ \
@@ -2401,6 +2468,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define GPIO_PIN5_EXTTXE \
     0x00010000UL /* The pin operates as the EXTTXE output */
@@ -2440,6 +2508,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     for the write operation*/
 #define GxP1 0x00000002UL /* GPIO1. (See GDP0). */
 #define GxP2 0x00000004UL /* GPIO2. (See GDP0). */
@@ -2488,6 +2557,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             if the GDM0 mask bit has a value of 1 for the write operation*/
 #define GDP1 GxP1 /* Direction Selection for GPIO1. (See GDP0). */
 #define GDP2 GxP2 /* Direction Selection for GPIO2. (See GDP0). */
@@ -2567,6 +2637,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             */
 #define GPIO_ISEN_LEN (4)
 #define GPIO_ISEN_MASK GPIO_IRQE_MASK
@@ -2594,6 +2665,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               Rising-Edge, 1 = Low or falling-edge.*/
 #define GISEN1 GIRQx1 /*  */
 #define GISEN2 GIRQx2 /*  */
@@ -2634,6 +2706,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               sensitive interrupt. Value 1 = Edge triggered interrupt */
 #define GIMOD1 GIRQx1 /*  */
 #define GIMOD2 GIRQx2 /*  */
@@ -2671,6 +2744,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             register */
 #define GPIO_IBES_LEN (4)
 #define GPIO_IBES_MASK GPIO_IRQE_MASK /*  */
@@ -2699,6 +2773,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
               GPIO_IMODE register selects the edge. Value 1 = Both edges    \     \
               \                                                                   \
               \ \                                                                                \
@@ -2725,6 +2800,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
               trigger the interrupt. */
 #define GIBES1 GIRQx1 /*  */
 #define GIBES2 GIRQx2 /*  */
@@ -2768,6 +2844,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               interrupt latch. Writing 0 has no effect. Reading returns zero \ \
               \                                                                \
               \ \                                                                             \
@@ -2794,6 +2871,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               */
 #define GICLR1 GIRQx1 /*  */
 #define GICLR2 GIRQx2 /*  */
@@ -2833,6 +2911,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             */
 #define GPIO_IDBE_LEN (4)
 #define GPIO_IDBE_MASK GPIO_IRQE_MASK
@@ -2860,6 +2939,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               enabled. Value 0 = de-bounce disabled */
 #define GIDBE1 GIRQx1 /*  */
 #define GIDBE2 GIRQx2 /*  */
@@ -2890,6 +2970,7 @@ extern "C" {
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               */
 
 /* offset from GPIO_CTRL in bytes */
@@ -2921,6 +3002,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             */
 #define GPIO_RAW_LEN (4)
 #define GPIO_RAW_MASK GPIO_IRQE_MASK
@@ -2961,6 +3043,7 @@ extern "C" {
             * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
+            * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
               */
 #define DRX_TUNE0b_110K_STD 0x000A
 #define DRX_TUNE0b_110K_NSTD 0x0016
@@ -2986,6 +3069,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             */
 #define DRX_TUNE1a_LEN (2)
 #define DRX_TUNE1a_MASK 0xFFFF
@@ -3009,6 +3093,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             */
 #define DRX_TUNE1b_LEN (2)
 #define DRX_TUNE1b_MASK 0xFFFF
@@ -3051,6 +3136,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             */
 #define DRX_SFDTOC_LEN (2)
 #define DRX_SFDTOC_MASK 0xFFFF
@@ -3072,6 +3158,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             */
 #define DRX_PRETOC_LEN (2)
 #define DRX_PRETOC_MASK 0xFFFF
@@ -3094,6 +3181,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
             */
 #define DRX_TUNE4H_LEN (2)
 #define DRX_TUNE4H_MASK 0xFFFF
@@ -3138,6 +3226,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define RF_TXCTRL_TXTXMQ_MASK \
     0x00000E00UL /* Transmit mixer Q-factor tuning register */
@@ -3165,6 +3254,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     RF_TXCTRL */
 #define RF_TXCTRL_CH2                                                           \
     0x00045CA0UL /* 32-bit value to program to Sub-Register 0x28:0C � \ \ \ \ \
@@ -3190,6 +3280,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     RF_TXCTRL */
 #define RF_TXCTRL_CH3                                                           \
     0x00086CC0UL /* 32-bit value to program to Sub-Register 0x28:0C � \ \ \ \ \
@@ -3215,6 +3306,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     RF_TXCTRL */
 #define RF_TXCTRL_CH4                                                           \
     0x00045C80UL /* 32-bit value to program to Sub-Register 0x28:0C � \ \ \ \ \
@@ -3240,6 +3332,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     RF_TXCTRL */
 #define RF_TXCTRL_CH5                                                           \
     0x001E3FE0UL /* 32-bit value to program to Sub-Register 0x28:0C � \ \ \ \ \
@@ -3265,6 +3358,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     RF_TXCTRL */
 #define RF_TXCTRL_CH7                                                           \
     0x001E7DE0UL /* 32-bit value to program to Sub-Register 0x28:0C � \ \ \ \ \
@@ -3290,6 +3384,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                              \
                     RF_TXCTRL */
 
 /* offset from TX_CAL_ID in bytes */
@@ -3322,6 +3417,7 @@ extern "C" {
          * \ \ \ \ \ \ \ \ \                                                                            \
          * \ \ \ \ \ \ \ \ \ \                                                                            \
          * \ \ \ \ \ \ \ \ \ \ \                                                                            \
+         * \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
            */
 #define TC_SARL_SAR_LTEMP_OFFSET \
     (4) /* Latest SAR reading for Temperature level */
@@ -3382,6 +3478,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             so may cause the DW1000 to malfunction. */
 #define FS_RES1_LEN (7)
 /* offset from FS_CTRL_ID in bytes */
@@ -3431,6 +3528,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             so may cause the DW1000 to malfunction. */
 #define FS_RES2_LEN (2)
 /* offset from FS_CTRL_ID in bytes */
@@ -3464,6 +3562,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             to tune out errors, see 8.1 � IC Calibration � Crystal Oscillator \
             \                                                                     \
             \ \                                                                                \
@@ -3491,6 +3590,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                \
             Trim. */
 #define FS_XTALT_MIDRANGE 0x10
 /* offset from FS_CTRL_ID in bytes */
@@ -3522,6 +3622,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             so may cause the DW1000 to malfunction. */
 #define FS_RES3_LEN (6)
 
@@ -3556,6 +3657,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             low-power SLEEP or DEEPSLEEPstates. */
 #define AON_WCFG_LEN (2)
 #define AON_WCFG_MASK 0x09CB /* access mask to AON_WCFG register*/
@@ -3586,6 +3688,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               Convertors */
 #define AON_WCFG_ONW_RX 0x0002 /* On Wake-up turn on the Receiver */
 #define AON_WCFG_ONW_LEUI                                                      \
@@ -3616,6 +3719,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               � Extended Unique Identifier. */
 #define AON_WCFG_ONW_LDC                                                       \
     0x0040 /* On Wake-up load configurations from the AON memory into the host \
@@ -3645,6 +3749,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               interface register set */
 #define AON_WCFG_ONW_L64P \
     0x0080 /* On Wake-up load the Length64 receiver operating parameter set */
@@ -3675,6 +3780,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               respect to the ARXSLP and ATXSLP sleep controls */
 #define AON_WCFG_ONW_LLDE 0x0800 /* On Wake-up load the LDE microcode. */
 #define AON_WCFG_ONW_LLDO 0x1000 /* On Wake-up load the LDO tune value. */
@@ -3707,6 +3813,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             the AON block with respect to the stored AON memory */
 #define AON_CTRL_LEN (1)
 #define AON_CTRL_MASK 0x8F /* access mask to AON_CTRL register */
@@ -3738,6 +3845,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             from the AON memory to the host interface register set. */
 #define AON_CTRL_SAVE                                                         \
     0x02 /* When this bit is set the DW1000 will copy the user configurations \
@@ -3767,6 +3875,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             from the host interface register set into the AON memory */
 #define AON_CTRL_UPL_CFG \
     0x04 /* Upload the AON block configurations to the AON  */
@@ -3822,6 +3931,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     frequency to set an LP clock frequency */
 #define AON_CFG0_LPCLKDIVA_SHIFT (5)
 #define AON_CFG0_SLEEP_TIM                                                     \
@@ -3850,6 +3960,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     elapse value */
 #define AON_CFG0_SLEEP_SHIFT (16)
 #define AON_CFG0_SLEEP_TIM_OFFSET 2 /* In bytes */
@@ -3886,6 +3997,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               state within the DW1000 */
 #define AON_CFG1_LPOSC_CAL                                                    \
     0x0004 /* This bit enables the calibration function that measures the \ \ \
@@ -3913,6 +4025,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               period of the IC�s internal low powered oscillator */
 
 /****************************************************************************/ /**
@@ -3947,6 +4060,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             location  */
 #define OTP_WDAT_LEN (4)
 /* offset from OTP_IF_ID in bytes */
@@ -3977,6 +4091,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             block */
 #define OTP_ADDR_LEN (2)
 #define OTP_ADDR_MASK                                                          \
@@ -4006,6 +4121,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               will be accessed read or written. */
 /* offset from OTP_IF_ID in bytes */
 #define OTP_CTRL 0x06 /* used to control the operation of the OTP memory */
@@ -4041,6 +4157,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               the OTP_ADDR register */
 #define OTP_CTRL_LDELOAD 0x8000 /* This bit forces a load of LDE microcode */
 #define OTP_CTRL_OTPPROG                                                       \
@@ -4068,6 +4185,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               written to OTP_ADDR. */
 /* offset from OTP_IF_ID in bytes */
 #define OTP_STAT 0x08
@@ -4102,6 +4220,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             appear here */
 #define OTP_RDAT_LEN (4)
 /* offset from OTP_IF_ID in bytes */
@@ -4130,6 +4249,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             location will appear here after power up */
 #define OTP_SRDAT_LEN (4)
 /* offset from OTP_IF_ID in bytes */
@@ -4159,6 +4279,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             receiver operational parameter */
 #define OTP_SF_LEN (1)
 #define OTP_SF_MASK 0x63
@@ -4190,6 +4311,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             selected by the OPS_SEL */
 #define OTP_SF_LDO_KICK \
     0x02 /* This bit when set initiates a load of the LDO tune code */
@@ -4212,6 +4334,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \                                                                             \
           * \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
           * \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             */
 
 /****************************************************************************/ /**
@@ -4256,6 +4379,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               find the first path */
 #define LDE_THRESH_LEN (2)
 /* offset from LDE_IF_ID in bytes */
@@ -4289,6 +4413,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               algorithm has determined to contain the maximum */
 #define LDE_PPINDX_LEN (2)
 /* offset from LDE_IF_ID in bytes */
@@ -4315,6 +4440,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               accumulator data memory */
 #define LDE_PPAMPL_LEN (2)
 /* offset from LDE_IF_ID in bytes */
@@ -4345,6 +4471,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               delay */
 #define LDE_RXANTD_LEN (2)
 /* offset from LDE_IF_ID in bytes */
@@ -4379,6 +4506,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
               coefficient */
 #define LDE_REPC_LEN (2)
 #define LDE_REPC_PCODE_1 0x5998
@@ -4444,6 +4572,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     zero to avoid any malfunction of the device. */
 #define EVC_EN 0x00000001UL /* Event Counters Enable bit */
 #define EVC_CLR 0x00000002UL
@@ -4487,6 +4616,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             good CRC/FCS sequence. */
 #define EVC_FCG_LEN (2)
 #define EVC_FCG_MASK 0x0FFF
@@ -4519,6 +4649,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             bad CRC/FCS sequence. */
 #define EVC_FCE_LEN (2)
 #define EVC_FCE_MASK 0x0FFF
@@ -4551,6 +4682,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             the receive frame filtering function. */
 #define EVC_FFR_LEN (2)
 #define EVC_FFR_MASK 0x0FFF
@@ -4589,6 +4721,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             */
 #define EVC_OVR_LEN (2)
 #define EVC_OVR_MASK 0x0FFF
@@ -4618,6 +4751,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             Timeout events */
 #define EVC_PTO_LEN (2)
 #define EVC_PTO_MASK 0x0FFF
@@ -4648,6 +4782,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             timeout events */
 #define EVC_FWTO_LEN (2)
 #define EVC_FWTO_MASK 0x0FFF
@@ -4679,6 +4814,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             This is incremented every time a frame is sent */
 #define EVC_TXFS_LEN (2)
 #define EVC_TXFS_MASK 0x0FFF
@@ -4711,6 +4847,7 @@ extern "C" {
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                 \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                 \
           * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                 \
+          * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                                 \
             */
 #define EVC_HPW_LEN (2)
 #define EVC_HPW_MASK 0x0FFF
@@ -4741,6 +4878,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                               \
             Warnings�. */
 #define EVC_TPW_LEN (2)
 #define EVC_TPW_MASK 0x0FFF
@@ -4772,6 +4910,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             cause the DW1000 to malfunction. */
 
 /* offset from DIG_DIAG_ID in bytes */
@@ -4806,6 +4945,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               spectral testing. When the TX_PSTM bit is set it enables a \ \ \ \
               \                                                                \
               \ \                                                                             \
@@ -4830,6 +4970,7 @@ extern "C" {
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
               repeating transmission of the data from the TX_BUFFER */
 
 /****************************************************************************/ /**
@@ -4881,6 +5022,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the PLL is calibrated and locked, then it will switch over \
                     \                                                          \
                     \ \                                                                             \
@@ -4908,6 +5050,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     the 125 MHz PLL clock */
 #define PMSC_CTRL0_SYSCLKS_19M \
     0x00000001UL /* Force system clock to be the 19.2 MHz XTI clock. */
@@ -4941,6 +5084,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     RX operation */
 #define PMSC_CTRL0_RXCLKS_19M                                                 \
     0x00000004UL /* Force RX clock enable and sourced clock from the 19.2 MHz \
@@ -4970,6 +5114,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     XTI clock */
 #define PMSC_CTRL0_RXCLKS_125M                                                 \
     0x00000008UL /* Force RX clock enable and sourced from the 125 MHz PLL \ \ \
@@ -4997,6 +5142,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     clock */
 #define PMSC_CTRL0_RXCLKS_OFF 0x0000000CUL /* Force RX clock off. */
 #define PMSC_CTRL0_TXCLKS_AUTO                                                 \
@@ -5026,6 +5172,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     TX operation */
 #define PMSC_CTRL0_TXCLKS_19M                                                 \
     0x00000010UL /* Force TX clock enable and sourced clock from the 19.2 MHz \
@@ -5055,6 +5202,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     XTI clock */
 #define PMSC_CTRL0_TXCLKS_125M                                                 \
     0x00000020UL /* Force TX clock enable and sourced from the 125 MHz PLL \ \ \
@@ -5082,6 +5230,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     clock */
 #define PMSC_CTRL0_TXCLKS_OFF 0x00000030UL /* Force TX clock off */
 #define PMSC_CTRL0_FACE 0x00000040UL       /* Force Accumulator Clock Enable */
@@ -5128,6 +5277,7 @@ extern "C" {
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                   * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                  * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     */
 #define PMSC_CTRL1_ATXSLP                                                      \
     0x00000800UL /* If this bit is set then the DW1000 will automatically \ \  \
@@ -5155,6 +5305,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     transition into SLEEP or DEEPSLEEP mode after transmission \
                     \                                                          \
                     \ \                                                                             \
@@ -5182,6 +5333,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     of a frame */
 #define PMSC_CTRL1_ARXSLP                                                      \
     0x00001000UL /* this bit is set then the DW1000 will automatically \ \ \ \ \
@@ -5207,6 +5359,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     transition into SLEEP mode after a receive attempt */
 #define PMSC_CTRL1_SNOZE 0x00002000UL /* Snooze Enable */
 #define PMSC_CTRL1_SNOZR                                                       \
@@ -5236,6 +5389,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     twice */
 #define PMSC_CTRL1_PLLSYN                                                     \
     0x00008000UL /* This enables a special 1 GHz clock used for some external \
@@ -5265,6 +5419,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     SYNC modes */
 #define PMSC_CTRL1_LDERUNE \
     0x00020000UL /* This bit enables the running of the LDE algorithm */
@@ -5297,6 +5452,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
             control of analog RF subsystems */
 #define PMSC_CTRL1_PKTSEQ_ENABLE                                               \
     0xE7 /* writing this to PMSC CONTROL 1 register (bits 10-3) enables PMSC \ \
@@ -5325,6 +5481,7 @@ extern "C" {
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+            \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
             control of analog RF subsystems */
 /* offset from PMSC_ID in bytes */
 #define PMSC_RES1_OFFSET 0x08
@@ -5372,6 +5529,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                             \
                     an event that causes them to be set on. */
 #define PMSC_LEDC_BLNKEN                                                      \
     0x00000100UL /* Blink Enable. When this bit is set to 1 the LED blink \ \ \
@@ -5399,6 +5557,7 @@ extern "C" {
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
+                    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                                                                            \
                     feature is enabled. */
 /* Default blink time. Blink time is expressed in multiples of 14 ms. The value
  * defined here is ~225 ms. */

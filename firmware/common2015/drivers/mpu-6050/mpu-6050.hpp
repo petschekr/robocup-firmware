@@ -6,8 +6,8 @@
 #include <cstdint>
 #include "Mbed.hpp"
 
-#include "mpu-6050-defines.hpp"
 #include "I2CMasterRtos.hpp"
+#include "mpu-6050-defines.hpp"
 
 /**
  * Defines

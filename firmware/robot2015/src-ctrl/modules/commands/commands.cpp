@@ -5,15 +5,15 @@
 #include <sstream>
 
 #include <mbed_rpc.h>
-#include "Rtos.hpp"
 #include <CC1201.hpp>
 #include <CommModule.hpp>
 #include <Decawave.hpp>
+#include <HelperFuncs.hpp>
 #include <KickerBoard.hpp>
 #include <Watchdog.hpp>
-#include "Logger.hpp"
-#include <HelperFuncs.hpp>
 #include "Console.hpp"
+#include "Logger.hpp"
+#include "Rtos.hpp"
 
 #include "ds2411.hpp"
 #include "fpga.hpp"

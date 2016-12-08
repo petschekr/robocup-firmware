@@ -29,8 +29,9 @@ constexpr float cube_const(const float x) { return x * x * x; }
 
 // Based on the triple-angle formula: sin 3x = 3 sin x - 4 sin ^3 x
 constexpr float sin_helper(const float x) {
-    return x < tol ? x : 3 * (sin_helper(x / 3.0)) -
-                             4 * cube_const(sin_helper(x / 3.0));
+    return x < tol ? x
+                   : 3 * (sin_helper(x / 3.0)) -
+                         4 * cube_const(sin_helper(x / 3.0));
 }
 
 constexpr float sin_const(const float x) {

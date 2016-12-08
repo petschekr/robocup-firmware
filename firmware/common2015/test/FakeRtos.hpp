@@ -1,7 +1,8 @@
 #pragma once
 
 /**
- * This files provides the modules for null-emulating testable rtos functionality.
+ * This files provides the modules for null-emulating testable rtos
+ * functionality.
  */
 namespace RtosTest {
 

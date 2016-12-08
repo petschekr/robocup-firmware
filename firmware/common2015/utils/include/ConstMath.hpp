@@ -25,8 +25,9 @@ constexpr double cube_const(const double x) { return x * x * x; }
 
 // Based on the triple-angle formula: sin 3x = 3 sin x - 4 sin ^3 x
 constexpr double sin_helper(const double x) {
-    return x < tol ? x : 3 * (sin_helper(x / 3.0)) -
-                             4 * cube_const(sin_helper(x / 3.0));
+    return x < tol ? x
+                   : 3 * (sin_helper(x / 3.0)) -
+                         4 * cube_const(sin_helper(x / 3.0));
 }
 constexpr double sin_const(const double x) {
     return sin_helper(x < 0 ? -x + M_PI : x);
@@ -34,8 +35,9 @@ constexpr double sin_const(const double x) {
 
 // sinh 3x = 3 sinh x + 4 sinh ^3 x
 constexpr double sinh_helper(const double x) {
-    return x < tol ? x : 3 * (sinh_helper(x / 3.0)) +
-                             4 * cube_const(sinh_helper(x / 3.0));
+    return x < tol ? x
+                   : 3 * (sinh_helper(x / 3.0)) +
+                         4 * cube_const(sinh_helper(x / 3.0));
 }
 constexpr double sinh_const(const double x) {
     return x < 0 ? -sinh_helper(-x) : sinh_helper(x);
