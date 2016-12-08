@@ -51,7 +51,7 @@ add_executable(test-firmware ${FIRMWARE_TEST_SRC})
 add_dependencies(test-firmware googletest)
 target_link_libraries(test-firmware ${GTEST_LIBRARIES})
 # target_include_directories(test-firmware PRIVATE "common2015")
-target_include_directories(test-firmware PRIVATE "common2015" "common2015/test")
+target_include_directories(test-firmware PRIVATE "common2015" "common2015/test" "common2015/utils/include" "common2015/modules/include")
 target_compile_definitions(test-firmware PRIVATE -D__MBED_TEST__)
 set_target_properties(test-firmware PROPERTIES EXCLUDE_FROM_ALL TRUE)
 

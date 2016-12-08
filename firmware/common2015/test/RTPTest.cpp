@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+
+#include "RTP.hpp"
+
 #include <string>
-#include "../utils/RTP.hpp"
 
 TEST(RTP, Header_IsdefaultConstructable) { RTP::Header h; }
 TEST(RTP, Packet_IsdefaultConstructable) { RTP::Packet p; }

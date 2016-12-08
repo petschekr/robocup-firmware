@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
+
+#include "CommPort.hpp"
+#include "RTP.hpp"
+
 #include <functional>
-#include "../modules/CommModule/CommPort.hpp"
-#include "../utils/RTP.hpp"
 
 namespace {
 using CommPortT = CommPort<void(), void()>;
