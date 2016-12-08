@@ -1,21 +1,18 @@
 #include "Rtos.hpp"
-
-#include <memory>
-#include <vector>
-
-#include <Assert.hpp>
-#include <CommModule.hpp>
-#include <CommPort.hpp>
-#include <Decawave.hpp>
-#include <HelperFuncs.hpp>
-#include <SharedSPI.hpp>
+#include "Assert.hpp"
+#include "CommModule.hpp"
+#include "CommPort.hpp"
+#include "Decawave.hpp"
+#include "HelperFuncs.hpp"
+#include "SharedSPI.hpp"
 #include "Logger.hpp"
-
 #include "TimeoutLED.hpp"
 #include "fpga.hpp"
 #include "io-expander.hpp"
 #include "robot-devices.hpp"
-#include "task-signals.hpp"
+
+#include <memory>
+#include <vector>
 
 using namespace std;
 
@@ -112,7 +109,9 @@ void InitializeCommModule(SharedSPIDevice<>::SpiPtrT sharedSPI) {
                                  RTP::PortType::LEGACY);
         commModule->setRxHandler(&legacy_rx_cb, RTP::PortType::LEGACY);
 
+#ifndef NDEBUG
         LOG(INFO, "%u sockets opened", commModule->numOpenSockets());
+#endif
 
         // Wait until the threads with the commModule are all started up
         // and ready

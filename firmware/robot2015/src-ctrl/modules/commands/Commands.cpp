@@ -1,23 +1,28 @@
-#include "commands.hpp"
+#include "Commands.hpp"
+#include "Watchdog.hpp"
+
+#ifdef NDEBUG
+
+void execute_iterative_command() {}
+void execute_line(char* rawCommand) {}
+
+#else
+
+#include "mbed_rpc.h"
+#include "CommModule.hpp"
+#include "CommLink.hpp"
+#include "HelperFuncs.hpp"
+#include "KickerBoard.hpp"
+#include "Console.hpp"
+#include "Logger.hpp"
+#include "Rtos.hpp"
+#include "ds2411.hpp"
+#include "fpga.hpp"
+#include "neostrip.hpp"
 
 #include <ctime>
 #include <map>
 #include <sstream>
-
-#include <mbed_rpc.h>
-#include <CC1201.hpp>
-#include <CommModule.hpp>
-#include <Decawave.hpp>
-#include <HelperFuncs.hpp>
-#include <KickerBoard.hpp>
-#include <Watchdog.hpp>
-#include "Console.hpp"
-#include "Logger.hpp"
-#include "Rtos.hpp"
-
-#include "ds2411.hpp"
-#include "fpga.hpp"
-#include "neostrip.hpp"
 
 using std::string;
 using std::vector;
@@ -890,7 +895,7 @@ int cmd_ps(cmd_args_t& args) {
         show_invalid_args(args);
         return 1;
     } else {
-        unsigned int num_threads = 0;
+        auto num_threads = 0;
 
         static const std::array<const char*, 9> thread_states = {
             "NA", "RDY", "RUN", "WDL", "WIT", "WOR", "WSM", "WMB", "WMX",
@@ -949,25 +954,26 @@ int cmd_ps(cmd_args_t& args) {
 
     return 0;
 }
+#endif
 
 int cmd_heapfill(cmd_args_t& args) {
+#ifndef NDEBUG
     if (!args.empty()) {
         show_invalid_args(args);
         return 1;
     }
+#endif
 
     printf("Testing heap size...\r\n");
     auto count = sizeof(void*);
     while (true) {
         void* buf = malloc(count);
         if (!buf) {
-            printf("failed to allocate %d bytes\r\n", count);
+            printf("Heap space:\t%d bytes\r\n", count);
             break;
-        } else {
-            printf("allocated %d bytes\r\n", count);
         }
         free(buf);
-        count += sizeof(void*);
+        count += 10 * sizeof(void*);
         // keep the watchdog timer renewed
         Watchdog::renew();
     }
@@ -975,6 +981,7 @@ int cmd_heapfill(cmd_args_t& args) {
     return 0;
 }
 
+#ifndef NDEBUG
 int cmd_radio(cmd_args_t& args) {
     if (args.empty()) {
         // Default to showing the list of ports
@@ -996,10 +1003,7 @@ int cmd_radio(cmd_args_t& args) {
         pck.header.port = portNbr;
         pck.header.address = RTP::BASE_STATION_ADDRESS;
 
-        if (args[0] == "show") {
-            CommModule::Instance->printInfo();
-
-        } else if (args[0] == "test-tx") {
+        if (args[0] == "test-tx") {
             printf("Placing %u byte packet in TX buffer.\r\n",
                    pck.payload.size());
             CommModule::Instance->send(std::move(pck));
@@ -1008,6 +1012,9 @@ int cmd_radio(cmd_args_t& args) {
             printf("Placing %u byte packet in RX buffer.\r\n",
                    pck.payload.size());
             CommModule::Instance->receive(pck);
+
+        } else if (args[0] == "show") {
+            CommModule::Instance->printInfo();
 
         } else if (args[0] == "loopback") {
             pck.header.port = RTP::PortType::LINK;
@@ -1321,3 +1328,5 @@ void show_invalid_args(cmd_args_t& args) {
 void show_invalid_args(const string& s) {
     printf("Invalid argument '%s'.\r\n", s.c_str());
 }
+
+#endif

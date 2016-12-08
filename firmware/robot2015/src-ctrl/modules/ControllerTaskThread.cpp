@@ -1,10 +1,8 @@
-#include <RPCVariable.h>
+#include "RPCVariable.h"
 #include "Rtos.hpp"
-
-#include <Assert.hpp>
-#include <Console.hpp>
+#include "Assert.hpp"
+#include "Console.hpp"
 #include "Logger.hpp"
-
 #include "PidMotionController.hpp"
 #include "RtosTimerHelper.hpp"
 #include "fpga.hpp"
@@ -12,7 +10,7 @@
 #include "motors.hpp"
 #include "mpu-6050.hpp"
 #include "robot-devices.hpp"
-#include "task-signals.hpp"
+#include "TaskSignals.hpp"
 
 using namespace std;
 

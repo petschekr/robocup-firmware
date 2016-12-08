@@ -5,7 +5,7 @@
 #include "Mbed.hpp"
 #include "Rtos.hpp"
 
-#include "commands.hpp"
+#include "Commands.hpp"
 #include "fpga.hpp"
 
 namespace {
@@ -42,6 +42,7 @@ uint8_t motors_refresh() {
     return status_byte;
 }
 
+#ifndef NDEBUG
 void motors_show() {
     std::array<int16_t, NUM_MOTORS> duty_cycles = {0};
     std::array<uint8_t, NUM_MOTORS> halls = {0};
@@ -150,3 +151,4 @@ int cmd_motors(const std::vector<std::string>& args) {
 
     return 0;
 }
+#endif

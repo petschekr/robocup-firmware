@@ -18,12 +18,13 @@
 #include "RotarySelector.hpp"
 #include "RtosTimerHelper.hpp"
 #include "SharedSPI.hpp"
-#include "commands.hpp"
+#include "Commands.hpp"
 #include "fpga.hpp"
 #include "io-expander.hpp"
 #include "neostrip.hpp"
 #include "robot-devices.hpp"
-#include "task-signals.hpp"
+#include "TaskSignals.hpp"
+#include "motors.hpp"
 
 #define RJ_ENABLE_ROBOT_CONSOLE
 
@@ -318,6 +319,8 @@ int main() {
         errorBitmask |= (1 << RJ_ERR_LED_M4);
         errorBitmask |= (1 << RJ_ERR_LED_DRIB);
     }
+
+    cmd_heapfill();
 
     while (true) {
         // make sure we can always reach back to main by
