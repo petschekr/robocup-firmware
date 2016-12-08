@@ -123,7 +123,7 @@ void CommModule::rxThread() {
 
             if (portIter != m_ports.end()) {
                 if (portIter->second.hasRxCallback()) {
-                    portIter->second.getRxCallback()(std::move(p));
+                    portIter->second.getRxCallback()(std::move(*p));
 
                     LOG(INFO,
                         "Reception:\r\n"
