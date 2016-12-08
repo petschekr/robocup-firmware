@@ -36,9 +36,8 @@ add_library(common2015 ${common2015_SRC} "${CMAKE_BINARY_DIR}/common/git_version
 
 target_include_directories( common2015 PUBLIC
     utils/include
-    modules/CommModule
-    modules/CommLink
-    modules/Console
+    modules/include
+    drivers/include
     drivers/avr-isp
     drivers/ball-sense
     drivers/buzzer

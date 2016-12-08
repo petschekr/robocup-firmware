@@ -4,8 +4,8 @@
 
 #include "Rtos.hpp"
 
-#include "logger.hpp"
-#include "rj-macros.hpp"
+#include "Logger.hpp"
+#include "MacroHelpers.hpp"
 #include "software-spi.hpp"
 
 template <size_t SIGN_INDEX>
@@ -48,7 +48,7 @@ FPGA::FPGA(std::shared_ptr<SharedSPI> sharedSPI, PinName nCs, PinName initB,
 
 bool FPGA::configure(const std::string& filepath) {
     // make sure the binary exists before doing anything
-    FILE* fp = fopen(filepath.c_str(), "r");
+    auto fp = fopen(filepath.c_str(), "r");
     if (fp == nullptr) {
         LOG(SEVERE, "No FPGA bitfile!");
 
@@ -62,12 +62,12 @@ bool FPGA::configure(const std::string& filepath) {
     _progB = 1;
 
     // wait for the FPGA to tell us it's ready for the bitstream
-    bool fpgaReady = false;
-    for (int i = 0; i < 100; i++) {
+    auto fpgaReady = false;
+    for (auto i = 0; i < 100; ++i) {
         Thread::wait(10);
 
         // We're ready to start the configuration process when _initB goes high
-        if (_initB == true) {
+        if (_initB) {
             fpgaReady = true;
             break;
         }
@@ -82,10 +82,11 @@ bool FPGA::configure(const std::string& filepath) {
 
     // Configure the FPGA with the bitstream file, this returns false if file
     // can't be opened
-    if (send_config(filepath)) {
+    const auto sendSuccess = send_config(filepath);
+    if (sendSuccess) {
         // Wait some extra time in case the _done pin needs time to be asserted
-        bool configSuccess = false;
-        for (int i = 0; i < 1000; i++) {
+        auto configSuccess = false;
+        for (auto i = 0; i < 1000; i++) {
             Thread::wait(1);
             if (_done == true) {
                 configSuccess = !_initB;
@@ -113,10 +114,10 @@ TODO(remove this hack once issue number 590 is closed)
 #include "../../../robot2015/src-ctrl/config/pins-ctrl-2015.hpp"
 
 bool FPGA::send_config(const std::string& filepath) {
-    const uint8_t bufSize = 50;
+    constexpr auto bufSize = 50;
 
     // open the bitstream file
-    FILE* fp = fopen(filepath.c_str(), "r");
+    auto fp = fopen(filepath.c_str(), "r");
 
     // send it out if successfully opened
     if (fp != nullptr) {
@@ -219,6 +220,7 @@ uint8_t FPGA::read_duty_cycles(int16_t* duty_cycles, size_t size) {
 uint8_t FPGA::set_duty_cycles(int16_t* duty_cycles, size_t size) {
     uint8_t status;
 
+    ASSERT(size == 5);
     if (size != 5) {
         LOG(WARN, "set_duty_cycles() requires input buffer to be of size 5");
     }

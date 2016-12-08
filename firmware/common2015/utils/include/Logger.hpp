@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-#include "rj-macros.hpp"
+#include "MacroHelpers.hpp"
 
 // Do weird macro things for logging the filename and line for every call.
 // Also allows for disabling all logging through macros so all log calls can be

@@ -1,15 +1,17 @@
 #include "Console.hpp"
 
-#include "logger.hpp"
+#include "Assert.hpp"
+#include "Logger.hpp"
+
+std::shared_ptr<Console> Console::Instance = nullptr;
+int Console::instanceCount = 0;
 
 const std::string Console::COMMAND_BREAK_MSG = "*BREAK*\033[K";
 
-shared_ptr<Console> Console::instance;
-
 Console::Console() : pc(USBTX, USBRX) {
-    // Set default values for the header parameters
-    CONSOLE_USER = "anon";
-    CONSOLE_HOSTNAME = "robot";
+    ++instanceCount;
+    ASSERT(instanceCount == 1);
+
     setHeader();
 
     // Use a higher baudrate than the default for a faster console
@@ -18,7 +20,7 @@ Console::Console() : pc(USBTX, USBRX) {
     // attach interrupt handlers
     attachInputHandler();
 
-    // reserve space for 5 lines in rx buffer
+    // reserve space in rx buffer
     _rxBuffer.reserve(15);
 }
 
@@ -27,12 +29,6 @@ void Console::attachInputHandler() {
 }
 
 void Console::detachInputHandler() { pc.attach(nullptr, Serial::RxIrq); }
-
-shared_ptr<Console>& Console::Instance() {
-    if (!instance) instance.reset(new Console);
-
-    return instance;
-}
 
 void Console::PrintHeader() {
     // prints out a bash-like header
@@ -53,7 +49,7 @@ void Console::RXCallback() {
 
         // Otherwise, continue as normal
         // read the char that caused the interrupt
-        char c = pc.getc();
+        auto c = pc.getc();
 
         esc_en = esc_flag_one && esc_flag_two;
 
@@ -206,16 +202,6 @@ void Console::Baudrate(uint16_t baud) {
 }
 
 uint16_t Console::Baudrate() const { return _baudRate; }
-
-std::string Console::GetHostResponse() {
-    if (esc_host_res_rdy) {
-        esc_host_res_rdy = false;
-
-        return esc_host_res;
-    } else {
-        return "";
-    }
-}
 
 void Console::ShowLogo() {
     Flush();

@@ -4,11 +4,11 @@
 #include "Console.hpp"
 #include "Assert.hpp"
 #include "HelperFuncs.hpp"
-#include "logger.hpp"
+#include "Logger.hpp"
 
 #include <ctime>
 
-std::shared_ptr<CommModule> CommModule::Instance;
+std::shared_ptr<CommModule> CommModule::Instance = nullptr;
 
 CommModule::CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
                        std::shared_ptr<FlashingTimeoutLED> txTimeoutLED)
@@ -258,6 +258,6 @@ void CommModule::printInfo() const {
         "Total:\t\t%u\t%u\r\n",
         numRxPackets(), numTxPackets());
 
-    Console::Instance()->Flush();
+    Console::Instance->Flush();
 }
 #endif

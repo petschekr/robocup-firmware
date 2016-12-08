@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <logger.hpp>
+#include "Logger.hpp"
 #include <HelperFuncs.hpp>
 #include <software-spi.hpp>
 

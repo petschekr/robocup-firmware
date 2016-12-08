@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Mbed.hpp"
-#include "Rtos.hpp"
 #include "cmsis_os.h"
 
-#include <cstdint>
 #include <string>
 
 /**
@@ -56,3 +53,8 @@ unsigned int ThreadMaxStackUsed(const P_TCB tcb);
  * @return     Currently used stack size, in bytes
  */
 unsigned int ThreadNowStackUsed(const P_TCB tcb);
+
+/**
+ * Check if the string represents a positive integer.
+ */
+bool isPosInt(const std::string& s);

@@ -1,7 +1,10 @@
 #include "HelperFuncs.hpp"
 
-#include "logger.hpp"
+#include "Logger.hpp"
+#include "Mbed.hpp"
+#include "Rtos.hpp"
 
+#include <cstdint>
 #include <type_traits>
 #include <vector>
 
@@ -87,4 +90,10 @@ unsigned int ThreadNowStackUsed(const P_TCB tcb) {
 #else
     return 0;
 #endif
+}
+
+bool isPosInt(const std::string& s) {
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && std::isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
 }

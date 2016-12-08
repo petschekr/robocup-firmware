@@ -8,7 +8,7 @@
 #include <Watchdog.hpp>
 #include <Assert.hpp>
 #include <HelperFuncs.hpp>
-#include <logger.hpp>
+#include "Logger.hpp"
 
 #include "BallSense.hpp"
 #include "Decawave.hpp"

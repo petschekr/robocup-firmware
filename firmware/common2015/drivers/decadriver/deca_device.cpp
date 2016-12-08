@@ -11,7 +11,7 @@
  *
  */
 
-#include <logger.hpp>
+#include "Logger.hpp"
 #include "Mbed.hpp"
 
 #include "deca_device_api.hpp"

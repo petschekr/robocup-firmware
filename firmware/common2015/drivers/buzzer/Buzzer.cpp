@@ -1,6 +1,6 @@
 #include "Buzzer.hpp"
 
-#include "const-math.hpp"
+#include "ConstMath.hpp"
 #include "HelperFuncs.hpp"
 #include "Rtos.hpp"
 #include "RtosTimerHelper.hpp"
@@ -47,7 +47,7 @@ const size_t numPts = 32;
 // different sounds from the single lookup table. For now...we have
 // a basic sin wave.
 //
-// Check out /firmware/common2015/util/const-math.hpp for the math operations
+// Check out /firmware/common2015/util/include/ConstMath.hpp for the math operations
 // that could be used to generate a lookup table at compile time.
 constexpr float wave_lut(std::size_t curr, std::size_t total) {
     return ((1.0 + sin_const(static_cast<float>(curr) / numPts * 2 * M_PI)) /

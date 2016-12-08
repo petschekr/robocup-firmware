@@ -9,7 +9,7 @@
 #include <SharedSPI.hpp>
 #include <Assert.hpp>
 #include <HelperFuncs.hpp>
-#include <logger.hpp>
+#include "Logger.hpp"
 
 #include "TimeoutLED.hpp"
 #include "fpga.hpp"

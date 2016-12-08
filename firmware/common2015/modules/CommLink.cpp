@@ -1,7 +1,7 @@
 #include "CommLink.hpp"
 
 #include "Assert.hpp"
-#include "logger.hpp"
+#include "Logger.hpp"
 
 namespace {
 // DEFAULT_STACK_SIZE defined in rtos library

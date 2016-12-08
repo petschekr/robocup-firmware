@@ -3,7 +3,7 @@
 
 #include <Console.hpp>
 #include <Assert.hpp>
-#include <logger.hpp>
+#include "Logger.hpp"
 
 #include "PidMotionController.hpp"
 #include "RtosTimerHelper.hpp"

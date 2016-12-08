@@ -1,7 +1,7 @@
 #include "ds2411.hpp"
 
 #include "Assert.hpp"
-#include "logger.hpp"
+#include "Logger.hpp"
 
 namespace {
 const unsigned int ID_tREC = 5;

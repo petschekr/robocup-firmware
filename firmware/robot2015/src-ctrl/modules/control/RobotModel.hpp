@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <array>
 #include "Geometry2d/Util.hpp"
-#include "const-math.hpp"
+#include "ConstMath.hpp"
 
 /// Model parameters for a robot.  Used by the controls system.
 class RobotModel {

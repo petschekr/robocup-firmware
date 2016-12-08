@@ -1,7 +1,7 @@
 #include "CC1201.hpp"
 
 #include "Assert.hpp"
-#include "logger.hpp"
+#include "Logger.hpp"
 
 // clang-format off
 constexpr const char* const CC1201_STATE_NAMES[] = {

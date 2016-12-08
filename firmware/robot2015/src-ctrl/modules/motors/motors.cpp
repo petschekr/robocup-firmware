@@ -2,8 +2,8 @@
 
 #include "Mbed.hpp"
 #include "Rtos.hpp"
-#include <Console.hpp>
-#include <numparser.hpp>
+#include "Console.hpp"
+#include "HelperFuncs.hpp"
 
 #include "commands.hpp"
 #include "fpga.hpp"
@@ -86,7 +86,7 @@ int cmd_motors_scroll(const std::vector<std::string>& args) {
 
     // move cursor back 8 rows
     printf("\033[%uA", 8);
-    Console::Instance()->Flush();
+    Console::Instance->Flush();
 
     Thread::wait(300);
     return 0;

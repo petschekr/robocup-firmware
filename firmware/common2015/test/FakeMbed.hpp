@@ -55,4 +55,4 @@ private:
     int m_hz;
 };
 
-}  // namespace FakeMbed
+}  // namespace MbedTest

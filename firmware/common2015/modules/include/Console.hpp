@@ -1,22 +1,15 @@
 #pragma once
 
+#include "Mbed.hpp"
+
 #include <deque>
 #include <memory>
 
-#include "Mbed.hpp"
-
-/**
- * enable scrolling vi sequence
- */
+/// enable scrolling vi sequence
 const std::string ENABLE_SCROLL_SEQ = "\033[r";
-
-/**
- * clear screen vi sequence
- */
+/// clear screen vi sequence
 const std::string CLEAR_SCREEN_SEQ = "\033[2J";
-
 const std::string ANSI_SD = "\033[1T";
-
 const std::string ANSI_SU = "\033[1S";
 
 /**
@@ -24,12 +17,10 @@ const std::string ANSI_SU = "\033[1S";
  */
 class Console {
 public:
-    /// Get a pointer to the global Console instance
-    static std::shared_ptr<Console>& Instance();
+    /// Global singleton instance
+    static std::shared_ptr<Console> Instance;
 
-    /**
-     * new line character. Default '\r'
-     */
+    /// New line character. Default '\r'
     static const char NEW_LINE_CHAR = '\r';  // ASCII CR (\r) (0x0D)
 
     /**
@@ -45,51 +36,34 @@ public:
      */
     static const char BACKSPACE_REPLY_CHAR = '\b';  // ASCII BK (\b) (0x08)
 
-    /**
-     * when the console backspaces, what does the last character become. Default
-     * ' '
-     */
+    /// character to replace when backspacing
     static const char BACKSPACE_REPLACE_CHAR = ' ';
 
-    /**
-     * default ETX (0x3)
-     */
+    /// default ETX (0x3)
     static const char BREAK_CHAR = 3;
-
     static const char ESC_START = 0x1B;
     static const char ESC_SEQ_START = '[';
-
-    /**
-     * define the sequence for arrow key flags
-     */
+    /// define the sequence for arrow key flags
     static const char ESCAPE_SEQ_ONE = 27;
-    // static const char ESCAPE_SEQ_ONE = '\033';
+    /// static const char ESCAPE_SEQ_ONE = '\033';
     static const char ESCAPE_SEQ_TWO = '[';
     static const char ARROW_UP_KEY = 'A';
     static const char ARROW_DOWN_KEY = 'B';
     static const char ARROW_LEFT_KEY = 'C';
     static const char ARROW_RIGHT_KEY = 'D';
-
     static const char CMD_END_CHAR = ';';
 
-    /**
-     * break message
-     */
+    /// break message
     static const std::string COMMAND_BREAK_MSG;
 
-    /**
-     * Deconstructor
-     */
-    ~Console(){};
+    /// Only call once!
+    static int instanceCount;
+    Console();
 
-    /**
-     * flushes stdout. Should be called after every putc or printf block.
-     */
+    /// flushes stdout. Should be called after every putc or printf block.
     void Flush();
 
-    /**
-     * requests the main loop break
-     */
+    /// requests the main loop break
     void RequestSystemStop();
 
     /// Attach the Serial connection's RX handler to @RXCallback.
@@ -99,12 +73,11 @@ public:
     /// besides the Console to read from stdin.
     void detachInputHandler();
 
-    /**
-     * returns if the main loop should break
-     */
+    /// returns if the main loop should break
     bool IsSystemStopRequested() const;
 
     bool IterCmdBreakReq() const;
+
     void IterCmdBreakReq(bool newState);
 
     std::string& rxBuffer();
@@ -115,56 +88,45 @@ public:
     void CommandHandled();
 
     void changeHostname(const std::string&);
+
     void changeUser(const std::string&);
 
     void Baudrate(uint16_t);
+
     uint16_t Baudrate() const;
 
     void PrintHeader();
-    void ShowLogo();
-    void SetTitle(const std::string&);
-    std::string GetHostResponse();
 
-    /**
-    * Serial connection
-    */
+    void ShowLogo();
+
+    void SetTitle(const std::string&);
+
+    /// Serial connection
     Serial pc;
 
 private:
-    /**
-     * Console initialization routine. Attaches interrupt handlers and clears
-     * the buffers.
-     */
-    Console();
-
     void RXCallback();
 
     void setHeader();
 
     static std::shared_ptr<Console> instance;
 
-    // Flags for command execution states
+    /// Flags for command execution states
     bool iter_break_req = false;
     bool command_ready = false;
 
-    /**
-    * Console header string.
-    */
+    /// Console header string
     std::string CONSOLE_HEADER;
-    std::string CONSOLE_USER;
-    std::string CONSOLE_HOSTNAME;
+    std::string CONSOLE_USER = "anon";
+    std::string CONSOLE_HOSTNAME = "robot";
 
     /// baud rate of serial connection
     uint16_t _baudRate;
 
-    /**
-     * Receive buffer
-     */
+    /// Receive buffer
     std::string _rxBuffer;
 
-    /**
-     * Is a system stop requested
-     */
+    /// Is a system stop requested
     bool sysStopReq = false;
 
     /**

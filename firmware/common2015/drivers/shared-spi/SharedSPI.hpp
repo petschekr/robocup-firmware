@@ -1,11 +1,10 @@
 #pragma once
 
+#include "Assert.hpp"
 #include "Mbed.hpp"
 #include "Rtos.hpp"
 
 #include <memory>
-
-#include "Assert.hpp"
 
 /**
  * A simple wrapper over mbed's SPI class that includes a mutex.
@@ -28,39 +27,39 @@ public:
     using SpiPtrT = std::shared_ptr<SharedSPI>;
 
     SharedSPIDevice(SpiPtrT spi, DIGITAL_OUT cs, bool csInverted = true)
-        : _spi(spi), _cs(cs) {
+        : _spi(spi), m_cs(cs) {
         ASSERT(spi != nullptr);
 
         /// The value we set the chip select pin to in order to assert it (it's
         /// often inverted).
-        _csAssertValue = csInverted ? 0 : 1;
+        m_csAssertValue = csInverted ? 0 : 1;
 
         /// Initialize to a de-asserted state
-        _cs = !_csAssertValue;
+        m_cs = !m_csAssertValue;
     }
 
     void chipSelect() {
         _spi->lock();
-        _spi->frequency(_frequency);
-        _cs = _csAssertValue;
+        _spi->frequency(m_frequency);
+        m_cs = m_csAssertValue;
     }
 
     void chipDeselect() {
-        _cs = !_csAssertValue;
+        m_cs = !m_csAssertValue;
         _spi->unlock();
     }
 
     /// Set the SPI frequency for this device
-    void setSPIFrequency(int hz) { _frequency = hz; }
+    void setSPIFrequency(int hz) { m_frequency = hz; }
 
 protected:
     SpiPtrT _spi;
-    DIGITAL_OUT _cs;
+    DIGITAL_OUT m_cs;
 
 private:
-    int _csAssertValue;
+    int m_csAssertValue;
 
     /// The SPI bus frequency used by this device.
     /// This default value is the same as the mbed's default (1MHz).
-    int _frequency = 1000000;
+    int m_frequency = 1'000'000;
 };

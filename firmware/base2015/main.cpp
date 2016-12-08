@@ -7,8 +7,8 @@
 #include "RJBaseUSBDevice.hpp"
 #include "SharedSPI.hpp"
 #include "firmware-common/base2015/usb-interface.hpp"
-#include "logger.hpp"
-#include "logger.hpp"
+#include "Logger.hpp"
+#include "Logger.hpp"
 #include "pins.hpp"
 #include "watchdog.hpp"
 

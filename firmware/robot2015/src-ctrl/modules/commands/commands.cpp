@@ -11,8 +11,8 @@
 #include <Decawave.hpp>
 #include <KickerBoard.hpp>
 #include <Watchdog.hpp>
-#include <logger.hpp>
-#include <numparser.hpp>
+#include "Logger.hpp"
+#include <HelperFuncs.hpp>
 #include "Console.hpp"
 
 #include "ds2411.hpp"
@@ -282,7 +282,7 @@ int cmd_console_clear(cmd_args_t& args) {
         show_invalid_args(args);
         return 1;
     } else {
-        Console::Instance()->Flush();
+        Console::Instance->Flush();
         printf(ENABLE_SCROLL_SEQ.c_str());
         printf(CLEAR_SCREEN_SEQ.c_str());
     }
@@ -312,7 +312,7 @@ int cmd_console_exit(cmd_args_t& args) {
         return 1;
     } else {
         printf("Shutting down serial console. Goodbye!\r\n");
-        Console::Instance()->RequestSystemStop();
+        Console::Instance->RequestSystemStop();
     }
 
     return 0;
@@ -405,9 +405,9 @@ int cmd_serial_ping(cmd_args_t& args) {
         return 1;
     } else {
         time_t sys_time = time(nullptr);
-        Console::Instance()->Flush();
+        Console::Instance->Flush();
         printf("reply: %lu\r\n", sys_time);
-        Console::Instance()->Flush();
+        Console::Instance->Flush();
 
         Thread::wait(600);
     }
@@ -424,7 +424,7 @@ int cmd_interface_reset(cmd_args_t& args) {
         return 1;
     } else {
         printf("The system is going down for reboot NOW!\033[0J\r\n");
-        Console::Instance()->Flush();
+        Console::Instance->Flush();
 
         // give some time for the feedback to get back to the console
         Thread::wait(800);
@@ -454,7 +454,7 @@ int cmd_ls(cmd_args_t& args) {
         // don't use printf until we close the directory
         for (auto& name : filenames) {
             printf(" - %s\r\n", name.c_str());
-            Console::Instance()->Flush();
+            Console::Instance->Flush();
         }
     } else {
         printf("Could not find '%s'\r\n", dirname.c_str());
@@ -622,7 +622,7 @@ int cmd_baudrate(cmd_args_t& args) {
                                     57600, 115200, 230400, 460800, 921600};
 
     if (args.empty() || args.size() > 1) {
-        printf("Baudrate: %u\r\n", Console::Instance()->Baudrate());
+        printf("Baudrate: %u\r\n", Console::Instance->Baudrate());
     }
 
     else if (args.size() == 1) {
@@ -639,7 +639,7 @@ int cmd_baudrate(cmd_args_t& args) {
 
             if (std::find(valid_rates.begin(), valid_rates.end(), new_rate) !=
                 valid_rates.end()) {
-                Console::Instance()->Baudrate(new_rate);
+                Console::Instance->Baudrate(new_rate);
                 printf("New baudrate: %u\r\n", new_rate);
             } else {
                 printf(
@@ -663,7 +663,7 @@ int cmd_console_user(cmd_args_t& args) {
     }
 
     else {
-        Console::Instance()->changeUser(args[0]);
+        Console::Instance->changeUser(args[0]);
     }
 
     return 0;
@@ -676,7 +676,7 @@ int cmd_console_hostname(cmd_args_t& args) {
     }
 
     else {
-        Console::Instance()->changeHostname(args[0]);
+        Console::Instance->changeHostname(args[0]);
     }
 
     return 0;
@@ -910,7 +910,7 @@ int cmd_ps(cmd_args_t& args) {
         // line
         printf("ALLOC    CURRENT (NOW|MAX)");
         printf("\033[A\033[1D|\033[B\r\n");
-        Console::Instance()->Flush();
+        Console::Instance->Flush();
 
         /*
          * Iterate over active threads
@@ -976,15 +976,13 @@ int cmd_heapfill(cmd_args_t& args) {
 }
 
 int cmd_radio(cmd_args_t& args) {
-    shared_ptr<CommModule> commModule = CommModule::Instance;
-
     if (args.empty()) {
         // Default to showing the list of ports
-        commModule->printInfo();
+        CommModule::Instance->printInfo();
         return 0;
     }
 
-    if (!commModule->isReady()) {
+    if (!CommModule::Instance->isReady()) {
         printf("The radio interface is not ready! Unseen bugs may occur!\r\n");
     }
 
@@ -999,17 +997,17 @@ int cmd_radio(cmd_args_t& args) {
         pck.header.address = RTP::BASE_STATION_ADDRESS;
 
         if (args[0] == "show") {
-            commModule->printInfo();
+            CommModule::Instance->printInfo();
 
         } else if (args[0] == "test-tx") {
             printf("Placing %u byte packet in TX buffer.\r\n",
                    pck.payload.size());
-            commModule->send(std::move(pck));
+            CommModule::Instance->send(std::move(pck));
 
         } else if (args[0] == "test-rx") {
             printf("Placing %u byte packet in RX buffer.\r\n",
                    pck.payload.size());
-            commModule->receive(pck);
+            CommModule::Instance->receive(pck);
 
         } else if (args[0] == "loopback") {
             pck.header.port = RTP::PortType::LINK;
@@ -1030,7 +1028,7 @@ int cmd_radio(cmd_args_t& args) {
             for (size_t j = 0; j < i; ++j) {
                 RTP::Packet pck2;
                 pck2 = pck;
-                commModule->send(std::move(pck2));
+                CommModule::Instance->send(std::move(pck2));
                 Thread::wait(50);
             }
 
@@ -1051,11 +1049,11 @@ int cmd_radio(cmd_args_t& args) {
                 unsigned int portNbr = atoi(args[2].c_str());
 
                 if (args[1] == "close") {
-                    commModule->close(portNbr);
+                    CommModule::Instance->close(portNbr);
                     printf("Port %u closed.\r\n", portNbr);
 
                 } else if (args[1] == "reset") {
-                    commModule->resetCount(portNbr);
+                    CommModule::Instance->resetCount(portNbr);
                     printf("Reset packet counts for port %u.\r\n", portNbr);
 
                 } else {
@@ -1088,7 +1086,7 @@ int cmd_radio(cmd_args_t& args) {
             int start_tick = clock();
             for (size_t i = 0; i < packet_cnt; ++i) {
                 Thread::wait(ms_delay);
-                commModule->send(std::move(pck));
+                CommModule::Instance->send(std::move(pck));
             }
             printf("Stress test finished in %.1fms.\r\n",
                    (clock() - start_tick) /
@@ -1133,7 +1131,7 @@ int cmd_pong(cmd_args_t& args) {
         }
 
         // quit when any character is typed
-        if (Console::Instance()->pc.readable()) break;
+        if (Console::Instance->pc.readable()) break;
     }
 
     // remove handlers, close port
@@ -1179,7 +1177,7 @@ int cmd_ping(cmd_args_t& args) {
         }
 
         // quit when any character is typed
-        if (Console::Instance()->pc.readable()) break;
+        if (Console::Instance->pc.readable()) break;
     }
 
     // remove handlers, close port
@@ -1279,7 +1277,7 @@ void execute_line(char* rawCommand) {
 
         cmds = strtok_r(nullptr, ";", &endCmd);
         // make sure we force everything out of stdout
-        Console::Instance()->Flush();
+        Console::Instance->Flush();
     }
 }
 
@@ -1289,12 +1287,12 @@ void execute_line(char* rawCommand) {
  */
 void execute_iterative_command() {
     if (iterative_command_state) {
-        if (Console::Instance()->IterCmdBreakReq()) {
+        if (Console::Instance->IterCmdBreakReq()) {
             iterative_command_state = false;
 
             // reset the flag for receiving a break character in the Console
             // class
-            Console::Instance()->IterCmdBreakReq(false);
+            Console::Instance->IterCmdBreakReq(false);
             // make sure the cursor is enabled
             printf("\033[?25h");
         } else {

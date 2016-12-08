@@ -4,10 +4,10 @@
 #include "Rtos.hpp"
 
 #include "CommPort.hpp"
+#include "HelperFuncs.hpp"
+#include "MailHelpers.hpp"
 #include "RTP.hpp"
 #include "TimeoutLED.hpp"
-#include "HelperFuncs.hpp"
-#include "mail-helper.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -37,9 +37,6 @@ public:
     /// The constructor initializes and starts threads and mail queues
     CommModule(std::shared_ptr<FlashingTimeoutLED> rxTimeoutLED,
                std::shared_ptr<FlashingTimeoutLED> txTimeoutLED);
-
-    /// The destructor frees up allocated memory and stops threads
-    ~CommModule(){};
 
     /// Assign an RX callback function to a port
     void setRxHandler(RxCallbackT callback, uint8_t portNbr);
@@ -101,7 +98,7 @@ private:
     // DEFAULT_STACK_SIZE defined in rtos library
     static constexpr size_t STACK_SIZE = DEFAULT_STACK_SIZE / 2;
     static constexpr osPriority RX_PRIORITY = osPriorityAboveNormal;
-    static constexpr osPriority TX_PRIORITY = osPriorityHigh;
+    static constexpr osPriority TX_PRIORITY = osPriorityAboveNormal;
 
     std::map<uint8_t, PortT> m_ports;
 

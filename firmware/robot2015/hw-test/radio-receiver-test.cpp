@@ -13,7 +13,7 @@
 
 #include "CC1201Radio.hpp"
 #include "SharedSPI.hpp"
-#include "logger.hpp"
+#include "Logger.hpp"
 #include "pins-ctrl-2015.hpp"
 
 using namespace std;

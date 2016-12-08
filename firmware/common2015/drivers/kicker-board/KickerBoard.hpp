@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mbed.hpp"
-#include <logger.hpp>
+#include "Logger.hpp"
 #include <string>
 #include "AVR910.hpp"
 #include "kicker_commands.h"
