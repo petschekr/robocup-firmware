@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include <mbed.h>
+#include "Mbed.hpp"
 
 #include "robot-devices.hpp"
 #include "neostrip.hpp"

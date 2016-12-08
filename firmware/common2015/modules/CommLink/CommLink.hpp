@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rtos.h>
+#include "Rtos.hpp"
 
 #include "CommModule.hpp"
 #include "RTP.hpp"

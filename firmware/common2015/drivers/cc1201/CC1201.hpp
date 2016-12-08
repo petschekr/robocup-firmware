@@ -2,7 +2,7 @@
 
 #include "CommLink.hpp"
 #include "Mbed.hpp"
-#include "rtos.h"
+#include "Rtos.hpp"
 #include "ti/defines.hpp"
 
 // The config file exported from RF Studio contains an array consisting of these

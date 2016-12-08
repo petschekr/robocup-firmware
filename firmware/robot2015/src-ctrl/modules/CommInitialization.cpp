@@ -1,4 +1,4 @@
-#include <rtos.h>
+#include "Rtos.hpp"
 
 #include <memory>
 #include <vector>
@@ -8,7 +8,7 @@
 #include <Decawave.hpp>
 #include <SharedSPI.hpp>
 #include <Assert.hpp>
-#include <helper-funcs.hpp>
+#include <HelperFuncs.hpp>
 #include <logger.hpp>
 
 #include "TimeoutLED.hpp"

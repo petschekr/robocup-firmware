@@ -1,4 +1,4 @@
-#include "helper-funcs.hpp"
+#include "HelperFuncs.hpp"
 
 #include "logger.hpp"
 
@@ -58,23 +58,23 @@ void setISRPriorities() {
 }
 
 // returns how many active threads there are
-unsigned int get_num_threads() {
-    unsigned int num_threads = 0;
-    P_TCB p_b = (P_TCB)&os_rdy;
+unsigned int getNumThreads() {
+    auto numThreads = 0;
+    auto p_b = reinterpret_cast<P_TCB>(&os_rdy);
 
     while (p_b != nullptr) {
-        num_threads++;
+        numThreads++;
         p_b = p_b->p_lnk;
     }
 
-    return num_threads;
+    return numThreads;
 }
 
 unsigned int ThreadMaxStackUsed(const P_TCB tcb) {
 #ifndef __MBED_CMSIS_RTOS_CA9
-    uint32_t high_mark = 0;
-    while (tcb->stack[high_mark] == 0xE25A2EA5) high_mark++;
-    return tcb->priv_stack - (high_mark * 4);
+    uint32_t highMark = 0;
+    while (tcb->stack[highMark] == 0xE25A2EA5) ++highMark;
+    return tcb->priv_stack - (highMark * 4);
 #else
     return 0;
 #endif
@@ -82,7 +82,7 @@ unsigned int ThreadMaxStackUsed(const P_TCB tcb) {
 
 unsigned int ThreadNowStackUsed(const P_TCB tcb) {
 #ifndef __MBED_CMSIS_RTOS_CA9
-    uint32_t top = reinterpret_cast<uint32_t>(tcb->stack) + tcb->priv_stack;
+    auto top = reinterpret_cast<uint32_t>(tcb->stack) + tcb->priv_stack;
     return top - tcb->tsk_stack;
 #else
     return 0;

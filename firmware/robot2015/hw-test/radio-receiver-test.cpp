@@ -8,7 +8,7 @@
  */
 
 #include <cmsis_os.h>
-#include <mbed.h>
+#include "Mbed.hpp"
 #include <memory>
 
 #include "CC1201Radio.hpp"

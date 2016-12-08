@@ -1,6 +1,6 @@
 #include "mcp23017.hpp"
 
-#include <mbed.h>
+#include "Mbed.hpp"
 #include <logger.hpp>
 
 MCP23017::MCP23017(PinName sda, PinName scl, int i2cAddress)

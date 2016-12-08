@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mbed.h>
-#include <rtos.h>
+#include "Mbed.hpp"
+#include "Rtos.hpp"
 
 /**
  * @brief A buzzer for controlling a pieze element to play sounds using a DAC.

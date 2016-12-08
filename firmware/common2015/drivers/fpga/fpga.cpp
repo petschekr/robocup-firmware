@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include <rtos.h>
+#include "Rtos.hpp"
 
 #include "logger.hpp"
 #include "rj-macros.hpp"

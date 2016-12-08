@@ -3,11 +3,11 @@
 #include <ctime>
 #include <string>
 
-#include <rtos.h>
+#include "Rtos.hpp"
 
 #include <Watchdog.hpp>
 #include <Assert.hpp>
-#include <helper-funcs.hpp>
+#include <HelperFuncs.hpp>
 #include <logger.hpp>
 
 #include "BallSense.hpp"

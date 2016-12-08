@@ -1,5 +1,5 @@
 #include <mbed_rpc.h>
-#include <rtos.h>
+#include "Rtos.hpp"
 
 #include <Console.hpp>
 #include <Assert.hpp>

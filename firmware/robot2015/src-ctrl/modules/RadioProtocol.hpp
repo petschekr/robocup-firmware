@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rtos.h>
+#include "Rtos.hpp"
 #include "CC1201.hpp"
 #include "CommModule.hpp"
 #include "Decawave.hpp"

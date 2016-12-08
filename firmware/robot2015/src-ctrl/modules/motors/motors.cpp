@@ -1,7 +1,7 @@
 #include "motors.hpp"
 
-#include <mbed.h>
-#include <rtos.h>
+#include "Mbed.hpp"
+#include "Rtos.hpp"
 #include <Console.hpp>
 #include <numparser.hpp>
 

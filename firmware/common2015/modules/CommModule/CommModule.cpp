@@ -3,7 +3,7 @@
 #include "CommPort.hpp"
 #include "Console.hpp"
 #include "Assert.hpp"
-#include "helper-funcs.hpp"
+#include "HelperFuncs.hpp"
 #include "logger.hpp"
 
 #include <ctime>

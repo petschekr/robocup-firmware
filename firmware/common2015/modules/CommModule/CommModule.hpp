@@ -6,7 +6,7 @@
 #include "CommPort.hpp"
 #include "RTP.hpp"
 #include "TimeoutLED.hpp"
-#include "helper-funcs.hpp"
+#include "HelperFuncs.hpp"
 #include "mail-helper.hpp"
 
 #include <algorithm>

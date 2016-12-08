@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mbed.h>
+#include "Mbed.hpp"
 #include <memory>
 
 #include "I2CMasterRtos.hpp"

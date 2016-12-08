@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-#include <rtos.h>
+#include "Rtos.hpp"
 #include <logger.hpp>
 
 MPU6050::MPU6050(PinName sda, PinName scl, int freq)

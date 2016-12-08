@@ -2,8 +2,8 @@
 
 #if DEVICE_I2C
 
-#include <mbed.h>
-#include <rtos.h>
+#include "Mbed.hpp"
+#include "Rtos.hpp"
 // #include "cmsis_os.h"
 
 #include "logger.hpp"

@@ -29,7 +29,7 @@ void setISRPriorities();
  *
  * @return     Number of active threads.
  */
-unsigned int get_num_threads();
+unsigned int getNumThreads();
 
 /**
  * @brief      Get the max amount of stack space used by a given thread.

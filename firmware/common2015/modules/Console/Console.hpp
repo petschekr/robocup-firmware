@@ -3,7 +3,7 @@
 #include <deque>
 #include <memory>
 
-#include <mbed.h>
+#include "Mbed.hpp"
 
 /**
  * enable scrolling vi sequence

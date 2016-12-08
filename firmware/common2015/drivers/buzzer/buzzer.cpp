@@ -1,10 +1,10 @@
 #include "buzzer.hpp"
 
-#include <array>
-
-#include <helper-funcs.hpp>
-#include <const-math.hpp>
+#include "const-math.hpp"
+#include "HelperFuncs.hpp"
 #include "RtosTimerHelper.hpp"
+
+#include <array>
 
 /*
  * These must be extern here since conexpr is taken advantage
