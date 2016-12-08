@@ -1,7 +1,8 @@
 #include "CommModule.hpp"
+
 #include "CommPort.hpp"
 #include "Console.hpp"
-#include "assert.hpp"
+#include "Assert.hpp"
 #include "helper-funcs.hpp"
 #include "logger.hpp"
 
@@ -87,7 +88,7 @@ void CommModule::rxThread() {
     Thread::signal_wait(SIGNAL_START);
 
     // set this true immediately after we are released execution
-    m_isReady = true;
+    m_isRunning = true;
 
     // Store our priority so we know what to reset it to if ever needed
     const auto threadPriority = m_rxThread.get_priority();
@@ -205,9 +206,15 @@ void CommModule::setTxHandler(TxCallbackT callback, uint8_t portNbr) {
 }
 
 void CommModule::ready() {
-    if (m_isReady) return;
-    // Start the TX thread - it starts the RX once
-    m_txThread.signal_set(SIGNAL_START);
+    if (m_isReady) m_txThread.signal_set(SIGNAL_START);
+    m_isReady = true;
+}
+
+void CommModule::close(unsigned int portNbr) noexcept {
+    try {
+        m_ports.erase(portNbr);
+    } catch (...) {
+    }
 }
 
 #ifndef NDEBUG

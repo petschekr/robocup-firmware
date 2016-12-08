@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Mbed.hpp"
-#include "rtos.h"
+#include "Rtos.hpp"
 
 #include "CommPort.hpp"
 #include "RTP.hpp"
 #include "TimeoutLED.hpp"
 #include "helper-funcs.hpp"
-#include "rtos-mgmt/mail-helper.hpp"
+#include "mail-helper.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -15,14 +15,12 @@
 #include <memory>
 #include <vector>
 
-#include "CommLink.hpp"
 /**
  * @brief A high-level firmware class for packet handling & routing
  *
- * The CommModule class provides the packet management routing
- * by distributing incoming packets to the correct area of the
- * firmware and distributing outgoing packets to the correct
- * hardware interface.
+ * The CommModule class provides a software routing service
+ * by filtering and routing RX packets to a respective callback
+ * function and sending TX packets to a derived CommLink class.
  */
 class CommModule {
 public:
@@ -69,10 +67,10 @@ public:
     void receive(RTP::Packet pkt);
 
     /// Close a port that was previouly assigned callback functions/methods
-    void close(unsigned int portNbr) { m_ports.erase(portNbr); }
+    void close(unsigned int portNbr) noexcept;
 
     /// Check if everything is ready for sending/receiving packets
-    bool isReady() const { return m_isReady; };
+    inline bool isReady() const noexcept { return m_isReady && m_isRunning; }
 
 #ifndef NDEBUG
     /// Retuns the number of ports with a binded callback function/method
@@ -117,6 +115,7 @@ private:
     std::shared_ptr<FlashingTimeoutLED> m_txTimeoutLED;
 
     bool m_isReady = false;
+    bool m_isRunning = false;
 
     void ready();
     void txThread();

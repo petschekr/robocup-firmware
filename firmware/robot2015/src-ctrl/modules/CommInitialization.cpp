@@ -7,7 +7,7 @@
 #include <CommPort.hpp>
 #include <Decawave.hpp>
 #include <SharedSPI.hpp>
-#include <assert.hpp>
+#include <Assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
 

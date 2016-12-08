@@ -1,6 +1,6 @@
 #include "CC1201.hpp"
 
-#include "assert.hpp"
+#include "Assert.hpp"
 #include "logger.hpp"
 
 // clang-format off

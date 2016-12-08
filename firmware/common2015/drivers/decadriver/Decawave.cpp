@@ -1,6 +1,6 @@
 #include "Decawave.hpp"
 
-#include "assert.hpp"
+#include "Assert.hpp"
 #include "logger.hpp"
 
 #include <memory>

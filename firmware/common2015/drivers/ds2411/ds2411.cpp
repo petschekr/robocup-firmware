@@ -1,6 +1,6 @@
 #include "ds2411.hpp"
 
-#include "assert.hpp"
+#include "Assert.hpp"
 #include "logger.hpp"
 
 namespace {

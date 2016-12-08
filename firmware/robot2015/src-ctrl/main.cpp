@@ -6,7 +6,7 @@
 #include <rtos.h>
 
 #include <Watchdog.hpp>
-#include <assert.hpp>
+#include <Assert.hpp>
 #include <helper-funcs.hpp>
 #include <logger.hpp>
 

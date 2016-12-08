@@ -1,9 +1,9 @@
-#include "assert.hpp"
+#include "Assert.hpp"
 
 #include "Mbed.hpp"
 
 /**
- * This is called when an assertion fails
+ * This is called when an assertion fails and does not return.
  *
  * @param exp  The expected value for the assertion check.
  * @param file The filename where the failure occured.

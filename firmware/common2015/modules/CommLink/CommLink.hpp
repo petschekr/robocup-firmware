@@ -6,7 +6,7 @@
 #include "RTP.hpp"
 #include "SharedSPI.hpp"
 #include "rj-macros.hpp"
-#include "rtos-mgmt/mail-helper.hpp"
+#include "mail-helper.hpp"
 
 #include <memory>
 

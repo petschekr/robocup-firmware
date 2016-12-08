@@ -1,9 +1,9 @@
 #include "helper-funcs.hpp"
 
+#include "logger.hpp"
+
 #include <type_traits>
 #include <vector>
-
-#include "logger.hpp"
 
 // The head of the linked list of active threads
 extern struct OS_XCB os_rdy;

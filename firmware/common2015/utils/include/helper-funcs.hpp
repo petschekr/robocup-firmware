@@ -1,11 +1,11 @@
 #pragma once
 
+#include "Mbed.hpp"
+#include "Rtos.hpp"
+#include "cmsis_os.h"
+
 #include <cstdint>
 #include <string>
-
-#include <mbed.h>
-#include <rtos.h>
-#include <cmsis_os.h>
 
 /**
  * Initializes the peripheral nested vector interrupt controller (PNVIC) with

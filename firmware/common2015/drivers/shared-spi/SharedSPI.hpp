@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "assert.hpp"
+#include "Assert.hpp"
 
 /**
  * A simple wrapper over mbed's SPI class that includes a mutex.

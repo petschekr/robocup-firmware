@@ -1,6 +1,6 @@
 #include "CommLink.hpp"
 
-#include "assert.hpp"
+#include "Assert.hpp"
 #include "logger.hpp"
 
 namespace {

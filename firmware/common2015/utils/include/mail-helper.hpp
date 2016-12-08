@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mbed.hpp"
-#include "rtos.h"
+#include "Rtos.hpp"
 
 // Helper function for using an rtos mail queue within a class
 

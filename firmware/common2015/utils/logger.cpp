@@ -1,10 +1,10 @@
 #include "logger.hpp"
 
+#include "Mbed.hpp"
+#include "Rtos.hpp"
+
 #include <algorithm>
 #include <cstdarg>
-
-#include <rtos.h>
-#include <Mbed.hpp>
 
 constexpr const char* LOG_LEVEL_STRING[] = {FOREACH_LEVEL(GENERATE_STRING)};
 bool isLogging;

@@ -2,7 +2,7 @@
 #include <rtos.h>
 
 #include <Console.hpp>
-#include <assert.hpp>
+#include <Assert.hpp>
 #include <logger.hpp>
 
 #include "PidMotionController.hpp"

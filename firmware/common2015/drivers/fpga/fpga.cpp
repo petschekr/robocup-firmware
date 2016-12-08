@@ -110,7 +110,7 @@ bool FPGA::configure(const std::string& filepath) {
 }
 
 TODO(remove this hack once issue number 590 is closed)
-#include "../../robot2015/src-ctrl/config/pins-ctrl-2015.hpp"
+#include "../../../robot2015/src-ctrl/config/pins-ctrl-2015.hpp"
 
 bool FPGA::send_config(const std::string& filepath) {
     const uint8_t bufSize = 50;

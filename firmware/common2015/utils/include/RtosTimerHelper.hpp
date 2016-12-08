@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Rtos.hpp"
+
 #include <functional>
-#include "rtos.h"
 
 /**
  * This class adds some nifty features to RtosTimer to make it more convenient
