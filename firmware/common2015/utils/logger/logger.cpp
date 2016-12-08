@@ -3,15 +3,15 @@
 #include <algorithm>
 #include <cstdarg>
 
-#include <Mbed.hpp>
 #include <rtos.h>
+#include <Mbed.hpp>
 
 constexpr const char* LOG_LEVEL_STRING[] = {FOREACH_LEVEL(GENERATE_STRING)};
 bool isLogging;
 uint8_t rjLogLevel;
 
 namespace {
-    Mutex m;
+Mutex m;
 }
 
 LogHelper::LogHelper(uint8_t logLevel, const char* source, int line,
@@ -57,5 +57,6 @@ void globalLogger(uint8_t logLevel, const char* source, int line,
 }
 
 int logLvlChange(const std::string& s) {
-    return std::count(s.begin(), s.end(), '+') - std::count(s.begin(), s.end(), '-');
+    return std::count(s.begin(), s.end(), '+') -
+           std::count(s.begin(), s.end(), '-');
 }

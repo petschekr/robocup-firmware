@@ -27,8 +27,7 @@ void CommModule::txThread() {
     // Store our priority so we know what to reset it to if ever needed
     const auto threadPriority = m_txThread.get_priority();
 
-    LOG(OK,
-        "TX communication module ready!\r\n    Thread ID: %u, Priority: %d",
+    LOG(OK, "TX communication module ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     // Signal to the RX thread that it can begin
@@ -93,8 +92,7 @@ void CommModule::rxThread() {
     // Store our priority so we know what to reset it to if ever needed
     const auto threadPriority = m_rxThread.get_priority();
 
-    LOG(OK,
-        "RX communication module ready!\r\n    Thread ID: %u, Priority: %d",
+    LOG(OK, "RX communication module ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {

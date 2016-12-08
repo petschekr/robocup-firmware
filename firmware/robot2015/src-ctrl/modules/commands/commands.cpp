@@ -765,7 +765,8 @@ int cmd_log_level(cmd_args_t& args) {
             {
                 // count the difference between '+' and '-' characters
                 string s(args[0]);
-                newLvl += std::count(s.begin(), s.end(), '+') - std::count(s.begin(), s.end(), '-');
+                newLvl += std::count(s.begin(), s.end(), '+') -
+                          std::count(s.begin(), s.end(), '-');
             }
 
             if (newLvl >= LOG_LEVEL_END) {
