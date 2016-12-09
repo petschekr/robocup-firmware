@@ -16,7 +16,7 @@ using namespace std;
 
 // Keep this pretty high for now. Ideally, drop it down to ~3 for production
 // builds. Hopefully that'll be possible without the console
-static const int CONTROL_LOOP_WAIT_MS = 5;
+static const auto CONTROL_LOOP_WAIT_MS = 5;
 
 // initialize PID controller
 PidMotionController pidController;
@@ -47,15 +47,15 @@ void Task_Controller_UpdateDribbler(uint8_t dribbler) {
 /**
  * initializes the motion controller thread
  */
-void Task_Controller(void const* args) {
-    const osThreadId mainID = (const osThreadId)args;
+void Task_Controller(const void* args) {
+    const auto mainID = reinterpret_cast<const osThreadId>(const_cast<void*>(args));
 
     // Store the thread's ID
-    osThreadId threadID = Thread::gettid();
+    const auto threadID = Thread::gettid();
     ASSERT(threadID != nullptr);
 
     // Store our priority so we know what to reset it to after running a command
-    osPriority threadPriority = osThreadGetPriority(threadID);
+    const auto threadPriority = osThreadGetPriority(threadID);
 
     MPU6050 imu(RJ_I2C_SDA, RJ_I2C_SCL);
 
@@ -163,15 +163,6 @@ void Task_Controller(void const* args) {
 
         // dribbler duty cycle
         duty_cycles[4] = dribblerSpeed;
-
-#if 0
-        // log duty cycle values
-        printf("duty cycles: ");
-        for (int i = 0; i < 4; i++) {
-            printf("%d, ", duty_cycles[i]);
-        }
-        printf("\r\n");
-#endif
 
         Thread::wait(CONTROL_LOOP_WAIT_MS);
     }

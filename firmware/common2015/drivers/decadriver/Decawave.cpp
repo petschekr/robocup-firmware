@@ -31,7 +31,7 @@ constexpr auto RX_RESP_TO_UUS = 5000;
 
 Decawave::Decawave(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
     : CommLink(sharedSPI, nCs, intPin), dw1000_api() {
-    setSPIFrequency(2000000);
+    setSPIFrequency(2'000'000);
 
     if (dwt_initialise(DWT_LOADNONE) == DWT_ERROR) {
         LOG(SEVERE, "Decawave not initialized");
@@ -45,28 +45,18 @@ Decawave::Decawave(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
         dwt_configure(&config);
         dwt_configuretxrf(&txconfig);
 
+        setSPIFrequency(8'000'000); // won't work after 8MHz
+
         dwt_setrxaftertxdelay(TX_TO_RX_DELAY_UUS);
-        // dwt_setinterrupt(DWT_INT_TFRS | DWT_INT_RPHE | DWT_INT_RFCG |
-        // DWT_INT_RFCE | DWT_INT_RFSL | DWT_INT_RFTO | DWT_INT_SFDT |
-        // DWT_INT_RXPTO | DWT_INT_ARFE, 1);
-        dwt_setcallbacks(
-            nullptr, static_cast<dwt_cb_t>(&Decawave::getDataSuccess), nullptr,
-            static_cast<dwt_cb_t>(&Decawave::getDataFail));
-        // dwt_setinterrupt(DWT_INT_RFCG | DWT_INT_RPHE | DWT_INT_RFCE |
-        // DWT_INT_RFSL | DWT_INT_SFDT, 1);
-        dwt_setinterrupt(0x00002000 | DWT_INT_RFCG | DWT_INT_RPHE |
-                             DWT_INT_RFCE | DWT_INT_RFSL | DWT_INT_RFTO |
-                             DWT_INT_RXPTO | DWT_INT_SFDT | DWT_INT_ARFE,
-                         1);
-        // dwt_setinterrupt(DWT_INT_RFCG, 1);
+        dwt_setcallbacks(nullptr, static_cast<dwt_cb_t>(&Decawave::getDataSuccess), nullptr, static_cast<dwt_cb_t>(&Decawave::getDataFail));
+        dwt_setinterrupt(DWT_INT_RFCG, 1);
 
         dwt_setautorxreenable(1);
 
         setLED(true);
-        dwt_forcetrxoff();  // TODO: Better way than force off then reset?
+        dwt_forcetrxoff(); // TODO: Better way than force off then reset?
         dwt_rxreset();
         dwt_rxenable(DWT_START_RX_IMMEDIATE);
-        setSPIFrequency(10000000);  // 10 MHz
 
         LOG(INFO, "Decawave ready!");
         CommLink::ready();
@@ -81,44 +71,42 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     dwt_rxreset();
     dwt_forcetrxoff();
 
-    auto& txBuf = *m_txBufferPtr;  // not copied
+    const auto bufferSize = 9 + pkt->size() + 2;
+    BufferT txBuffer(bufferSize);
 
-    // 0x8841
-    txBuf[0] = 0x41;
-    txBuf[1] = 0x88;
-    txBuf[2] = 0;
-    txBuf[3] = 0xCA;
-    txBuf[4] = 0xDE;
-    txBuf[5] = pkt->header.address;
-    txBuf[6] = 0;
-    txBuf[7] = m_address;
-    txBuf[8] = 0;
+    // MAC layer header for Decawave
+    txBuffer.insert(txBuffer.end(), {
+        0x41,
+        0x88,
+        0x00,
+        0xCA,
+        0xDE,
+        pkt->header.address,
+        0x00,
+        static_cast<uint8_t>(m_address),
+        0x00
+    });
 
-    /*
-    txBuf[0] = 0xC5;
-    txBuf[1] = 0;
-    */
+    ASSERT(txBuffer.size() == 9);
 
-    const auto headerData = reinterpret_cast<const uint8_t*>(&pkt->header);
+    const auto headerFirstPtr = reinterpret_cast<const uint8_t*>(&pkt->header);
+    const auto headerLastPtr = headerFirstPtr + RTP::HeaderSize - 1;
 
-    size_t i = 0;
-    for (; i < RTP::HeaderSize; ++i) txBuf[i + 9] = headerData[i];
+    // insert the RTP header
+    txBuffer.insert(txBuffer.end(), headerFirstPtr, headerLastPtr);
+    // insert the RTP payload
+    txBuffer.insert(txBuffer.end(), pkt->payload.begin(), pkt->payload.end());
+    // insert padding for CRC
+    txBuffer.insert(txBuffer.end(), {0x00, 0x00});
 
-    i += 8;
-    for (auto byte : pkt->payload) txBuf[i++] = byte;
+    // send to the Decawave's API
+    dwt_writetxdata(txBuffer.size(), txBuffer.data(), 0);
+    dwt_writetxfctrl(txBuffer.size(), 0, 0);
 
-    txBuf[++i] = 0;
-    txBuf[++i] = 0;
-    ++i;
+    const auto sentStatus = dwt_starttx(DWT_START_TX_IMMEDIATE | DWT_RESPONSE_EXPECTED);
+    const auto hadError = sentStatus != DWT_SUCCESS;
 
-    dwt_writetxdata(i, txBuf.data(), 0);
-    dwt_writetxfctrl(i, 0, 0);
-
-    if (DWT_SUCCESS ==
-        dwt_starttx(DWT_START_TX_IMMEDIATE | DWT_RESPONSE_EXPECTED)) {
-        return COMM_SUCCESS;
-    }
-    return COMM_DEV_BUF_ERR;
+    return hadError ? COMM_DEV_BUF_ERR : COMM_SUCCESS;
 }
 
 CommLink::BufferT Decawave::getData() {

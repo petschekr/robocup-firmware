@@ -39,7 +39,7 @@ unsigned int getNumThreads();
  *
  * @return     Max stack usage so far, in bytes
  */
-unsigned int ThreadMaxStackUsed(const P_TCB tcb);
+unsigned int threadMaxStackUsed(const P_TCB tcb);
 
 /**
  * @brief      Get the currently used stack size for a thread.
@@ -52,7 +52,7 @@ unsigned int ThreadMaxStackUsed(const P_TCB tcb);
  *
  * @return     Currently used stack size, in bytes
  */
-unsigned int ThreadNowStackUsed(const P_TCB tcb);
+unsigned int threadNowStackUsed(const P_TCB tcb);
 
 /**
  * Check if the string represents a positive integer.

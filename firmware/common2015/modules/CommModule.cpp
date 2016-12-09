@@ -43,8 +43,12 @@ void CommModule::txThread() {
             auto p = static_cast<RTP::Packet*>(evt.value.p);
 
             // Bump up the thread's priority
+#ifndef NDEBUG
             auto tState = m_txThread.set_priority(osPriorityRealtime);
             ASSERT(tState == osOK);
+#else
+            m_txThread.set_priority(osPriorityRealtime);
+#endif
 
             // cache the dereference to the header
             const auto& header = p->header;
@@ -60,6 +64,7 @@ void CommModule::txThread() {
             // grab an iterator to the port, lookup only once
             const auto portIter = m_ports.find(portNum);
 
+            // invoke callback if port exists and has an attached function
             if (portIter != m_ports.end()) {
                 if (portIter->second.hasTxCallback()) {
                     portIter->second.getTxCallback()(p);
@@ -74,8 +79,12 @@ void CommModule::txThread() {
             // Release the allocated memory once data is sent
             osMailFree(m_txQueue, p);
 
+#ifndef NDEBUG
             tState = m_txThread.set_priority(threadPriority);
             ASSERT(tState == osOK);
+#else
+            m_txThread.set_priority(threadPriority);
+#endif
         }
     }
 
@@ -104,8 +113,12 @@ void CommModule::rxThread() {
             auto p = static_cast<RTP::Packet*>(evt.value.p);
 
             // Bump up the thread's priority
+#ifndef NDEBUG
             auto tState = m_rxThread.set_priority(osPriorityRealtime);
             ASSERT(tState == osOK);
+#else
+            m_rxThread.set_priority(osPriorityRealtime);
+#endif
 
             // cache the dereference to the header
             const auto& header = p->header;
@@ -121,6 +134,7 @@ void CommModule::rxThread() {
             // grab an iterator to the port, lookup only once
             const auto portIter = m_ports.find(portNum);
 
+            // invoke callback if port exists and has an attached function
             if (portIter != m_ports.end()) {
                 if (portIter->second.hasRxCallback()) {
                     portIter->second.getRxCallback()(std::move(*p));
@@ -135,8 +149,12 @@ void CommModule::rxThread() {
             // free memory allocated for mail
             osMailFree(m_rxQueue, p);
 
+#ifndef NDEBUG
             tState = m_rxThread.set_priority(threadPriority);
             ASSERT(tState == osOK);
+#else
+            m_rxThread.set_priority(threadPriority);
+#endif
         }
     }
 

@@ -1,32 +1,28 @@
 // ** DON'T INCLUDE <iostream>! THINGS WILL BREAK! **
+#include "Assert.hpp"
+#include "BallSensor.hpp"
+#include "Commands.hpp"
+#include "Decawave.hpp"
+#include "fpga.hpp"
+#include "HackedKickerBoard.hpp"
+#include "HelperFuncs.hpp"
+#include "io-expander.hpp"
+#include "Logger.hpp"
+#include "motors.hpp"
+#include "neostrip.hpp"
+#include "RadioProtocol.hpp"
+#include "robot-devices.hpp"
+#include "RobotModel.hpp"
+#include "RotarySelector.hpp"
+#include "Rtos.hpp"
+#include "RtosTimerHelper.hpp"
+#include "SharedSPI.hpp"
+#include "TaskSignals.hpp"
+#include "Watchdog.hpp"
+
 #include <array>
 #include <ctime>
 #include <string>
-
-#include "Rtos.hpp"
-
-#include <Assert.hpp>
-#include <HelperFuncs.hpp>
-#include <Watchdog.hpp>
-#include "Logger.hpp"
-
-#include "BallSense.hpp"
-#include "Decawave.hpp"
-#include "HackedKickerBoard.hpp"
-#include "RadioProtocol.hpp"
-#include "RobotModel.hpp"
-#include "RotarySelector.hpp"
-#include "RtosTimerHelper.hpp"
-#include "SharedSPI.hpp"
-#include "Commands.hpp"
-#include "fpga.hpp"
-#include "io-expander.hpp"
-#include "neostrip.hpp"
-#include "robot-devices.hpp"
-#include "TaskSignals.hpp"
-#include "motors.hpp"
-
-#define RJ_ENABLE_ROBOT_CONSOLE
 
 using namespace std;
 
@@ -124,7 +120,7 @@ int main() {
     uint8_t kickStrength = 0x08;  // DB_KICK_TIME;
 
     // Initialize and start ball sensor
-    BallSense ballSense(RJ_BALL_EMIT, RJ_BALL_DETECTOR);
+    BallSensor ballSense(RJ_BALL_EMIT, RJ_BALL_DETECTOR);
     ballSense.start(10);
     ballSense.senseChangeCallback = [&](bool haveBall) {
         // invert value due to active-low wiring of led
@@ -200,7 +196,7 @@ int main() {
                            DEFAULT_STACK_SIZE / 2);
     Thread::signal_wait(MAIN_TASK_CONTINUE, osWaitForever);
 
-#ifdef RJ_ENABLE_ROBOT_CONSOLE
+#ifndef NDEBUG
     // Start the thread task for the serial console
     Thread console_task(Task_SerialConsole, mainID, osPriorityBelowNormal);
     Thread::signal_wait(MAIN_TASK_CONTINUE, osWaitForever);
@@ -218,7 +214,7 @@ int main() {
     uint8_t battVoltage = 0;
 
     // Radio timeout timer
-    const auto RADIO_TIMEOUT = 100;
+    const auto RadioTimeout = 100;
     RtosTimerHelper radioTimeoutTimer(
         [&]() {
             // reset radio
@@ -226,10 +222,10 @@ int main() {
             // globalRadio->strobe(CC1201_STROBE_SFRX);
             // globalRadio->strobe(CC1201_STROBE_SRX);
 
-            radioTimeoutTimer.start(RADIO_TIMEOUT);
+            radioTimeoutTimer.start(RadioTimeout);
         },
         osTimerOnce);
-    radioTimeoutTimer.start(RADIO_TIMEOUT);
+    radioTimeoutTimer.start(RadioTimeout);
 
     // Setup radio protocol handling
     RadioProtocol radioProtocol(CommModule::Instance);
@@ -239,7 +235,7 @@ int main() {
     radioProtocol.rxCallback = [&](const RTP::ControlMessage* msg,
                                    const bool addressed) {
         // reset timeout
-        radioTimeoutTimer.start(RADIO_TIMEOUT);
+        radioTimeoutTimer.start(RadioTimeout);
 
         if (addressed) {
             // update target velocity from packet
@@ -262,7 +258,7 @@ int main() {
                 kick_hack.kick(kickStrength);
             } else if (msg->triggerMode == 2) {
                 // kick on break beam
-                if (ballSense.have_ball()) {
+                if (ballSense.hasBall()) {
                     kick_hack.kick(kickStrength);
                     kickOnBreakBeam = false;
                 } else {
@@ -275,7 +271,7 @@ int main() {
         RTP::RobotStatusMessage reply;
         reply.uid = robotShellID;
         reply.battVoltage = battVoltage;
-        reply.ballSenseStatus = ballSense.have_ball() ? 1 : 0;
+        reply.ballSenseStatus = ballSense.hasBall() ? 1 : 0;
 
         // report any motor errors
         reply.motorErrors = 0;
@@ -302,12 +298,18 @@ int main() {
 
     // Release each thread into its operations in a structured manner
     controller_task.signal_set(SUB_TASK_CONTINUE);
-#ifdef RJ_ENABLE_ROBOT_CONSOLE
+#ifndef NDEBUG
     console_task.signal_set(SUB_TASK_CONTINUE);
 #endif
 
-    osStatus tState = osThreadSetPriority(mainID, osPriorityNormal);
+// #pragma for gcc has bugs in it for selectively disabling warnings
+// so we test for NDEBUG instead
+#ifndef NDEBUG
+    auto tState = osThreadSetPriority(mainID, osPriorityNormal);
     ASSERT(tState == osOK);
+#else
+    osThreadSetPriority(mainID, osPriorityNormal);
+#endif
 
     auto ll = 0;
     uint16_t errorBitmask = 0;

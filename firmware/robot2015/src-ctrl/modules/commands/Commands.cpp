@@ -925,27 +925,27 @@ int cmd_ps(cmd_args_t& args) {
          * OS_TASKCNT = 15 here and is undefined since we build that
          * part as a library.
         */
-        for (unsigned int i = 0; i < 15; i++) {
-            P_TCB p = (P_TCB)os_active_TCB[i];
+        for (auto i = 0; i < 15; ++i) {
+            auto p = reinterpret_cast<P_TCB>(os_active_TCB[i]);
 
             if (p != nullptr) {
                 // get the thread's stack sizes
-                size_t alloc = p->priv_stack;
-                size_t now = ThreadNowStackUsed(p);
-                size_t max_used = ThreadMaxStackUsed(p);
-                const char* state_now = thread_states[p->state];
+                auto alloc = p->priv_stack;
+                auto now = threadNowStackUsed(p);
+                auto maxUsed = threadMaxStackUsed(p);
+                const char* stateNow = thread_states[p->state];
 
                 // compute max and current utilization percentages
-                float util_now = static_cast<float>(now) / alloc;
-                float util_max = static_cast<float>(max_used) / alloc;
+                auto utilNow = static_cast<float>(now) / alloc;
+                auto utilMax = static_cast<float>(maxUsed) / alloc;
 
                 printf(
                     "%-4u\t  %-3u\t %s\t%-6u\t   %-7u  %-7u  "
                     "%-7u (%.0f%%|%-.0f%%)\r\n",
-                    p->task_id, p->prio, state_now, p->delta_time, max_used,
-                    alloc, now, util_now * 100, util_max * 100);
+                    p->task_id, p->prio, stateNow, p->delta_time, maxUsed,
+                    alloc, now, utilNow * 100, utilMax * 100);
 
-                num_threads++;
+                ++num_threads;
             }
         }
 

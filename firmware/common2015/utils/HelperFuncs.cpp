@@ -18,11 +18,11 @@ void setISRPriorities() {
     // structure for the IPRs. Grouping is global withing the IPRs so
     // this value should only be changed here.
     NVIC_SetPriorityGrouping(5);
-    uint32_t priorityGrouping = NVIC_GetPriorityGrouping();
+    const auto priorityGrouping = NVIC_GetPriorityGrouping();
 
     // set preemptive priority default to 2 (0..3)
     // set priority default to 1 (0..3)
-    uint32_t defaultPriority = NVIC_EncodePriority(priorityGrouping, 2, 1);
+    const auto defaultPriority = NVIC_EncodePriority(priorityGrouping, 2, 1);
 
     // When the kernel initialzes the PNVIC, all ISRs are set to the
     // highest priority, making it impossible to elevate a few over
@@ -31,7 +31,7 @@ void setISRPriorities() {
     //
     // Consult LPC17xx.h under IRQn_Type for PNVIC ranges, this is LPC1768
     // specific
-    for (uint32_t IRQn = TIMER0_IRQn; IRQn <= CANActivity_IRQn; IRQn++)
+    for (auto IRQn = int(TIMER0_IRQn); IRQn <= CANActivity_IRQn; ++IRQn)
         NVIC_SetPriority((IRQn_Type)IRQn, defaultPriority);
 
     // reestablish watchdog
@@ -73,7 +73,7 @@ unsigned int getNumThreads() {
     return numThreads;
 }
 
-unsigned int ThreadMaxStackUsed(const P_TCB tcb) {
+unsigned int threadMaxStackUsed(const P_TCB tcb) {
 #ifndef __MBED_CMSIS_RTOS_CA9
     uint32_t highMark = 0;
     while (tcb->stack[highMark] == 0xE25A2EA5) ++highMark;
@@ -83,7 +83,7 @@ unsigned int ThreadMaxStackUsed(const P_TCB tcb) {
 #endif
 }
 
-unsigned int ThreadNowStackUsed(const P_TCB tcb) {
+unsigned int threadNowStackUsed(const P_TCB tcb) {
 #ifndef __MBED_CMSIS_RTOS_CA9
     auto top = reinterpret_cast<uint32_t>(tcb->stack) + tcb->priv_stack;
     return top - tcb->tsk_stack;

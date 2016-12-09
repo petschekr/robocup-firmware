@@ -6,11 +6,10 @@
 
 #include "MacroHelpers.hpp"
 
-// Do weird macro things for logging the filename and line for every call.
-// Also allows for disabling all logging through macros so all log calls can be
-// removed from production builds.
+// Macros for logging the filename and line for every call to LOG(...)
+// disabled for Release builds
 /* clang-format off */
-#ifdef RJ_LOGGING_EN
+#ifndef NDEBUG
     // Gets curent file name without path
     // see http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
 #   ifdef __FILE_NAME__

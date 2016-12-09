@@ -54,11 +54,15 @@ void Task_SerialConsole(const void* args) {
         if (Console::Instance->CommandReady() == true) {
             // Increase the thread's priority first so we can make sure the
             // scheduler will select it to run
+#ifndef NDEBUG
             auto tState = osThreadSetPriority(threadID, osPriorityAboveNormal);
             ASSERT(tState == osOK);
+#else
+            osThreadSetPriority(threadID, osPriorityAboveNormal);
+#endif
 
             // Execute the command
-            auto rxLen = Console::Instance->rxBuffer().size() + 1;
+            const auto rxLen = Console::Instance->rxBuffer().size() + 1;
             char rx[rxLen];
             memcpy(rx, Console::Instance->rxBuffer().c_str(), rxLen - 1);
             rx[rxLen - 1] = '\0';
@@ -74,8 +78,12 @@ void Task_SerialConsole(const void* args) {
             Console::Instance->attachInputHandler();
 
             // Now, reset the priority of the thread to its idle state
+#ifndef NDEBUG
             tState = osThreadSetPriority(threadID, threadPriority);
             ASSERT(tState == osOK);
+#else
+            osThreadSetPriority(threadID, threadPriority);
+#endif
 
             Console::Instance->CommandHandled();
         }
