@@ -15,7 +15,8 @@ void BallSensor::update() {
         const auto hadBall = hasBall();
 
         // possible break in beam
-        const auto notBrokenOrUnbroken = std::abs(senseLight - m_senseDark) < DeltaThreshold;
+        const auto notBrokenOrUnbroken =
+            std::abs(senseLight - m_senseDark) < DeltaThreshold;
         if (notBrokenOrUnbroken) {
             ++m_consecCount;
         } else {

@@ -8,16 +8,16 @@ void execute_line(char* rawCommand) {}
 
 #else
 
-#include "mbed_rpc.h"
-#include "CommModule.hpp"
 #include "CommLink.hpp"
+#include "CommModule.hpp"
+#include "Console.hpp"
 #include "HelperFuncs.hpp"
 #include "KickerBoard.hpp"
-#include "Console.hpp"
 #include "Logger.hpp"
 #include "Rtos.hpp"
 #include "ds2411.hpp"
 #include "fpga.hpp"
+#include "mbed_rpc.h"
 #include "neostrip.hpp"
 
 #include <ctime>

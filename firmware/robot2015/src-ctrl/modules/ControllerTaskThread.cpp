@@ -1,16 +1,16 @@
-#include "RPCVariable.h"
-#include "Rtos.hpp"
 #include "Assert.hpp"
 #include "Console.hpp"
 #include "Logger.hpp"
 #include "PidMotionController.hpp"
+#include "RPCVariable.h"
+#include "Rtos.hpp"
 #include "RtosTimerHelper.hpp"
+#include "TaskSignals.hpp"
 #include "fpga.hpp"
 #include "io-expander.hpp"
 #include "motors.hpp"
 #include "mpu-6050.hpp"
 #include "robot-devices.hpp"
-#include "TaskSignals.hpp"
 
 using namespace std;
 
@@ -48,7 +48,8 @@ void Task_Controller_UpdateDribbler(uint8_t dribbler) {
  * initializes the motion controller thread
  */
 void Task_Controller(const void* args) {
-    const auto mainID = reinterpret_cast<const osThreadId>(const_cast<void*>(args));
+    const auto mainID =
+        reinterpret_cast<const osThreadId>(const_cast<void*>(args));
 
     // Store the thread's ID
     const auto threadID = Thread::gettid();

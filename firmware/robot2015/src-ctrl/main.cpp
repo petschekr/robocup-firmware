@@ -3,15 +3,10 @@
 #include "BallSensor.hpp"
 #include "Commands.hpp"
 #include "Decawave.hpp"
-#include "fpga.hpp"
 #include "HackedKickerBoard.hpp"
 #include "HelperFuncs.hpp"
-#include "io-expander.hpp"
 #include "Logger.hpp"
-#include "motors.hpp"
-#include "neostrip.hpp"
 #include "RadioProtocol.hpp"
-#include "robot-devices.hpp"
 #include "RobotModel.hpp"
 #include "RotarySelector.hpp"
 #include "Rtos.hpp"
@@ -19,6 +14,11 @@
 #include "SharedSPI.hpp"
 #include "TaskSignals.hpp"
 #include "Watchdog.hpp"
+#include "fpga.hpp"
+#include "io-expander.hpp"
+#include "motors.hpp"
+#include "neostrip.hpp"
+#include "robot-devices.hpp"
 
 #include <array>
 #include <ctime>

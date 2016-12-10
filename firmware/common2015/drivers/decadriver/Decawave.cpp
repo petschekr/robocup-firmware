@@ -45,16 +45,18 @@ Decawave::Decawave(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
         dwt_configure(&config);
         dwt_configuretxrf(&txconfig);
 
-        setSPIFrequency(8'000'000); // won't work after 8MHz
+        setSPIFrequency(8'000'000);  // won't work after 8MHz
 
         dwt_setrxaftertxdelay(TX_TO_RX_DELAY_UUS);
-        dwt_setcallbacks(nullptr, static_cast<dwt_cb_t>(&Decawave::getDataSuccess), nullptr, static_cast<dwt_cb_t>(&Decawave::getDataFail));
+        dwt_setcallbacks(
+            nullptr, static_cast<dwt_cb_t>(&Decawave::getDataSuccess), nullptr,
+            static_cast<dwt_cb_t>(&Decawave::getDataFail));
         dwt_setinterrupt(DWT_INT_RFCG, 1);
 
         dwt_setautorxreenable(1);
 
         setLED(true);
-        dwt_forcetrxoff(); // TODO: Better way than force off then reset?
+        dwt_forcetrxoff();  // TODO: Better way than force off then reset?
         dwt_rxreset();
         dwt_rxenable(DWT_START_RX_IMMEDIATE);
 
@@ -75,17 +77,9 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     BufferT txBuffer(bufferSize);
 
     // MAC layer header for Decawave
-    txBuffer.insert(txBuffer.end(), {
-        0x41,
-        0x88,
-        0x00,
-        0xCA,
-        0xDE,
-        pkt->header.address,
-        0x00,
-        static_cast<uint8_t>(m_address),
-        0x00
-    });
+    txBuffer.insert(txBuffer.end(),
+                    {0x41, 0x88, 0x00, 0xCA, 0xDE, pkt->header.address, 0x00,
+                     static_cast<uint8_t>(m_address), 0x00});
 
     ASSERT(txBuffer.size() == 9);
 
@@ -103,7 +97,8 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     dwt_writetxdata(txBuffer.size(), txBuffer.data(), 0);
     dwt_writetxfctrl(txBuffer.size(), 0, 0);
 
-    const auto sentStatus = dwt_starttx(DWT_START_TX_IMMEDIATE | DWT_RESPONSE_EXPECTED);
+    const auto sentStatus =
+        dwt_starttx(DWT_START_TX_IMMEDIATE | DWT_RESPONSE_EXPECTED);
     const auto hadError = sentStatus != DWT_SUCCESS;
 
     return hadError ? COMM_DEV_BUF_ERR : COMM_SUCCESS;

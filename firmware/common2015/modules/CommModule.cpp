@@ -42,7 +42,7 @@ void CommModule::txThread() {
             // Get a pointer to the packet's memory location
             auto p = static_cast<RTP::Packet*>(evt.value.p);
 
-            // Bump up the thread's priority
+// Bump up the thread's priority
 #ifndef NDEBUG
             auto tState = m_txThread.set_priority(osPriorityRealtime);
             ASSERT(tState == osOK);
@@ -112,7 +112,7 @@ void CommModule::rxThread() {
             // get a pointer to where the data is stored
             auto p = static_cast<RTP::Packet*>(evt.value.p);
 
-            // Bump up the thread's priority
+// Bump up the thread's priority
 #ifndef NDEBUG
             auto tState = m_rxThread.set_priority(osPriorityRealtime);
             ASSERT(tState == osOK);

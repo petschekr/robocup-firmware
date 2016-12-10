@@ -1,11 +1,11 @@
-#include "Rtos.hpp"
-#include "mbed_rpc.h"
 #include "Assert.hpp"
+#include "Commands.hpp"
 #include "Console.hpp"
 #include "Logger.hpp"
-#include "Commands.hpp"
+#include "Rtos.hpp"
 #include "TaskSignals.hpp"
 #include "git_version.hpp"
+#include "mbed_rpc.h"
 
 /**
  * Initializes the console
@@ -52,8 +52,8 @@ void Task_SerialConsole(const void* args) {
 
         // If there is a new command to handle, parse and process it
         if (Console::Instance->CommandReady() == true) {
-            // Increase the thread's priority first so we can make sure the
-            // scheduler will select it to run
+// Increase the thread's priority first so we can make sure the
+// scheduler will select it to run
 #ifndef NDEBUG
             auto tState = osThreadSetPriority(threadID, osPriorityAboveNormal);
             ASSERT(tState == osOK);
@@ -77,7 +77,7 @@ void Task_SerialConsole(const void* args) {
                 Console::Instance->pc.getc();
             Console::Instance->attachInputHandler();
 
-            // Now, reset the priority of the thread to its idle state
+// Now, reset the priority of the thread to its idle state
 #ifndef NDEBUG
             tState = osThreadSetPriority(threadID, threadPriority);
             ASSERT(tState == osOK);
