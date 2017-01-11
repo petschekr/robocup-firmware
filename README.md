@@ -1,5 +1,5 @@
 # GT RoboJackets RoboCup SSL - Firmware
-[![Build Status](https://circleci.com/gh/RoboJackets/robocup-firmware.svg?&style=shield)](https://circleci.com/gh/RoboJackets/robocup-firmware) 
+[![Build Status](https://circleci.com/gh/RoboJackets/robocup-firmware.svg?&style=shield)](https://circleci.com/gh/RoboJackets/robocup-firmware)
 
 The Georgia Tech RoboJackets team competes in the annual RoboCup Small Size League (SSL) competition.  This repository contains all of the firmware that we run on our robots. More information on how our software works can be found on our [documentation page](http://robojackets.github.io/robocup-firmware/), our [wiki](http://wiki.robojackets.org/w/RoboCup_Software) or on our [website](http://www.robojackets.org/).
 Also, check out our [2014 qualification video](https://www.youtube.com/watch?v=H3F9HexPLT0) to see our robots in action!
@@ -52,10 +52,9 @@ $ util/<SYSTEM>-setup
 $ make
 ```
 
-We use CMake as our build system and have a simple `makefile` setup that invokes CMake.
+We use CMake as our build system and have a simple `makefile` setup that invokes CMake. For more information on what software we use for firmware, see [toolchain.md](./util/TOOLCHAIN.md).
 
 After running `make`, several programs will be placed in the **run** folder.  See the [soccer docs](http://robojackets.github.io/robocup-software/md_soccer_doc__soccer.html) for instructions on running the soccer program.
-
 
 ## Documentation
 
@@ -75,4 +74,3 @@ The TESTS name filter to run only certain tests. For example `make test-soccer T
 ## License
 
 This project is licensed under the Apache License v2.0.  See the [LICENSE](LICENSE) file for more information.
-
