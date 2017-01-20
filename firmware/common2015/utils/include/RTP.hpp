@@ -27,12 +27,12 @@ void serializeToVector(const PACKET_TYPE& pkt, std::vector<uint8_t>* buf) {
 // a hackish way of enforcing 'enum class' scopes without
 // the bitfield restrictions
 namespace PortTypeNamespace {
-enum PortTypeEnum { SINK, LINK, CONTROL, LEGACY, PING };
+enum PortTypeEnum { SINK = 0, LINK, CONTROL, LEGACY, PING };
 }
 using PortType = PortTypeNamespace::PortTypeEnum;
 
 namespace MessageTypeNamespace {
-enum MessageTypeEnum { CONTROL, TUNING, UPGRADE, MISC };
+enum MessageTypeEnum { CONTROL = 0, TUNING, UPGRADE, MISC };
 }
 using MessageType = MessageTypeNamespace::MessageTypeEnum;
 

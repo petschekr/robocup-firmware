@@ -32,12 +32,13 @@ void CommLink::rxThread() {
     // Only continue past this point once the hardware link is initialized
     Thread::signal_wait(SIGNAL_START);
 
+    // To force the initial failure of the Decawave so it will re-enable RX
+    getData();
+
     LOG(OK, "RX communication link ready!\r\n    Thread ID: %u, Priority: %d",
         reinterpret_cast<P_TCB>(m_rxThread.gettid())->task_id, threadPriority);
 
     while (true) {
-        // Thread::yield();
-
         // Wait until new data has arrived
         Thread::signal_wait(SIGNAL_RX);
 
@@ -45,8 +46,6 @@ void CommLink::rxThread() {
 
         // Get the received data from the external chip
         auto response = getData();
-
-        // Thread::yield();
 
         if (!response.empty()) {
             // Write the data to the CommModule object's rxQueue

@@ -58,7 +58,7 @@ Decawave::Decawave(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
         setLED(true);
         dwt_forcetrxoff();  // TODO: Better way than force off then reset?
         dwt_rxreset();
-        dwt_rxenable(DWT_START_RX_IMMEDIATE);
+        // dwt_rxenable(DWT_START_RX_IMMEDIATE);
 
         LOG(INFO, "Decawave ready!");
         CommLink::ready();
@@ -86,7 +86,7 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
     ASSERT(txBuffer.size() == 9);
 
     const auto headerFirstPtr = reinterpret_cast<const uint8_t*>(&pkt->header);
-    const auto headerLastPtr = headerFirstPtr + RTP::HeaderSize - 1;
+    const auto headerLastPtr = headerFirstPtr + RTP::HeaderSize;
 
     // insert the RTP header
     txBuffer.insert(txBuffer.end(), headerFirstPtr, headerLastPtr);

@@ -148,6 +148,8 @@ int main() {
 
             // send to all robots
             pkt.header.address = RTP::ROBOT_ADDRESS;
+            pkt.header.port = RTP::PortType::CONTROL;
+            pkt.header.type = RTP::MessageType::CONTROL;
 
             // transmit!
             CommModule::Instance->send(std::move(pkt));

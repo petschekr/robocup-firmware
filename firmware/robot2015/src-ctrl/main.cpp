@@ -69,7 +69,7 @@ int main() {
 
     // Set the default logging configurations
     isLogging = RJ_LOGGING_EN;
-    rjLogLevel = INFO;
+    rjLogLevel = OK;
 
     /* Always send out an empty line at startup for keeping the console
      * clean on after a 'reboot' command is called;
@@ -217,11 +217,7 @@ int main() {
     const auto RadioTimeout = 100;
     RtosTimerHelper radioTimeoutTimer(
         [&]() {
-            // reset radio
-            // globalRadio->strobe(CC1201_STROBE_SIDLE);
-            // globalRadio->strobe(CC1201_STROBE_SFRX);
-            // globalRadio->strobe(CC1201_STROBE_SRX);
-
+            // start radio timeout timer
             radioTimeoutTimer.start(RadioTimeout);
         },
         osTimerOnce);
@@ -280,8 +276,14 @@ int main() {
             if (err) reply.motorErrors |= (1 << i);
         }
 
-        // fpga status, 0 when good
-        reply.fpgaStatus = !fpgaInitialized + fpgaError;
+        // fpga status
+        if (!fpgaInitialized) {
+            reply.fpgaStatus = 1;
+        } else if (fpgaError) {
+            reply.fpgaStatus = 2;
+        } else {
+            reply.fpgaStatus = 0;  // good
+        }
 
         vector<uint8_t> replyBuf;
         RTP::serializeToVector(reply, &replyBuf);
@@ -336,7 +338,7 @@ int main() {
             fflush(stdout);
         }
 
-        Thread::wait(RJ_WATCHDOG_TIMER_VALUE * 250);
+        Thread::wait(RJ_WATCHDOG_TIMER_VALUE * 500);
 
         // Pack errors into bitmask
         errorBitmask |= (!globalRadio || !globalRadio->isConnected())
@@ -352,12 +354,14 @@ int main() {
             make_pair(2, RJ_ERR_LED_M3), make_pair(3, RJ_ERR_LED_M4),
             make_pair(4, RJ_ERR_LED_DRIB)};
 
-        for (const auto& pair : motorErrLedMapping) {
-            const motorErr_t& status = global_motors[pair.first].status;
-            // clear the bit
-            errorBitmask &= ~(1 << pair.second);
-            // set the bit to whatever hasError is set to
-            errorBitmask |= (status.hasError << pair.second);
+        if(fpgaInitialized) {
+            for (const auto& pair : motorErrLedMapping) {
+                const motorErr_t& status = global_motors[pair.first].status;
+                // clear the bit
+                errorBitmask &= ~(1 << pair.second);
+                // set the bit to whatever hasError is set to
+                errorBitmask |= (status.hasError << pair.second);
+            }
         }
 
         // get the battery voltage
