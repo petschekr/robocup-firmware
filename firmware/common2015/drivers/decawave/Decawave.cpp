@@ -5,24 +5,59 @@
 
 #include <memory>
 
+/*
+Channel(RX/TX usually must be same): varies centre frequency and bandwidth
+PRF(pulse repetition frequency)(16 or 64 MHz)(RX/TX must be same): higher PRF more accuracy/range, additional power consumption
+    Different PRFs will not be picked up or interfere
+Preamble length(TX only): number of symbols repeated in preamble
+    Selected based on data rate
+    Longer preamble gives improved range but longer air time
+PAC(Preamble acquisition chunk) size(RX only): chunk size used to cross correlate to detect preamble
+    Determined by expected preamble length
+    Larger PAC gives better performance when preamble long enough to allow it
+TX preamble code(TX only): used as specification for complex channel
+    Allows for multiple unique complex channels on one channel
+    Prevents overlapping channels from communicating
+    Selection based on the chosen channel and PRF
+RX preamble code(RX only): same as the TX preamble code
+SFD(standard/non-standard)(RX/TX must be same): 0 for IEEE 802.15.4 standard, 1 for non-standard decawave found to be more robust
+Data rate(RX/TX must be same): rate of transmission, higher means faster but less range
+PHY header mode(RX/TX must be same): use standard 128 or extended 1024 octet frame
+SFD timeout(RX only): timout from start of aquiring preamble to recover from false preamble detection
+    Reccomended length: (preamble length + 1 + SFD length - PAC size)
+*/
+
+/*
+Summary:
+    Channel          (choose)
+    PRF              (choose)
+    Preamble length  (based on data rate)
+    PAC size         (based on preamble length)
+    TX preamble code (based on channel and PRF)
+    RX preamble code (based on TX preamble code)
+    SFD              (choose, likely 0)
+    Data rate        (choose)
+    PHY header mode  (choose, likely STD)
+    SFD timout       (based on preamble length)
+*/
+
 namespace {
 dwt_config_t config = {
-    4,                 /* Channel number. */
-    DWT_PRF_64M,       /* Pulse repetition frequency. */
-    DWT_PLEN_128,      /* Preamble length. Used in TX only. */
-    DWT_PAC8,          /* Preamble acquisition chunk size. Used in RX only. */
-    17,                /* TX preamble code. Used in TX only. */
-    17,                /* RX preamble code. Used in RX only. */
-    0,                 /* 0 to use standard SFD, 1 to use non-standard SFD. */
-    DWT_BR_6M8,        /* Data rate. */
-    DWT_PHRMODE_STD,   /* PHY header mode. */
-    (128 + 1 + 64 - 8) /* SFD timeout (preamble length + 1 + SFD length - PAC
-                          size). Used in RX only. */
+    4,                 // Channel
+    DWT_PRF_64M,       // PRF
+    DWT_PLEN_128,      // Preamble length
+    DWT_PAC8,          // PAC size
+    17,                // TX preamble code
+    17,                // RX preamble code
+    0,                 // standard/non-standard SFD
+    DWT_BR_6M8,        // Data rate
+    DWT_PHRMODE_STD,   // PHY header mode
+    (128 + 1 + 64 - 8) // SFD timeout
 };
 
-dwt_txconfig_t txconfig = {
-    0x95,       /* PG delay. */
-    0x9A9A9A9A, /* TX power. */
+static dwt_txconfig_t txconfig = {
+    0x95,            // PG delay
+    0x9A9A9A9A,      // TX power
 };
 
 constexpr auto TX_TO_RX_DELAY_UUS = 60;
@@ -72,7 +107,7 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
 
     dwt_rxreset();
     dwt_forcetrxoff();
-    
+
     BufferT txBuffer;
 
     const auto bufferSize = 9 + pkt->size() + 2;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CommLink.hpp"
-#include "deca_device_api.hpp"
+#include "decadriver/deca_device_api.hpp"
 
 class Decawave : public CommLink, public dw1000_api {
 public:

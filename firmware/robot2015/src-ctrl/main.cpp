@@ -129,9 +129,9 @@ int main() {
         ballStatusPin = !haveBall;
 
         // kick!
-        // if (kickerReady && haveBall && kickOnBreakBeam) {
-        //     KickerBoard::Instance->kick(kickStrength);
-        // }
+        if (haveBall && kickOnBreakBeam) {
+            kick_hack.kick(kickStrength);
+        }
     };
 
     // Initialize and configure the fpga with the given bitfile

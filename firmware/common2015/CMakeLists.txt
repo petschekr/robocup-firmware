@@ -42,7 +42,7 @@ target_include_directories( common2015 PUBLIC
     drivers/ball-sense
     drivers/buzzer
     drivers/cc1201
-    drivers/decadriver
+    drivers/decawave
     drivers/ds2411
     drivers/fpga
     drivers/kicker-board
