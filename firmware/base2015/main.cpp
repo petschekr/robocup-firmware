@@ -10,7 +10,8 @@
 #include "SharedSPI.hpp"
 #include "firmware-common/base2015/usb-interface.hpp"
 #include "pins.hpp"
-#include "watchdog.hpp"
+#include "Watchdog.hpp"
+#include "RTP.hpp"
 
 #define RJ_WATCHDOG_TIMER_VALUE 2  // seconds
 
@@ -48,9 +49,9 @@ void radioRxHandler(RTP::Packet pkt) {
 
     // drop the packet if it's the wrong size. Thsi will need to be changed if
     // we have variable-sized reply packets
-    if (buf.size() != RTP::Reverse_Size) {
+    if (buf.size() != RTP::ReverseSize) {
         LOG(WARN, "Dropping packet, wrong size '%u', should be '%u'",
-            buf.size(), RTP::Reverse_Size);
+            buf.size(), RTP::ReverseSize);
         return;
     }
 
@@ -73,7 +74,7 @@ int main() {
 
     // Set the default logging configurations
     isLogging = RJ_LOGGING_EN;
-    rjLogLevel = INIT;
+    rjLogLevel = INFO;
 
     printf("****************************************\r\n");
     LOG(INFO, "Base station starting...");
@@ -83,11 +84,10 @@ int main() {
         // globalRadio->freq());
 
         // register handlers for any ports we might use
-        for (RTP::Port port :
-             {RTP::Port::CONTROL, RTP::Port::PING, RTP::Port::LEGACY}) {
+        for (RTP::PortType port :
+             {RTP::PortType::CONTROL, RTP::PortType::PING, RTP::PortType::LEGACY}) {
             CommModule::Instance->setRxHandler(&radioRxHandler, port);
-            CommModule::Instance->setTxHandler((CommLink*)globalRadio,
-                                               &CommLink::sendPacket, port);
+            CommModule::Instance->setTxHandler(globalRadio.get(), &CommLink::sendPacket, port);
         }
     } else {
         LOG(SEVERE, "No radio interface found!");
@@ -121,27 +121,30 @@ int main() {
     LOG(OK, "Initialized USB interface!");
 
     // Set the watdog timer's initial config
-    Watchdog::Set(RJ_WATCHDOG_TIMER_VALUE);
+    Watchdog::set(RJ_WATCHDOG_TIMER_VALUE);
 
     LOG(OK, "Listening for commands over USB");
 
     // buffer to read data from usb bulk transfers into
-    uint8_t buf[MAX_PACKET_SIZE_EPBULK];
+    CommLink::BufferT buf(MAX_PACKET_SIZE_EPBULK);
     uint32_t bufSize;
 
     while (true) {
         // make sure we can always reach back to main by renewing the watchdog
         // timer periodically
-        Watchdog::Renew();
+        Watchdog::renew();
         // attempt to read data from EPBULK_OUT
         // if data is available, write it into @pkt and send it
-        if (usbLink.readEP_NB(EPBULK_OUT, buf, &bufSize,
+        if (usbLink.readEP_NB(EPBULK_OUT, buf.data(), &bufSize,
                               MAX_PACKET_SIZE_EPBULK)) {
+
             LOG(DEBUG, "Read %d bytes from BULK IN", bufSize);
 
+            CommLink::BufferT vec;
+            vec.insert(vec.end(), buf.begin(), buf.begin() + bufSize);
+
             // construct packet from buffer received over USB
-            RTP::Packet pkt;
-            pkt.recv(buf, bufSize);
+            RTP::Packet pkt(vec);
 
             // send to all robots
             pkt.header.address = RTP::ROBOT_ADDRESS;
