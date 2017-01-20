@@ -99,7 +99,7 @@ public:
 
     template <typename T, typename = std::enable_if_t<
                               std::is_convertible<T, uint8_t>::value>>
-    Packet(const std::vector<T>& v, PortType p = PortType::LEGACY) {
+    Packet(const std::vector<T>& v, PortType p = PortType::CONTROL) {
         recv(v);
     }
 

@@ -72,9 +72,11 @@ int32_t Decawave::sendPacket(const RTP::Packet* pkt) {
 
     dwt_rxreset();
     dwt_forcetrxoff();
+    
+    BufferT txBuffer;
 
     const auto bufferSize = 9 + pkt->size() + 2;
-    BufferT txBuffer(bufferSize);
+    txBuffer.reserve(bufferSize);
 
     // MAC layer header for Decawave
     txBuffer.insert(txBuffer.end(),
@@ -124,12 +126,6 @@ CommLink::BufferT Decawave::getData() {
 
     // remove the last 2 elements
     buf.erase(buf.end() - 3, buf.end() - 1);
-
-    for(const auto& b : buf)
-    {
-        printf("%02X ", b);
-    }
-    printf("\n\r\r");
 
     // move the buffer to the caller
     return std::move(buf);
@@ -183,10 +179,8 @@ void Decawave::getDataSuccess(const dwt_cb_data_t* cb_data) {
     const auto offset = 9;
     const auto dataLength = cb_data->datalength - offset;
     // Read recived data to m_rxBufferPtr array
-    // m_rxBufferPtr->reserve(dataLength);
     m_rxBufferPtr->resize(dataLength);
     dwt_readrxdata(m_rxBufferPtr->data(), dataLength, offset);
-    // printf("--%02X", m_rxBufferPtr->data()[0]);
 }
 
 void Decawave::getDataFail(const dwt_cb_data_t* cb_data) {}
