@@ -13,7 +13,7 @@ dwt_config_t config = {
     DWT_PAC8,          /* Preamble acquisition chunk size. Used in RX only. */
     17,                /* TX preamble code. Used in TX only. */
     17,                /* RX preamble code. Used in RX only. */
-    1,                 /* 0 to use standard SFD, 1 to use non-standard SFD. */
+    0,                 /* 0 to use standard SFD, 1 to use non-standard SFD. */
     DWT_BR_6M8,        /* Data rate. */
     DWT_PHRMODE_STD,   /* PHY header mode. */
     (128 + 1 + 64 - 8) /* SFD timeout (preamble length + 1 + SFD length - PAC
@@ -33,7 +33,7 @@ Decawave::Decawave(SpiPtrT sharedSPI, PinName nCs, PinName intPin)
     : CommLink(sharedSPI, nCs, intPin), dw1000_api() {
     setSPIFrequency(2'000'000);
 
-    if (dwt_initialise(DWT_LOADNONE) == DWT_ERROR) {
+    if (dwt_initialise(DWT_LOADUCODE) == DWT_ERROR) {
         LOG(SEVERE, "Decawave not initialized");
         return;
     }
@@ -125,6 +125,12 @@ CommLink::BufferT Decawave::getData() {
     // remove the last 2 elements
     buf.erase(buf.end() - 3, buf.end() - 1);
 
+    for(const auto& b : buf)
+    {
+        printf("%02X ", b);
+    }
+    printf("\n\r\r");
+
     // move the buffer to the caller
     return std::move(buf);
 }
@@ -177,8 +183,10 @@ void Decawave::getDataSuccess(const dwt_cb_data_t* cb_data) {
     const auto offset = 9;
     const auto dataLength = cb_data->datalength - offset;
     // Read recived data to m_rxBufferPtr array
-    m_rxBufferPtr->reserve(dataLength);
+    // m_rxBufferPtr->reserve(dataLength);
+    m_rxBufferPtr->resize(dataLength);
     dwt_readrxdata(m_rxBufferPtr->data(), dataLength, offset);
+    // printf("--%02X", m_rxBufferPtr->data()[0]);
 }
 
 void Decawave::getDataFail(const dwt_cb_data_t* cb_data) {}
