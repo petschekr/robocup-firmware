@@ -3,6 +3,9 @@
 
 #ifdef NDEBUG
 
+// Probably a better place for this (needed for FPGA init)
+LocalFileSystem local("local");
+
 void execute_iterative_command() {}
 void execute_line(char* rawCommand) {}
 
