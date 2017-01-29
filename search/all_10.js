@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['saturate',['saturate',['../class_geometry2d_1_1_point.html#a7c7c74276015f8a8efc19a3b2937ae7f',1,'Geometry2d::Point']]],
+  ['saturate',['saturate',['../class_geometry2d_1_1_point.html#a554b018bc94a2e9a07e4c0c4b95b6838',1,'Geometry2d::Point']]],
   ['segment',['Segment',['../class_geometry2d_1_1_segment.html',1,'Geometry2d']]],
-  ['selftest',['selfTest',['../class_c_c1201.html#a6463819e64582f1f6e74e26bcc0e440c',1,'CC1201::selfTest()'],['../class_comm_link.html#a43c1119c09f26dba0e816f57bf1d70e0',1,'CommLink::selfTest()']]],
-  ['sendpacket',['sendPacket',['../class_c_c1201.html#a321a031a3da161a4ec641b69e86a70a4',1,'CC1201::sendPacket()'],['../class_comm_link.html#ae9ec315271e66d405ef55c91cbc19ca7',1,'CommLink::sendPacket()']]],
+  ['selftest',['selfTest',['../class_c_c1201.html#a6463819e64582f1f6e74e26bcc0e440c',1,'CC1201::selfTest()'],['../class_decawave.html#a657220843ee6216e736a2cbf30600eb1',1,'Decawave::selfTest()'],['../class_comm_link.html#a43c1119c09f26dba0e816f57bf1d70e0',1,'CommLink::selfTest()']]],
+  ['sendpacket',['sendPacket',['../class_c_c1201.html#a321a031a3da161a4ec641b69e86a70a4',1,'CC1201::sendPacket()'],['../class_decawave.html#accfcb002d00a2cd5f1f41e288ce373f2',1,'Decawave::sendPacket()'],['../class_comm_link.html#ae9ec315271e66d405ef55c91cbc19ca7',1,'CommLink::sendPacket()']]],
   ['sensechangecallback',['senseChangeCallback',['../class_ball_sense.html#a2965a1ce960a0b427bd523248a3700fb',1,'BallSense']]],
   ['set',['Set',['../class_watchdog.html#a35b747177c2780f8247fd89adc08afe2',1,'Watchdog']]],
   ['setaccelerorange',['setAcceleroRange',['../class_m_p_u6050.html#a3811859c76080d0faea7ed0d43c34525',1,'MPU6050']]],
@@ -20,6 +20,7 @@ var searchData=
   ['setsleepmode',['setSleepMode',['../class_m_p_u6050.html#aef8cf162a22513736313ebaa108cb9b7',1,'MPU6050']]],
   ['setspifrequency',['setSPIFrequency',['../class_shared_s_p_i_device.html#a72b94604822101722a63b2f873e4e38c',1,'SharedSPIDevice']]],
   ['setuid',['setUID',['../class_radio_protocol.html#a6c1d74f9c25b65c4c60f62fe881c06ec',1,'RadioProtocol']]],
+  ['sfdto',['sfdTO',['../structdwt__config__t.html#a3e02b0ef49a41cdfef4c090c75b21098',1,'dwt_config_t']]],
   ['shape',['Shape',['../class_geometry2d_1_1_shape.html',1,'Geometry2d']]],
   ['shapeset',['ShapeSet',['../class_geometry2d_1_1_shape_set.html',1,'Geometry2d']]],
   ['shapeset',['ShapeSet',['../class_geometry2d_1_1_shape_set.html#a5c0ed4dae2daee13389ab15697e66d35',1,'Geometry2d::ShapeSet']]],
@@ -35,5 +36,11 @@ var searchData=
   ['stop_5fcharging',['stop_charging',['../class_kicker_board.html#a0ec9b6088c4503f3329d19093bf8b82c',1,'KickerBoard']]],
   ['stopmaster',['stopMaster',['../classmbed_1_1_i2_c_driver.html#a057006a54ef33be39e4a638f2cfeba76',1,'mbed::I2CDriver']]],
   ['stopslave',['stopSlave',['../classmbed_1_1_i2_c_driver.html#a605b4c6d27a2339b5ff055f89958c018',1,'mbed::I2CDriver']]],
-  ['strobingtimeoutleds',['StrobingTimeoutLEDs',['../class_strobing_timeout_l_e_ds.html',1,'']]]
+  ['strobingtimeoutleds',['StrobingTimeoutLEDs',['../class_strobing_timeout_l_e_ds.html',1,'']]],
+  ['sys_5fcfg_5fid',['SYS_CFG_ID',['../deca__regs_8h.html#a555961045b2585a4f224aecb367f0f6c',1,'deca_regs.h']]],
+  ['sys_5fctrl_5fid',['SYS_CTRL_ID',['../deca__regs_8h.html#aa5ee6a88c4cfd57e9f2805d304ec5300',1,'deca_regs.h']]],
+  ['sys_5fmask_5fid',['SYS_MASK_ID',['../deca__regs_8h.html#a219b5ba03d254ecf2079fb93cf0890c7',1,'deca_regs.h']]],
+  ['sys_5fstate_5fid',['SYS_STATE_ID',['../deca__regs_8h.html#a634bb23bbe821aa3993d59d24c56c9ba',1,'deca_regs.h']]],
+  ['sys_5fstatus_5fid',['SYS_STATUS_ID',['../deca__regs_8h.html#adeeac09a1435acb863b0cd44ccf4643e',1,'deca_regs.h']]],
+  ['sys_5ftime_5fid',['SYS_TIME_ID',['../deca__regs_8h.html#a31270e00443e51812405a091c488a9d2',1,'deca_regs.h']]]
 ];

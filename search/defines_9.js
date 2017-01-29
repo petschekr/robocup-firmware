@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['reg_5f05_5fid_5freserved',['REG_05_ID_RESERVED',['../deca__regs_8h.html#aaa9e654f7d5aa738e025fc57ad53cd18',1,'deca_regs.h']]],
+  ['reg_5f07_5fid_5freserved',['REG_07_ID_RESERVED',['../deca__regs_8h.html#a92342a9155f87d0eebb58f8875d357bd',1,'deca_regs.h']]],
+  ['reg_5f0b_5fid_5freserved',['REG_0B_ID_RESERVED',['../deca__regs_8h.html#a86095112e860ddbc2097efad01787ad4',1,'deca_regs.h']]],
+  ['reg_5f16_5fid_5freserved',['REG_16_ID_RESERVED',['../deca__regs_8h.html#ad0c6467e6050cb01dd28c5db1b7bc821',1,'deca_regs.h']]],
+  ['reg_5f1b_5fid_5freserved',['REG_1B_ID_RESERVED',['../deca__regs_8h.html#affbf04600eb9912eefadb1c617d9eada',1,'deca_regs.h']]],
+  ['reg_5f20_5fid_5freserved',['REG_20_ID_RESERVED',['../deca__regs_8h.html#a95ebe5a762ac24f66af7fdec5cd71a5b',1,'deca_regs.h']]],
+  ['reg_5f22_5fid_5freserved',['REG_22_ID_RESERVED',['../deca__regs_8h.html#a3942e619c6a960e7edddc52de0ea1822',1,'deca_regs.h']]],
+  ['reg_5f29_5fid_5freserved',['REG_29_ID_RESERVED',['../deca__regs_8h.html#aa6a051ee59146e00bf9934bc7d12e737',1,'deca_regs.h']]],
+  ['reg_5f30_5fid_5freserved',['REG_30_ID_RESERVED',['../deca__regs_8h.html#a5b0e691df1d793c6a6b9f1eb4ff263e5',1,'deca_regs.h']]],
+  ['reg_5f37_5fid_5freserved',['REG_37_ID_RESERVED',['../deca__regs_8h.html#a63dc73bb021e5206c4ac9b301391ed6f',1,'deca_regs.h']]],
+  ['rf_5fconf_5fid',['RF_CONF_ID',['../deca__regs_8h.html#a42e4039f1140cedf72ffa58cd9bc7f7a',1,'deca_regs.h']]],
+  ['rx_5fbuffer_5fid',['RX_BUFFER_ID',['../deca__regs_8h.html#a4083cd58f0401dfa3f7e047fad4d61f5',1,'deca_regs.h']]],
+  ['rx_5ffinfo_5fid',['RX_FINFO_ID',['../deca__regs_8h.html#af7a34f290dbabd0881b1c140ae3a3152',1,'deca_regs.h']]],
+  ['rx_5ffqual_5fid',['RX_FQUAL_ID',['../deca__regs_8h.html#aa1438373974087885c44cf9c6a100ca8',1,'deca_regs.h']]],
+  ['rx_5ffwto_5fid',['RX_FWTO_ID',['../deca__regs_8h.html#a1fa3de4549ef0405c0ef6ab9f0b4f2a4',1,'deca_regs.h']]],
+  ['rx_5fsniff_5fid',['RX_SNIFF_ID',['../deca__regs_8h.html#a5422bbd6f1e33f216e8a12decb29a6c9',1,'deca_regs.h']]],
+  ['rx_5ftime_5fid',['RX_TIME_ID',['../deca__regs_8h.html#afc2bced2e42d756919f0d9587a7a8413',1,'deca_regs.h']]],
+  ['rx_5fttcki_5fid',['RX_TTCKI_ID',['../deca__regs_8h.html#a0ddac39358a872ee845cf042c7ef8976',1,'deca_regs.h']]],
+  ['rx_5fttcko_5fid',['RX_TTCKO_ID',['../deca__regs_8h.html#af154a15497231accc6230781d41ffefc',1,'deca_regs.h']]]
+];

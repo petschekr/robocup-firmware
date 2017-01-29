@@ -5,7 +5,7 @@ var searchData=
   ['charge',['charge',['../class_kicker_board.html#a83ee4cedca2f3826ade7005882c05a6d',1,'KickerBoard']]],
   ['checkmemory',['checkMemory',['../class_a_v_r910.html#a3d5e6c907a6c31e47e05557fc713f0f0',1,'AVR910']]],
   ['chip',['chip',['../class_kicker_board.html#ad6776892171cc45f082c09e23a7e03ce',1,'KickerBoard']]],
-  ['clamp',['clamp',['../class_geometry2d_1_1_point.html#a78e72ad69d5facc315e7cd9e6f47d05a',1,'Geometry2d::Point']]],
+  ['clamp',['clamp',['../class_geometry2d_1_1_point.html#adf38c5f284b65bff27b654fcb6ec5886',1,'Geometry2d::Point']]],
   ['clear',['clear',['../class_neo_strip.html#aabfa67bbc4f42769d7913fb3323b67ad',1,'NeoStrip::clear()'],['../class_geometry2d_1_1_composite_shape.html#ae8a9e41ef5fe8929ca8a058236032c4a',1,'Geometry2d::CompositeShape::clear()'],['../class_geometry2d_1_1_shape_set.html#aae03f5ef559ef96e06129c61e27e672c',1,'Geometry2d::ShapeSet::clear()']]],
   ['clearwindup',['clearWindup',['../class_pid.html#a63308bb7bc14653d961b1f79f1824aaf',1,'Pid']]],
   ['commandhandled',['CommandHandled',['../class_console.html#a6a55072738de2c432b77a21b89ed51dc',1,'Console']]],

@@ -1,8 +1,8 @@
 var searchData=
 [
   ['m_5fchannel',['m_channel',['../classmbed_1_1_i2_c_driver.html#a6edb3a7172d31210d3a71e2b00b1299e',1,'mbed::I2CDriver']]],
-  ['mag',['mag',['../class_geometry2d_1_1_point.html#a6ed5c08d2d6593452ca07f3b93f10a71',1,'Geometry2d::Point']]],
-  ['magsq',['magsq',['../class_geometry2d_1_1_point.html#aaafa7c842d0f79280fbf1b03bcae411f',1,'Geometry2d::Point']]],
+  ['mag',['mag',['../class_geometry2d_1_1_point.html#a9007ad178dcc9e07dbaf94c275d07304',1,'Geometry2d::Point']]],
+  ['magsq',['magsq',['../class_geometry2d_1_1_point.html#ac7fad9eb73c694f547b14a7bd891d09b',1,'Geometry2d::Point']]],
   ['mailhelper',['MailHelper',['../class_mail_helper.html',1,'']]],
   ['mailhelper_3c_20rtp_3a_3apacket_2c_20rx_5fqueue_5fsize_20_3e',['MailHelper&lt; rtp::packet, RX_QUEUE_SIZE &gt;',['../class_mail_helper.html',1,'']]],
   ['mailhelper_3c_20rtp_3a_3apacket_2c_20tx_5fqueue_5fsize_20_3e',['MailHelper&lt; rtp::packet, TX_QUEUE_SIZE &gt;',['../class_mail_helper.html',1,'']]],

@@ -129,9 +129,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aeaf7cbe9e1ff8950b0b7c95ba2b99bc2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaf7cbe9e1ff8950b0b7c95ba2b99bc2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>RadioProtocol</b> (std::shared_ptr&lt; <a class="el" href="class_comm_module.html">CommModule</a> &gt; commModule, <a class="el" href="class_c_c1201.html">CC1201</a> *radio, uint8_t uid=rtp::INVALID_ROBOT_UID)</td></tr>
-<tr class="separator:aeaf7cbe9e1ff8950b0b7c95ba2b99bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f69fd12e6c5b71f1ea0731b0ec4b726"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f69fd12e6c5b71f1ea0731b0ec4b726"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RadioProtocol</b> (std::shared_ptr&lt; <a class="el" href="class_comm_module.html">CommModule</a> &gt; commModule, <a class="el" href="class_decawave.html">Decawave</a> *radio, uint8_t uid=rtp::INVALID_ROBOT_UID)</td></tr>
+<tr class="separator:a2f69fd12e6c5b71f1ea0731b0ec4b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c1d74f9c25b65c4c60f62fe881c06ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c1d74f9c25b65c4c60f62fe881c06ec"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_radio_protocol.html#a6c1d74f9c25b65c4c60f62fe881c06ec">setUID</a> (uint8_t uid)</td></tr>
 <tr class="memdesc:a6c1d74f9c25b65c4c60f62fe881c06ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set robot unique id. Also update address. <br /></td></tr>
@@ -150,9 +150,9 @@ State&#160;</td><td class="memItemRight" valign="bottom"><b>state</b> () const <
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a5cc00e7809e0759b2e5df320220a5cdf"><td class="memItemLeft" align="right" valign="top">std::function&lt; std::vector&lt; uint8_t &gt;const <a class="el" href="structrtp_1_1_control_message.html">rtp::ControlMessage</a> *msg)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_radio_protocol.html#a5cc00e7809e0759b2e5df320220a5cdf">rxCallback</a></td></tr>
-<tr class="memdesc:a5cc00e7809e0759b2e5df320220a5cdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback that is called whenever a packet is received.  <a href="#a5cc00e7809e0759b2e5df320220a5cdf">More...</a><br /></td></tr>
-<tr class="separator:a5cc00e7809e0759b2e5df320220a5cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42423d86a2259acb1acc80a054739bb5"><td class="memItemLeft" align="right" valign="top">std::function&lt; std::vector&lt; uint8_t &gt;const <a class="el" href="structrtp_1_1_control_message.html">rtp::ControlMessage</a> *msg, const bool addresed)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_radio_protocol.html#a42423d86a2259acb1acc80a054739bb5">rxCallback</a></td></tr>
+<tr class="memdesc:a42423d86a2259acb1acc80a054739bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback that is called whenever a packet is received.  <a href="#a42423d86a2259acb1acc80a054739bb5">More...</a><br /></td></tr>
+<tr class="separator:a42423d86a2259acb1acc80a054739bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -188,12 +188,12 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a clas
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a5cc00e7809e0759b2e5df320220a5cdf"></a>
+<a class="anchor" id="a42423d86a2259acb1acc80a054739bb5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::function&lt;std::vector&lt;uint8_t&gt;const <a class="el" href="structrtp_1_1_control_message.html">rtp::ControlMessage</a>* msg)&gt; RadioProtocol::rxCallback</td>
+          <td class="memname">std::function&lt;std::vector&lt;uint8_t&gt;const <a class="el" href="structrtp_1_1_control_message.html">rtp::ControlMessage</a>* msg, const bool addresed)&gt; RadioProtocol::rxCallback</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -219,7 +219,7 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_radio_protocol.html">RadioProtocol</a></li>
-    <li class="footer">Generated on Wed Oct 26 2016 00:21:21 for GT RoboCup SSL by
+    <li class="footer">Generated on Sun Jan 29 2017 18:56:01 for GT RoboCup SSL by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

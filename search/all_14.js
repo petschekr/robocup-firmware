@@ -8,5 +8,6 @@ var searchData=
   ['writemask',['writeMask',['../class_m_c_p23017.html#a03a2643a1e2fbf8c2aa998d48f360498',1,'MCP23017']]],
   ['writemaster',['writeMaster',['../classmbed_1_1_i2_c_driver.html#acdd51e043b788fa3352b86595b346d71',1,'mbed::I2CDriver::writeMaster(int address, const char *data, int length, bool repeated=false)'],['../classmbed_1_1_i2_c_driver.html#adbe58aea77dff35781d5ca1bda4b0de3',1,'mbed::I2CDriver::writeMaster(int data)']]],
   ['writepin',['writePin',['../class_m_c_p23017.html#abf2d0d52597391e51a5ec6c25a6b05a1',1,'MCP23017']]],
-  ['writeslave',['writeSlave',['../classmbed_1_1_i2_c_driver.html#a9b69b9bef095f7d99c2a1987c0c16998',1,'mbed::I2CDriver::writeSlave(const char *data, int length)'],['../classmbed_1_1_i2_c_driver.html#ad9c60f25719bf4150e1e1129dd3ad140',1,'mbed::I2CDriver::writeSlave(int data)']]]
+  ['writeslave',['writeSlave',['../classmbed_1_1_i2_c_driver.html#a9b69b9bef095f7d99c2a1987c0c16998',1,'mbed::I2CDriver::writeSlave(const char *data, int length)'],['../classmbed_1_1_i2_c_driver.html#ad9c60f25719bf4150e1e1129dd3ad140',1,'mbed::I2CDriver::writeSlave(int data)']]],
+  ['writetospi',['writetospi',['../classdw1000__api.html#a1d2308c2e7ccc17b410b2873741f23d5',1,'dw1000_api::writetospi()'],['../class_decawave.html#a699654dc8dbc6366bedc2eb6ab13a34b',1,'Decawave::writetospi()']]]
 ];

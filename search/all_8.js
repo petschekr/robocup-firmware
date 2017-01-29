@@ -13,7 +13,7 @@ var searchData=
   ['is_5fcharge_5fenabled',['is_charge_enabled',['../class_kicker_board.html#a786e5313bcbd3a231d75f35c3520949a',1,'KickerBoard']]],
   ['is_5fiterative',['is_iterative',['../structcommand__t.html#a816cc17fd5afbb6e347a1e45ff898fa7',1,'command_t']]],
   ['is_5fpingable',['is_pingable',['../class_kicker_board.html#ab499b18264154983cd2647254db10601',1,'KickerBoard']]],
-  ['isconnected',['isConnected',['../class_c_c1201.html#a6e38428d0ef057b215bb89c5b327a213',1,'CC1201::isConnected()'],['../class_comm_link.html#a518b5e89a19177696fd1f037ac37e99f',1,'CommLink::isConnected()']]],
+  ['isconnected',['isConnected',['../class_c_c1201.html#a6e38428d0ef057b215bb89c5b327a213',1,'CC1201::isConnected()'],['../class_decawave.html#a947bf9a8c2e95e67bde8d6e3f3f640d0',1,'Decawave::isConnected()'],['../class_comm_link.html#a518b5e89a19177696fd1f037ac37e99f',1,'CommLink::isConnected()']]],
   ['isr',['ISR',['../class_comm_link.html#a288c3410e4911738eb088e23817f9356',1,'CommLink']]],
   ['issystemstoprequested',['IsSystemStopRequested',['../class_console.html#a9dff64f8179cd12a04a8352e436f062d',1,'Console']]]
 ];

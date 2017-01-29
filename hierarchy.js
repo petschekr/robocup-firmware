@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "agc_cfg_struct", "structagc__cfg__struct.html", null ],
     [ "AnalogOut", null, [
       [ "Buzzer", "class_buzzer.html", null ]
     ] ],
@@ -14,6 +15,15 @@ var hierarchy =
     [ "rtp::ControlMessage", "structrtp_1_1_control_message.html", null ],
     [ "fake_mbed::DigitalIn", "classfake__mbed_1_1_digital_in.html", null ],
     [ "DS2411_t", "struct_d_s2411__t.html", null ],
+    [ "dw1000_api", "classdw1000__api.html", [
+      [ "Decawave", "class_decawave.html", null ]
+    ] ],
+    [ "dwt_cb_data_t", "structdwt__cb__data__t.html", null ],
+    [ "dwt_config_t", "structdwt__config__t.html", null ],
+    [ "dwt_deviceentcnts_t", "structdwt__deviceentcnts__t.html", null ],
+    [ "dw1000_api::dwt_local_data_t", "structdw1000__api_1_1dwt__local__data__t.html", null ],
+    [ "dwt_rxdiag_t", "structdwt__rxdiag__t.html", null ],
+    [ "dwt_txconfig_t", "structdwt__txconfig__t.html", null ],
     [ "Field_Dimensions", "struct_field___dimensions.html", null ],
     [ "FIRFilter< T >", "class_f_i_r_filter.html", null ],
     [ "HackedKickerBoard", "class_hacked_kicker_board.html", null ],
@@ -80,7 +90,8 @@ var hierarchy =
         [ "KickerBoard", "class_kicker_board.html", null ]
       ] ],
       [ "CommLink", "class_comm_link.html", [
-        [ "CC1201", "class_c_c1201.html", null ]
+        [ "CC1201", "class_c_c1201.html", null ],
+        [ "Decawave", "class_decawave.html", null ]
       ] ],
       [ "FPGA", "class_f_p_g_a.html", null ]
     ] ],

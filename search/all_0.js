@@ -1,11 +1,16 @@
 var searchData=
 [
+  ['acc_5fmem_5fid',['ACC_MEM_ID',['../deca__regs_8h.html#ab1c85fa05050ad44ea5051eb88761595',1,'deca_regs.h']]],
+  ['ack_5fresp_5ft_5fid',['ACK_RESP_T_ID',['../deca__regs_8h.html#a83578ad2176080283f41c70a467fd899',1,'deca_regs.h']]],
   ['add',['add',['../class_geometry2d_1_1_composite_shape.html#a9d61a9cd810f5329270c948f6b3669d7',1,'Geometry2d::CompositeShape']]],
   ['address',['address',['../classmbed_1_1_i2_c_slave_rtos.html#a23dc01adca21ebdcdaf756609576235c',1,'mbed::I2CSlaveRtos']]],
   ['addressslave',['addressSlave',['../classmbed_1_1_i2_c_driver.html#ab2711321ef746b170b5dfb408c4e01be',1,'mbed::I2CDriver']]],
+  ['agc_5fcfg_5fstruct',['agc_cfg_struct',['../structagc__cfg__struct.html',1,'']]],
+  ['agc_5fctrl_5fid',['AGC_CTRL_ID',['../deca__regs_8h.html#adc13b30d26e4a593ff6e095456bf1f1f',1,'deca_regs.h']]],
   ['aliases',['aliases',['../structcommand__t.html#a8723f9a317f9daa788cf65064574764b',1,'command_t']]],
-  ['angle',['angle',['../class_geometry2d_1_1_point.html#a67ea60681c7172fa1ef5ad7b2e04174d',1,'Geometry2d::Point']]],
-  ['anglebetween',['angleBetween',['../class_geometry2d_1_1_point.html#a953fb146cb2a0c43246221ae04a5d638',1,'Geometry2d::Point']]],
+  ['angle',['angle',['../class_geometry2d_1_1_point.html#a800e80286a92a810d1631294b23b1010',1,'Geometry2d::Point']]],
+  ['anglebetween',['angleBetween',['../class_geometry2d_1_1_point.html#a9147e66f7164f390dc416dda2dceb9a6',1,'Geometry2d::Point']]],
+  ['aon_5fid',['AON_ID',['../deca__regs_8h.html#a7ffeee6d9c8e85864bbe38055aeb2426',1,'deca_regs.h']]],
   ['arc',['Arc',['../class_geometry2d_1_1_arc.html',1,'Geometry2d']]],
   ['arcradius',['ArcRadius',['../struct_field___dimensions.html#a01d05184f9c582f489d4058f42e9644f',1,'Field_Dimensions']]],
   ['attachinputhandler',['attachInputHandler',['../class_console.html#abce075310014fc23761f41e6952845fc',1,'Console']]],
